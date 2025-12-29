@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:task8/core/constants/text_style.dart';
+import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/widgets/bottom_nav.dart';
+
+import 'home_header.dart';
+import 'home_body.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,20 +11,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home", style: TextStyle(fontSize: 20.sp)),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Container(
-          width: 200.w,
-          height: 100.h,
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(16.r),
-          ),
-          alignment: Alignment.center,
-          child: Text("ScreenUtil Test", style: AppTextStyles.textStyle16),
+      backgroundColor: AppColors.backgroundDark,
+      bottomNavigationBar: const BottomNav(),
+      body: const SafeArea(
+        child: SingleChildScrollView(
+          child: Column(children: [HomeHeader(), HomeBody()]),
         ),
       ),
     );
