@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/view/details/cast_section.dart';
 import 'package:task8/view/details/details_header.dart';
@@ -26,7 +27,7 @@ class MovieDetailsScreen extends StatelessWidget {
                   RatingAndSynopsisSection(),
                   CastSection(),
                   ReviewsSection(),
-                  SizedBox(height: 40),
+                  SizedBox(height: 40.h),
                 ],
               ),
             ),

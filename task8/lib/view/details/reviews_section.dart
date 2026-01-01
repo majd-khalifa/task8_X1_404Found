@@ -218,10 +218,8 @@ class ReviewsSection extends StatelessWidget {
                               SizedBox(width: 4.w),
                               Text(
                                 "Delete",
-                                style: TextStyle(
-                                  fontSize: 12.sp,
+                                style: AppTextStyles.textStyle12.copyWith(
                                   color: Colors.red[400],
-                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ],
@@ -237,11 +235,38 @@ class ReviewsSection extends StatelessWidget {
           SizedBox(height: 16.h),
           Column(
             children: [
-              ReviewCard(initials: "JD", avatarBg: Colors.blue.withOpacity(0.2), avatarTextColor: Colors.blue[400]!, name: "John Doe", rating: 4, dateText: "2 days ago", reviewText: "Christopher Nolan does it again. The docking scene is perhaps the most tense sequence in cinema history."),
+              ReviewCard(
+                initials: "JD",
+                avatarBg: Colors.blue.withOpacity(0.2),
+                avatarTextColor: Colors.blue[400]!,
+                name: "John Doe",
+                rating: 4,
+                dateText: "2 days ago",
+                reviewText:
+                    "Christopher Nolan does it again. The docking scene is perhaps the most tense sequence in cinema history.",
+              ),
               SizedBox(height: 12.h),
-              ReviewCard(initials: "SA", avatarBg: AppColors.green.withOpacity(0.2), avatarTextColor: AppColors.greenprofilebackground, name: "Sarah A.", rating: 5, dateText: "1 week ago", reviewText: "Beautiful, haunting, and scientifically fascinating. It's a bit long, but worth every minute."),
+              ReviewCard(
+                initials: "SA",
+                avatarBg: AppColors.green.withOpacity(0.2),
+                avatarTextColor: AppColors.greenprofilebackground,
+                name: "Sarah A.",
+                rating: 5,
+                dateText: "1 week ago",
+                reviewText:
+                    "Beautiful, haunting, and scientifically fascinating. It's a bit long, but worth every minute.",
+              ),
               SizedBox(height: 12.h),
-              ReviewCard(initials: "MK", avatarBg: AppColors.purple.withOpacity(0.2), avatarTextColor: AppColors.purpleprofilebackground, name: "Mike K.", rating: 3, dateText: "2 weeks ago", reviewText: "I didn't quite understand the ending, but the journey there was incredible."),
+              ReviewCard(
+                initials: "MK",
+                avatarBg: AppColors.purple.withOpacity(0.2),
+                avatarTextColor: AppColors.purpleprofilebackground,
+                name: "Mike K.",
+                rating: 3,
+                dateText: "2 weeks ago",
+                reviewText:
+                    "I didn't quite understand the ending, but the journey there was incredible.",
+              ),
             ],
           ),
           SizedBox(height: 20.h),
