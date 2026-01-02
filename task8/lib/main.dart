@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           onGenerateRoute: AppRoutes.generateRoute,
-          initialRoute: AppRoutes.home, // أول صفحة
+          initialRoute: AppRoutes.profile, // أول صفحة
         );
       },
     );

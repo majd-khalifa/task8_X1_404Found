@@ -61,7 +61,7 @@ class AppTextStyles {
   /// 24.sp — big titles (Profile name, section headers)
   static TextStyle textStyle24 = TextStyle(
     fontSize: 24.sp,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontFamily: AppFont.beVietnamPro,
     color: AppColors.textPrimary,
     height: 30 / 24,
