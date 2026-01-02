@@ -11,13 +11,9 @@ class AppColors {
   // Background
   static const Color backgroundLight = Color(0xFFF7F6F8);
   static const Color backgroundDark = Color(0xFF0D0A10);
-<<<<<<< HEAD
   static const Color background = Color(0xFF191022);
   static final Color greenprofilebackground = Colors.green[400]!;
   static final Color purpleprofilebackground = Colors.purple[400]!;
-=======
-  static const surfaceDark = Color(0xFF251B2F);
->>>>>>> f868a9ea667c193ac5c8aebda07aa90cee954c45
 
   // Text
   static const Color textPrimary = Colors.white;
