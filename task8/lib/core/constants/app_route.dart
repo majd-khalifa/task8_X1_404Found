@@ -9,6 +9,7 @@ class AppRoutes {
   static const String home = '/home';
 
 
+
   static const String details = '/details';
 
 
@@ -16,6 +17,8 @@ class AppRoutes {
     switch (settings.name) {
       // case profile:
       //   return MaterialPageRoute(builder: (_) => const p());
+
+ 
       case login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
 
@@ -33,3 +36,4 @@ class AppRoutes {
     }
   }
 }
+  

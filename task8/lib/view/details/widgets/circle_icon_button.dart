@@ -1,10 +1,9 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 class CircleIconButton extends StatelessWidget {
-  const CircleIconButton({
-    super.key,
-    required this.icon,
-  });
+  const CircleIconButton({super.key, required this.icon});
 
   final IconData icon;
 
