@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/text_style.dart';
 
 import 'widgets/search_bar.dart';
@@ -16,16 +16,16 @@ class HomeBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const AppSearchBar(),
-        16.verticalSpace,
+        const SizedBox(height: 16.0),
 
         // Categories
         SizedBox(
-          height: 36.h,
+          height: 36.0,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             itemCount: 5,
-            separatorBuilder: (_, __) => SizedBox(width: 12.w),
+            separatorBuilder: (_, __) => const SizedBox(width: 12.0),
             itemBuilder: (_, index) {
               final categories = ["All", "Action", "Sci-Fi", "Comedy", "Drama"];
               return CategoryChip(
@@ -36,19 +36,19 @@ class HomeBody extends StatelessWidget {
           ),
         ),
 
-        20.verticalSpace,
+        const SizedBox(height: 20.0),
 
         // Trending
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Text("Trending Now", style: AppTextStyles.textStyle20),
         ),
-        12.verticalSpace,
+        const SizedBox(height: 12.0),
         SizedBox(
-          height: 280.h,
+          height: 280.0,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             children: const [
               TrendingCard(
                 image: "assets/images/dune.png",
@@ -81,22 +81,22 @@ class HomeBody extends StatelessWidget {
           ),
         ),
 
-        20.verticalSpace,
+        const SizedBox(height: 20.0),
 
         // For You
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Text("For You", style: AppTextStyles.textStyle20),
         ),
-        12.verticalSpace,
+        const SizedBox(height: 12.0),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: 2,
-            crossAxisSpacing: 16.w,
-            mainAxisSpacing: 16.h,
+            crossAxisSpacing: 16.0,
+            mainAxisSpacing: 16.0,
             childAspectRatio: 0.55,
             children: const [
               MovieGridItem(

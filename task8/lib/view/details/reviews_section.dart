@@ -19,7 +19,7 @@ class ReviewsSection extends StatelessWidget {
           Row(
             children: [
               Text("Reviews (12k)", style: AppTextStyles.textStyle18),
-              Spacer(),
+              const Spacer(),
               FilledButton.tonal(
                 style: FilledButton.styleFrom(
                   backgroundColor: AppColors.primary.withOpacity(0.2),
@@ -27,7 +27,7 @@ class ReviewsSection extends StatelessWidget {
                     horizontal: 16.w,
                     vertical: 8.h,
                   ),
-                  shape: StadiumBorder(),
+                  shape: const StadiumBorder(),
                 ),
                 onPressed: () {},
                 child: Row(
@@ -52,7 +52,7 @@ class ReviewsSection extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Container(
             padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(

@@ -29,7 +29,7 @@ class RatingAndSynopsisSection extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Average Rating", style: AppTextStyles.textStyle12),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [

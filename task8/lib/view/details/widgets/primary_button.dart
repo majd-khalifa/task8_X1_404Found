@@ -14,14 +14,14 @@ class PrimaryButton extends StatelessWidget {
         width: 0.7.sw,
         height: 48,
         decoration: BoxDecoration(
-          color: Color(0xFF7F13EC),
+          color: const Color(0xFF7F13EC),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.play_arrow, color: AppColors.textPrimary),
+              const Icon(Icons.play_arrow, color: AppColors.textPrimary),
               Text("Watch Trailer", style: AppTextStyles.textStyle24),
             ],
           ),

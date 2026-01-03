@@ -22,7 +22,7 @@ class BackgroundHeader extends StatelessWidget {
             right: 0,
             height: 0.7.sh,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -30,7 +30,7 @@ class BackgroundHeader extends StatelessWidget {
                     // Colors.black.withOpacity(0.3),
                     // const Color(0xFF191022).withOpacity(0.6),
                     // const Color(0xFF191022),
-                    AppColors.gradient1, AppColors.gradient2,
+                    AppColors.primary, Colors.purple,
                   ],
                   stops: [0.0, 0.8],
                 ),
@@ -41,8 +41,8 @@ class BackgroundHeader extends StatelessWidget {
             child: Column(
               children: [
                 // 🔹 أزرار الهيدر
-                Padding(
-                  padding: const EdgeInsets.symmetric(
+                const Padding(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 26,
                   ),
@@ -53,7 +53,7 @@ class BackgroundHeader extends StatelessWidget {
                       Row(
                         children: [
                           CircleButton(icon: Icons.share),
-                          const SizedBox(width: 12),
+                          SizedBox(width: 12),
                           CircleButton(icon: Icons.favorite_border),
                         ],
                       ),
@@ -70,7 +70,7 @@ class BackgroundHeader extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: AppColors.borderLight, width: 2),
 
-                    image: DecorationImage(
+                    image: const DecorationImage(
                       image: AssetImage(AppImage.posterImage),
                       fit: BoxFit.cover,
                     ),
@@ -126,12 +126,12 @@ class BackgroundHeader extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: AppColors.cardDark),
                         ),
-                        child: Icon(Icons.bookmark_add, color: AppColors.white),
+                        child: const Icon(Icons.bookmark_add, color: AppColors.white),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
               ],
             ),
           ),

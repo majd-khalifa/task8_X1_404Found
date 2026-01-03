@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app_color.dart';
 import 'app_font.dart';
 
 class AppTextStyles {
   /// 10.sp — badges, tiny labels
-  static TextStyle textStyle10 = TextStyle(
-    fontSize: 10.sp,
+  static TextStyle textStyle10 = const TextStyle(
+    fontSize: 10.0,
     fontWeight: FontWeight.w600,
     fontFamily: AppFont.beVietnamPro,
     color: AppColors.textPrimary,
@@ -14,8 +14,8 @@ class AppTextStyles {
   );
 
   /// 12.sp — small labels, cast names, timestamps
-  static TextStyle textStyle12 = TextStyle(
-    fontSize: 12.sp,
+  static TextStyle textStyle12 = const TextStyle(
+    fontSize: 12.0,
     fontWeight: FontWeight.w500,
     fontFamily: AppFont.beVietnamPro,
     color: AppColors.textSecondary,
@@ -23,8 +23,8 @@ class AppTextStyles {
   );
 
   /// 14.sp — body text, review text, genres
-  static TextStyle textStyle14 = TextStyle(
-    fontSize: 14.sp,
+  static TextStyle textStyle14 = const TextStyle(
+    fontSize: 14.0,
     fontWeight: FontWeight.w400,
     fontFamily: AppFont.beVietnamPro,
     color: AppColors.textPrimary,
@@ -32,8 +32,8 @@ class AppTextStyles {
   );
 
   /// 16.sp — normal body, grid titles
-  static TextStyle textStyle16 = TextStyle(
-    fontSize: 16.sp,
+  static TextStyle textStyle16 = const TextStyle(
+    fontSize: 16.0,
     fontWeight: FontWeight.w500,
     fontFamily: AppFont.beVietnamPro,
     color: AppColors.textPrimary,
@@ -41,8 +41,8 @@ class AppTextStyles {
   );
 
   /// 18.sp — section titles (Synopsis, Reviews, Cast)
-  static TextStyle textStyle18 = TextStyle(
-    fontSize: 18.sp,
+  static TextStyle textStyle18 = const TextStyle(
+    fontSize: 18.0,
     fontWeight: FontWeight.w700,
     fontFamily: AppFont.beVietnamPro,
     color: AppColors.textPrimary,
@@ -50,8 +50,8 @@ class AppTextStyles {
   );
 
   /// 20.sp — Trending Now title
-  static TextStyle textStyle20 = TextStyle(
-    fontSize: 20.sp,
+  static TextStyle textStyle20 = const TextStyle(
+    fontSize: 20.0,
     fontWeight: FontWeight.w700,
     fontFamily: AppFont.beVietnamPro,
     color: AppColors.textPrimary,
@@ -59,17 +59,17 @@ class AppTextStyles {
   );
 
   /// 24.sp — big titles (Profile name, section headers)
-  static TextStyle textStyle24 = TextStyle(
-    fontSize: 24.sp,
-    fontWeight: FontWeight.w600,
+  static TextStyle textStyle24 = const TextStyle(
+    fontSize: 24.0,
+    fontWeight: FontWeight.w700,
     fontFamily: AppFont.beVietnamPro,
     color: AppColors.textPrimary,
     height: 30 / 24,
   );
 
   /// 28.sp — large display text (rare)
-  static TextStyle textStyle28 = TextStyle(
-    fontSize: 28.sp,
+  static TextStyle textStyle28 = const TextStyle(
+    fontSize: 28.0,
     fontWeight: FontWeight.w700,
     fontFamily: AppFont.beVietnamPro,
     color: AppColors.textPrimary,
@@ -77,8 +77,8 @@ class AppTextStyles {
   );
 
   /// 30.sp — Movie Title (Interstellar)
-  static TextStyle textStyle30 = TextStyle(
-    fontSize: 30.sp,
+  static TextStyle textStyle30 = const TextStyle(
+    fontSize: 30.0,
     fontWeight: FontWeight.w900,
     fontFamily: AppFont.beVietnamPro,
     color: AppColors.textPrimary,
@@ -86,8 +86,8 @@ class AppTextStyles {
   );
 
   /// 32.sp — Hero titles (rare)
-  static TextStyle textStyle32 = TextStyle(
-    fontSize: 32.sp,
+  static TextStyle textStyle32 = const TextStyle(
+    fontSize: 32.0,
     fontWeight: FontWeight.w800,
     fontFamily: AppFont.beVietnamPro,
     color: AppColors.textPrimary,

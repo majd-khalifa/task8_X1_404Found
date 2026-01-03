@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/text_style.dart';
 
@@ -22,34 +22,36 @@ class TrendingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 144.w,
+      width: 144.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.circular(12.0),
             child: AspectRatio(
               aspectRatio: 2 / 3, // يمنع أي Overflow
               child: Stack(
                 children: [
                   Positioned.fill(child: Image.asset(image, fit: BoxFit.cover)),
                   Positioned(
-                    top: 8.h,
-                    right: 8.w,
+                    top: 8.0,
+                    right: 8.0,
                     child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 6.w,
-                        vertical: 2.h,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6.0,
+                        vertical: 2.0,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(.4),
-                        borderRadius: BorderRadius.circular(6.r),
-                        border: Border.all(color: Colors.white.withOpacity(.1)),
+                        color: Colors.black.withAlpha((0.4 * 255).round()),
+                        borderRadius: BorderRadius.circular(6.0),
+                        border: Border.all(
+                          color: Colors.white.withAlpha((0.1 * 255).round()),
+                        ),
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.star, color: Colors.amber, size: 12.sp),
-                          2.horizontalSpace,
+                          const Icon(Icons.star, color: Colors.amber, size: 12.0),
+                          const SizedBox(width: 2.0),
                           Text(
                             rating,
                             style: AppTextStyles.textStyle10.copyWith(
@@ -65,7 +67,7 @@ class TrendingCard extends StatelessWidget {
             ),
           ),
 
-          6.verticalSpace,
+          const SizedBox(height: 6.0),
 
           Text(
             title,

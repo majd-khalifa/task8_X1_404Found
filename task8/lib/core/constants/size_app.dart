@@ -5,8 +5,8 @@ import 'app_color.dart';
 
 class AppShadows {
   static BoxShadow primaryShadow = BoxShadow(
-    color: AppColors.primary.withOpacity(.4),
+    color: AppColors.primary.withAlpha((0.4 * 255).round()),
     blurRadius: 12,
-    offset: Offset(0, 6),
+    offset: const Offset(0, 6),
   );
 }

@@ -80,7 +80,7 @@ class ReviewCard extends StatelessWidget {
                               );
                             }),
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Text(dateText, style: AppTextStyles.textStyle10),
                         ],
                       ),
@@ -91,7 +91,7 @@ class ReviewCard extends StatelessWidget {
             ],
           ),
 
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
 
           Text(reviewText, style: AppTextStyles.textStyle14),
           SizedBox(height: 20.h),

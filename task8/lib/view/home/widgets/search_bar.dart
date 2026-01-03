@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/text_style.dart';
 
@@ -9,19 +9,19 @@ class AppSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Container(
-        height: 48.h,
+        height: 48.0,
         decoration: BoxDecoration(
           color: AppColors.cardDark,
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: BorderRadius.circular(12.0),
           border: Border.all(color: AppColors.borderLight),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 14.w),
+        padding: const EdgeInsets.symmetric(horizontal: 14.0),
         child: Row(
           children: [
-            Icon(Icons.search, color: AppColors.textMuted, size: 22.sp),
-            10.horizontalSpace,
+            const Icon(Icons.search, color: AppColors.textMuted, size: 22.0),
+            const SizedBox(width: 10.0),
             Expanded(
               child: TextField(
                 style: AppTextStyles.textStyle14,
@@ -36,7 +36,7 @@ class AppSearchBar extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(Icons.tune, color: AppColors.textMuted, size: 22.sp),
+            const Icon(Icons.tune, color: AppColors.textMuted, size: 22.0),
           ],
         ),
       ),

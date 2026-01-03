@@ -13,7 +13,7 @@ class CastSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text("Cast", style: AppTextStyles.textStyle18),
         ),
 
@@ -24,7 +24,7 @@ class CastSection extends StatelessWidget {
           child: ListView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            children: [
+            children: const [
               CastItem(img: AppImage.castimage1, name: "Matthew M."),
               CastItem(img: AppImage.castimage2, name: "Anne H."),
               CastItem(img: AppImage.castimage1, name: "Jessica C."),

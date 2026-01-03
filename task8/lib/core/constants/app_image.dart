@@ -1,6 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 class AppImage {
-  static String mainurl = "assets/images/";
-  static String posterImage = "${mainurl}unnamed (8).png";
-  static String castimage1 = "${mainurl}unnamed (10).png";
-  static String castimage2 = "${mainurl}unnamed (9).png";
+  static const String posterImage = 'assets/images/poster.jpg'; // افترض مسار الصورة
+  static const String castimage1 = 'assets/images/cast1.jpg';
+  static const String castimage2 = 'assets/images/cast2.jpg';
 }

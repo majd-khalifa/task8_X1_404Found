@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/size_app.dart';
 import 'package:task8/core/constants/text_style.dart';
@@ -15,18 +15,20 @@ class CategoryChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 18.w),
+      padding: const EdgeInsets.symmetric(horizontal: 18.0),
       decoration: BoxDecoration(
         color: isActive ? AppColors.primary : AppColors.buttonDark,
-        borderRadius: BorderRadius.circular(999.r),
+        borderRadius: BorderRadius.circular(999.0),
         border: Border.all(
           color: isActive ? Colors.transparent : AppColors.borderLight,
         ),
         boxShadow: isActive
             ? [
                 AppShadows.primaryShadow.copyWith(
-                  color: AppShadows.primaryShadow.color.withOpacity(.7),
-                  offset: Offset(0, 6),
+                  color: AppShadows.primaryShadow.color.withAlpha(
+                    (0.7 * 255).round(),
+                  ),
+                  offset: const Offset(0, 6),
                   blurRadius: 60,
                 ),
               ]

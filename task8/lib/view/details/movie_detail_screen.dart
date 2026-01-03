@@ -18,15 +18,15 @@ class MovieDetailsScreen extends StatelessWidget {
         child: Column(
           children: [
             // الهيدر الكامل (خلفية + بوستر + اسم الفيلم + أزرار)
-            BackgroundHeader(),
+            const BackgroundHeader(),
             // المحتوى بعد الهيدر
             ContentWrapper(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RatingAndSynopsisSection(),
-                  CastSection(),
-                  ReviewsSection(),
+                  const RatingAndSynopsisSection(),
+                  const CastSection(),
+                  const ReviewsSection(),
                   SizedBox(height: 40.h),
                 ],
               ),

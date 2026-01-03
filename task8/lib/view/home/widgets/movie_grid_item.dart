@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/text_style.dart';
 
@@ -29,7 +29,7 @@ class MovieGridItem extends StatelessWidget {
         Stack(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(12.0),
               child: AspectRatio(
                 aspectRatio: 2 / 3, // يمنع Overflow
                 child: Image.asset(image, fit: BoxFit.cover),
@@ -38,13 +38,13 @@ class MovieGridItem extends StatelessWidget {
 
             if (badge != null)
               Positioned(
-                top: 8.h,
-                left: 8.w,
+                top: 8.0,
+                left: 8.0,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(.9),
-                    borderRadius: BorderRadius.circular(8.r),
+                    color: AppColors.primary.withAlpha((0.9 * 255).round()),
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Text(
                     badge!,
@@ -58,7 +58,7 @@ class MovieGridItem extends StatelessWidget {
           ],
         ),
 
-        6.verticalSpace,
+        const SizedBox(height: 6.0),
 
         Text(
           title,
@@ -69,23 +69,23 @@ class MovieGridItem extends StatelessWidget {
           ),
         ),
 
-        4.verticalSpace,
+        const SizedBox(height: 4.0),
 
         Row(
           children: [
-            Icon(Icons.star, color: Colors.amber, size: 14.sp),
-            4.horizontalSpace,
+            const Icon(Icons.star, color: Colors.amber, size: 14.0),
+            const SizedBox(width: 4.0),
             Text(rating, style: AppTextStyles.textStyle12),
-            6.horizontalSpace,
+            const SizedBox(width: 6.0),
             Container(
-              width: 3.w,
-              height: 3.w,
+              width: 3.0,
+              height: 3.0,
               decoration: const BoxDecoration(
                 color: Colors.white54,
                 shape: BoxShape.circle,
               ),
             ),
-            6.horizontalSpace,
+            const SizedBox(width: 6.0),
             Text(
               year,
               style: AppTextStyles.textStyle12.copyWith(

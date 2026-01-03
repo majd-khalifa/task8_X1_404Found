@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -8,28 +8,28 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.w),
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "Login",
-              style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold),
             ),
 
-            SizedBox(height: 40.h),
+            const SizedBox(height: 40.0),
 
             // Email
             TextField(
               decoration: InputDecoration(
                 hintText: "Email",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: BorderRadius.circular(12.0),
                 ),
               ),
             ),
 
-            SizedBox(height: 20.h),
+            const SizedBox(height: 20.0),
 
             // Password
             TextField(
@@ -37,20 +37,20 @@ class LoginScreen extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: "Password",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: BorderRadius.circular(12.0),
                 ),
               ),
             ),
 
-            SizedBox(height: 30.h),
+            const SizedBox(height: 30.0),
 
             // Button
             SizedBox(
               width: double.infinity,
-              height: 50.h,
+              height: 50.0,
               child: ElevatedButton(
                 onPressed: () {},
-                child: Text("Login", style: TextStyle(fontSize: 18.sp)),
+                child: const Text("Login", style: TextStyle(fontSize: 18.0)),
               ),
             ),
           ],
