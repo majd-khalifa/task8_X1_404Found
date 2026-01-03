@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:task8/view/auth/login/login_screen.dart';
 import 'package:task8/view/home/home_screen.dart';
+import 'package:task8/view/profile/profile_screen.dart';
 
 class AppRoutes {
   static const String login = '/login';
   static const String home = '/home';
+  static const String profile = '/profile';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -13,6 +15,9 @@ class AppRoutes {
 
       case home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+
+      case profile:
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
 
       default:
         return MaterialPageRoute(
