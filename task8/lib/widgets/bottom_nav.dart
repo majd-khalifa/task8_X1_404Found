@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/size_app.dart';
 import 'package:task8/core/constants/text_style.dart';
+import 'package:task8/core/constants/app_route.dart';
 
 class BottomNav extends StatelessWidget {
   const BottomNav({super.key});
@@ -24,12 +25,22 @@ class BottomNav extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          _NavItem(icon: Icons.home_filled, label: "Home", isActive: true),
-          _NavItem(icon: Icons.search, label: "Search"),
-          _CenterNavButton(),
-          _NavItem(icon: Icons.reviews, label: "Reviews"),
-          _NavItem(icon: Icons.person, label: "Profile"),
+        children: [
+          const _NavItem(
+            icon: Icons.home_filled,
+            label: "Home",
+            isActive: true,
+          ),
+          const _NavItem(icon: Icons.search, label: "Search"),
+          const _CenterNavButton(),
+          const _NavItem(icon: Icons.reviews, label: "Reviews"),
+
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, AppRoutes.profile);
+            },
+            child: const _NavItem(icon: Icons.person, label: "Profile"),
+          ),
         ],
       ),
     );
