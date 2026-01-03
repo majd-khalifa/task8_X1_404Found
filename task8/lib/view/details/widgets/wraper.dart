@@ -13,7 +13,7 @@ class ContentWrapper extends StatelessWidget {
     return Container(
       constraints: BoxConstraints(minHeight: 0.5.sh),
       decoration: BoxDecoration(
-        color: AppColors.backgroundDark,
+        color: AppColors.background,
         borderRadius: BorderRadius.vertical(top: Radius.circular(32.r)),
         border: Border(
           top: BorderSide(color: Colors.white.withOpacity(0.05), width: 1.w),

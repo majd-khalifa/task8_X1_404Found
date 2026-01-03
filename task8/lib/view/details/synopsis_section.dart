@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/text_style.dart';
 
 class RatingAndSynopsisSection extends StatelessWidget {
   const RatingAndSynopsisSection({super.key});
-=======
-
-class SynopsisSection extends StatelessWidget {
-  const SynopsisSection({super.key});
->>>>>>> f868a9ea667c193ac5c8aebda07aa90cee954c45
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-<<<<<<< HEAD
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // ⭐ Rating Card
           Container(
             padding: EdgeInsets.all(16.w),
             margin: EdgeInsets.only(bottom: 24.h),
@@ -40,38 +34,9 @@ class SynopsisSection extends StatelessWidget {
                       children: [
                         Text("8.6", style: AppTextStyles.textStyle30),
                         SizedBox(width: 8.w),
-                        //     Row(
-                        //       children: [
-                        //         Icon(
-                        //           Icons.star,
-                        //           size: 20.sp,
-                        //           color: AppColors.primary,
-                        //         ),
-                        //         Icon(
-                        //           Icons.star,
-                        //           size: 20.sp,
-                        //           color: AppColors.primary,
-                        //         ),
-                        //         Icon(
-                        //           Icons.star,
-                        //           size: 20.sp,
-                        //           color: AppColors.primary,
-                        //         ),
-                        //         Icon(
-                        //           Icons.star,
-                        //           size: 20.sp,
-                        //           color: AppColors.primary,
-                        //         ),
-                        //         Icon(
-                        //           Icons.star,
-                        //           size: 20.sp,
-                        //           color: AppColors.primary.withOpacity(0.5),
-                        //         ),
-                        //       ],
-                        //     ),
                         Row(
                           children: List.generate(5, (index) {
-                            double rating = 4.5; // القيمة القادمة من API
+                            double rating = 5;
 
                             Color color;
                             if (index < rating.floor()) {
@@ -98,7 +63,6 @@ class SynopsisSection extends StatelessWidget {
                 ),
                 SizedBox(width: 16.w),
 
-                // Right: Rotten Tomatoes
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -139,17 +103,11 @@ class SynopsisSection extends StatelessWidget {
             ),
           ),
 
-=======
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
->>>>>>> f868a9ea667c193ac5c8aebda07aa90cee954c45
+          // 📘 Synopsis Section
           Text(
             "Synopsis",
             style: TextStyle(
               color: Colors.white,
-<<<<<<< HEAD
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
             ),
@@ -169,7 +127,6 @@ class SynopsisSection extends StatelessWidget {
             ),
           ),
 
-          // 🟣 Read more button
           TextButton(
             style: TextButton.styleFrom(
               padding: EdgeInsets.zero,
@@ -178,29 +135,17 @@ class SynopsisSection extends StatelessWidget {
             ),
             onPressed: () {},
             child: Padding(
-              padding: EdgeInsets.only(top: 8.h), // mt-2
+              padding: EdgeInsets.only(top: 8.h),
               child: Text(
                 "Read more",
                 style: TextStyle(
                   color: AppColors.primary,
-                  fontSize: 14.sp, // text-sm
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.bold,
-                  decoration:
-                      TextDecoration.underline, // hover:underline (ثابت هنا)
+                  decoration: TextDecoration.underline,
                 ),
               ),
             ),
-=======
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 8),
-          Text(
-            "Earth's future has been riddled by disasters, famines, and droughts. "
-            "There is only one way to ensure mankind's survival: Interstellar travel...",
-            style: TextStyle(color: Colors.white70, fontSize: 14, height: 1.5),
->>>>>>> f868a9ea667c193ac5c8aebda07aa90cee954c45
           ),
         ],
       ),
