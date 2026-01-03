@@ -42,10 +42,7 @@ class BackgroundHeader extends StatelessWidget {
               children: [
                 // 🔹 أزرار الهيدر
                 const Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 26,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 26),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -126,7 +123,10 @@ class BackgroundHeader extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: AppColors.cardDark),
                         ),
-                        child: const Icon(Icons.bookmark_add, color: AppColors.white),
+                        child: const Icon(
+                          Icons.bookmark_add,
+                          color: AppColors.white,
+                        ),
                       ),
                     ],
                   ),
