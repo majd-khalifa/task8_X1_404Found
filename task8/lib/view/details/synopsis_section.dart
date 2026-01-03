@@ -15,6 +15,7 @@ class RatingAndSynopsisSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // ⭐ Rating Card
           Container(
             padding: EdgeInsets.all(16.w),
             margin: EdgeInsets.only(bottom: 24.h),
@@ -35,38 +36,9 @@ class RatingAndSynopsisSection extends StatelessWidget {
                       children: [
                         Text("8.6", style: AppTextStyles.textStyle30),
                         SizedBox(width: 8.w),
-                        //     Row(
-                        //       children: [
-                        //         Icon(
-                        //           Icons.star,
-                        //           size: 20.sp,
-                        //           color: AppColors.primary,
-                        //         ),
-                        //         Icon(
-                        //           Icons.star,
-                        //           size: 20.sp,
-                        //           color: AppColors.primary,
-                        //         ),
-                        //         Icon(
-                        //           Icons.star,
-                        //           size: 20.sp,
-                        //           color: AppColors.primary,
-                        //         ),
-                        //         Icon(
-                        //           Icons.star,
-                        //           size: 20.sp,
-                        //           color: AppColors.primary,
-                        //         ),
-                        //         Icon(
-                        //           Icons.star,
-                        //           size: 20.sp,
-                        //           color: AppColors.primary.withOpacity(0.5),
-                        //         ),
-                        //       ],
-                        //     ),
                         Row(
                           children: List.generate(5, (index) {
-                            double rating = 4.5; // القيمة القادمة من API
+                            double rating = 5;
 
                             Color color;
                             if (index < rating.floor()) {
@@ -93,7 +65,6 @@ class RatingAndSynopsisSection extends StatelessWidget {
                 ),
                 SizedBox(width: 16.w),
 
-                // Right: Rotten Tomatoes
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -134,6 +105,7 @@ class RatingAndSynopsisSection extends StatelessWidget {
             ),
           ),
 
+
           Text(
             "Synopsis",
             style: TextStyle(
@@ -157,7 +129,6 @@ class RatingAndSynopsisSection extends StatelessWidget {
             ),
           ),
 
-          // 🟣 Read more button
           TextButton(
             style: TextButton.styleFrom(
               padding: EdgeInsets.zero,
@@ -166,15 +137,14 @@ class RatingAndSynopsisSection extends StatelessWidget {
             ),
             onPressed: () {},
             child: Padding(
-              padding: EdgeInsets.only(top: 8.h), // mt-2
+              padding: EdgeInsets.only(top: 8.h),
               child: Text(
                 "Read more",
                 style: TextStyle(
                   color: AppColors.primary,
-                  fontSize: 14.sp, // text-sm
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.bold,
-                  decoration:
-                      TextDecoration.underline, // hover:underline (ثابت هنا)
+                  decoration: TextDecoration.underline,
                 ),
               ),
             ),

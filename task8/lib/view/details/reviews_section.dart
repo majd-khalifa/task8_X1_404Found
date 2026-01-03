@@ -41,11 +41,8 @@ class ReviewsSection extends StatelessWidget {
                     SizedBox(width: 8.w),
                     Text(
                       "Post Review",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
-                      ),
+                      style: AppTextStyles.textStyle14.copyWith(color: AppColors.primary)
+                      
                     ),
                   ],
                 ),
@@ -81,11 +78,9 @@ class ReviewsSection extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text(
                             "You",
-                            style: TextStyle(
-                              color: AppColors.primary,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style:
+                            AppTextStyles.textStyle14.copyWith(color: AppColors.primary)
+                            
                           ),
                         ),
                         SizedBox(width: 12.w),
@@ -94,11 +89,8 @@ class ReviewsSection extends StatelessWidget {
                           children: [
                             Text(
                               "Your Review",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: AppTextStyles. textStyle14.copyWith(color: AppColors.white)
+                            
                             ),
                             SizedBox(height: 4.h),
                             Row(
@@ -239,8 +231,8 @@ class ReviewsSection extends StatelessWidget {
             children: [
               ReviewCard(
                 initials: "JD",
-                avatarBg: Colors.blue.withOpacity(0.2),
-                avatarTextColor: Colors.blue[400]!,
+                avatarBg: AppColors.green.withOpacity(0.2),
+                avatarTextColor: AppColors.blueprofilebackground,
                 name: "John Doe",
                 rating: 4,
                 dateText: "2 days ago",
@@ -279,10 +271,8 @@ class ReviewsSection extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 16.h),
                 child: Text(
                   "View All Reviews",
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.cardDark,
+                  style: AppTextStyles.textStyle14.copyWith(
+                    color: AppColors.textSecondary,
                   ),
                 ),
               ),

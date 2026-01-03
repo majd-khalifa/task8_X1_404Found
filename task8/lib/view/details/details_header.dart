@@ -13,30 +13,38 @@ class BackgroundHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 1.sw,
-      height: 0.6.sh,
+      height: 0.65.sh,
       child: Stack(
         children: [
+          // 🔹 صورة خلفية خفيفة (تعطي عمق مثل Stitch)
           Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 0.7.sh,
+            child: Image.asset(
+              AppImage.posterImage,
+              fit: BoxFit.cover,
+              color: Colors.black.withOpacity(0.65),
+              colorBlendMode: BlendMode.darken,
+            ),
+          ),
+
+          // 🔹 Gradient Overlay واحد ناعم (مطابق Stitch)
+          Positioned.fill(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
+                  stops: [0.0, 0.5, 1.0],
                   colors: [
-                    // Colors.black.withOpacity(0.3),
-                    // const Color(0xFF191022).withOpacity(0.6),
-                    // const Color(0xFF191022),
-                    AppColors.gradient1, AppColors.gradient2,
+                    AppColors.backgroundGradientTop,
+                    AppColors.backgroundGradientMiddle,
+                    AppColors.backgroundGradientBottom,
                   ],
-                  stops: [0.0, 0.8],
                 ),
               ),
             ),
           ),
+
+          // 🔹 المحتوى
           Positioned.fill(
             child: Column(
               children: [
@@ -69,7 +77,6 @@ class BackgroundHeader extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: AppColors.borderLight, width: 2),
-
                     image: DecorationImage(
                       image: AssetImage(AppImage.posterImage),
                       fit: BoxFit.cover,
@@ -79,12 +86,8 @@ class BackgroundHeader extends StatelessWidget {
 
                 const SizedBox(height: 16),
 
-                // 🔹 اسم الفيلم
                 Text("Interstellar", style: AppTextStyles.textStyle30),
-
                 const SizedBox(height: 8),
-
-                // 🔹 التصنيفات
                 Text(
                   "Sci-Fi • Adventure • Drama",
                   style: AppTextStyles.textStyle14,
@@ -98,22 +101,33 @@ class BackgroundHeader extends StatelessWidget {
                   child: Row(
                     children: [
                       Expanded(
-                        child: ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                        child: Container(
+                          height: 45.h,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primary.withOpacity(0.6),
+                                blurRadius: 10.r,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
                             ),
-                          ),
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.play_arrow,
-                            color: AppColors.textPrimary,
-                          ),
-                          label: Text(
-                            "Watch Trailer",
-                            style: AppTextStyles.textStyle16,
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.play_arrow,
+                              color: AppColors.textPrimary,
+                            ),
+                            label: Text(
+                              "Watch Trailer",
+                              style: AppTextStyles.textStyle16,
+                            ),
                           ),
                         ),
                       ),
@@ -126,12 +140,14 @@ class BackgroundHeader extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: AppColors.cardDark),
                         ),
-                        child: Icon(Icons.bookmark_add, color: AppColors.white),
+                        child: const Icon(
+                          Icons.bookmark_add,
+                          color: AppColors.white,
+                        ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
               ],
             ),
           ),

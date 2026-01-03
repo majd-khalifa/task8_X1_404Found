@@ -19,6 +19,7 @@ class MovieDetailsScreen extends StatelessWidget {
           children: [
             // الهيدر الكامل (خلفية + بوستر + اسم الفيلم + أزرار)
             BackgroundHeader(),
+            SizedBox(height: 15),
             // المحتوى بعد الهيدر
             ContentWrapper(
               child: Column(

@@ -6,14 +6,29 @@ class AppColors {
   // Primary
   static const Color primary = Color(0xFF7F13EC);
   //gradient
-  static const Color gradient1 = Color(0xFF1A0B2E);
-  static const Color gradient2 = Color(0xFF0A0A0A);
+  static const Color backgroundGradientTop = Color.fromRGBO(0, 0, 0, 0.35);
+
+  static const Color backgroundGradientMiddle = Color.fromRGBO(
+    25,
+    16,
+    34,
+    0.65,
+  );
+
+  static const Color backgroundGradientBottom = Color(0xFF191022);
   // Background
   static const Color backgroundLight = Color(0xFFF7F6F8);
   static const Color backgroundDark = Color(0xFF0D0A10);
+
+
   static const Color background = Color(0xFF191022);
   static final Color greenprofilebackground = Colors.green[400]!;
   static final Color purpleprofilebackground = Colors.purple[400]!;
+  static final Color blueprofilebackground = Colors.blue[400]!;
+  static const surfaceDark = Color(0xFF251B2F);
+
+
+
 
   // Text
   static const Color textPrimary = Colors.white;
@@ -38,4 +53,5 @@ class AppColors {
   static const white = Colors.white;
   static const green = Colors.green;
   static const purple = Colors.purple;
+  static const blue = Colors.blue;
 }

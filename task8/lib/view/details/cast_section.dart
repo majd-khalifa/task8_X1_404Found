@@ -21,6 +21,9 @@ class CastSection extends StatelessWidget {
 
         SizedBox(
           height: 110.h,
+
+
+
           child: ListView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 20),
