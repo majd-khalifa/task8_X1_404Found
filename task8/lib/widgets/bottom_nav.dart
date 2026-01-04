@@ -33,7 +33,12 @@ class BottomNav extends StatelessWidget {
           ),
           const _NavItem(icon: Icons.search, label: "Search"),
           const _CenterNavButton(),
-          const _NavItem(icon: Icons.reviews, label: "Reviews"),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, AppRoutes.reviews);
+            },
+            child: const _NavItem(icon: Icons.reviews, label: "Reviews"),
+          ),
 
           GestureDetector(
             onTap: () {
@@ -78,18 +83,23 @@ class _CenterNavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Transform.translate(
-      offset: Offset(0, -14.h), // رقم سالب = لفوق
-      child: Container(
-        width: 48.w,
-        height: 48.w,
-        decoration: BoxDecoration(
-          color: AppColors.primary,
-          shape: BoxShape.circle,
-          border: Border.all(color: AppColors.backgroundDark, width: 4.w),
-          boxShadow: [AppShadows.primaryShadow],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, AppRoutes.trailer);
+      },
+      child: Transform.translate(
+        offset: Offset(0, -14.h), // رقم سالب = لفوق
+        child: Container(
+          width: 48.w,
+          height: 48.w,
+          decoration: BoxDecoration(
+            color: AppColors.primary,
+            shape: BoxShape.circle,
+            border: Border.all(color: AppColors.backgroundDark, width: 4.w),
+            boxShadow: [AppShadows.primaryShadow],
+          ),
+          child: Icon(Icons.add, color: Colors.white, size: 28.sp),
         ),
-        child: Icon(Icons.add, color: Colors.white, size: 28.sp),
       ),
     );
   }
