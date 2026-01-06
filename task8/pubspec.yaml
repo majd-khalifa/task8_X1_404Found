@@ -13,6 +13,13 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.0
+  dio: ^5.9.0
+  bloc: ^9.2.0
+  equatable: ^2.0.8
+  flutter_bloc: ^9.1.1
+  font_awesome_flutter: ^10.7.0
+  flutter_signin_button: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:

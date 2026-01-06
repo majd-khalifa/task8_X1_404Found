@@ -50,9 +50,9 @@ class BackgroundHeader extends StatelessWidget {
               children: [
                 // 🔹 أزرار الهيدر
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 26,
+                  padding:  EdgeInsets.symmetric(
+                    horizontal: 20.w,
+                    vertical: 26.h,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,7 +73,7 @@ class BackgroundHeader extends StatelessWidget {
                 Container(
                   width: 176.w,
                   height: 256.h,
-                  margin: const EdgeInsets.only(top: 8),
+                  margin:  EdgeInsets.only(top: 8.h),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: AppColors.borderLight, width: 2),
@@ -97,7 +97,7 @@ class BackgroundHeader extends StatelessWidget {
 
                 // 🔹 الأزرار
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding:  EdgeInsets.symmetric(horizontal: 20.w),
                   child: Row(
                     children: [
                       Expanded(
