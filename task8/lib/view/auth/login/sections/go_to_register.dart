@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_route.dart';
 
+
 class GoToRegister extends StatelessWidget {
   const GoToRegister({super.key});
 
@@ -32,8 +33,7 @@ class GoToRegister extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ],
-    );
+
+       )] );
   }
 }

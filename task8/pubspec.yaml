@@ -13,6 +13,7 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.0
+  video_player: ^2.8.6
   dio: ^5.9.0
   bloc: ^9.2.0
   equatable: ^2.0.8
@@ -27,11 +28,10 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 flutter:
-  uses-material-design: true
+  uses-material-design: true 
 
   assets:
     - assets/images/
-    - assets/icons/
 
   fonts:
     - family: Be_Vietnam_Pro

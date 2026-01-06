@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 
+import 'package:task8/core/constants/text_style.dart';
+
 class LogInHeader extends StatelessWidget {
   const LogInHeader({super.key});
 
@@ -47,6 +49,7 @@ class LogInHeader extends StatelessWidget {
             ),
           ],
         ),
+
         const SizedBox(height: 20),
 
         Center(
@@ -62,15 +65,30 @@ class LogInHeader extends StatelessWidget {
 
         const SizedBox(height: 8),
 
+
+        SizedBox(height: 20.h),
+
+        Center(child: Text('Welcome Back', style: AppTextStyles.textStyle28)),
+
+        SizedBox(height: 8.h),
+
         Center(
           child: Text(
             'Log in to track and rate the latest premieres.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16.sp, color: AppColors.textSecondary),
+
+             style: AppTextStyles.textStyle14.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
         ),
         const SizedBox(height: 32),
-      ],
-    );
+
+          
+          ]);
+      
+
+       
+    
   }
 }

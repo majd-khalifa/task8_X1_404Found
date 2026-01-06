@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/core/constants/text_style.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController? controller;
@@ -17,7 +18,7 @@ class CustomTextField extends StatefulWidget {
   final bool enabled;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     this.controller,
     required this.hintText,
     required this.prefixIcon,
@@ -28,7 +29,7 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.onChanged,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -46,12 +47,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56.h,
+      height: 50.h,
       width: 1.sw,
       decoration: BoxDecoration(
-        color: AppColors.inputBackground,
+        color: AppColors.surfaceDark,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border.withOpacity(0.3), width: 1),
+        border: Border.all(color: AppColors.border.withOpacity(0.5), width: 1),
       ),
       child: TextFormField(
         controller: widget.controller,
@@ -61,16 +62,26 @@ class _CustomTextFieldState extends State<CustomTextField> {
         validator: widget.validator,
         onChanged: widget.onChanged,
         enabled: widget.enabled,
-        style: TextStyle(color: AppColors.textPrimary, fontSize: 16),
+
+        /// ⭐ هنا استخدمنا AppTextStyles
+        style: AppTextStyles.textStyle16.copyWith(color: AppColors.textPrimary),
+
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 8, top: 15),
+          contentPadding: EdgeInsets.only(left: 16.w, right: 16.w, top: 10.h),
+
           hintText: widget.hintText,
-          hintStyle: TextStyle(color: AppColors.textHint, fontSize: 16),
+
+          /// ⭐ وهنا أيضًا
+          hintStyle: AppTextStyles.textStyle16.copyWith(
+            color: AppColors.textMuted,
+          ),
+
           prefixIcon: Icon(
             widget.prefixIcon,
             color: AppColors.iconColor,
-            size: 23,
+            size: 20,
           ),
+
           suffixIcon: widget.isPassword
               ? IconButton(
                   icon: Icon(

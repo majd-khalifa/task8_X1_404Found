@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/core/constants/text_style.dart';
 
 class SocialButton extends StatelessWidget {
   final IconData? icon;
@@ -14,6 +15,7 @@ class SocialButton extends StatelessWidget {
 
   const SocialButton({
     Key? key,
+
     required this.icon,
     required this.text,
     required this.onPressed,
@@ -40,28 +42,30 @@ class SocialButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+
           padding: EdgeInsets.symmetric(horizontal: 16),
+
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // if (customIcon != null)
-            //   customIcon!
-            // else if (icon != null)
-              FaIcon(
-               icon,
-                color: isFacebook
-                    ? Colors.white
-                    : (iconColor ?? AppColors.textPrimary),
-                size: 15,
-              ),
 
-            SizedBox(width: 12),
+            
+
+            FaIcon(
+              icon,
+              color: isFacebook
+                  ? Colors.white
+                  : (iconColor ?? AppColors.textPrimary),
+              size: 15,
+            ),
+
+            const SizedBox(width: 12),
+
             Text(
               text,
-              style: TextStyle(
+              style: AppTextStyles.textStyle16.copyWith(
                 color: isFacebook ? Colors.white : AppColors.textPrimary,
-                fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
             ),

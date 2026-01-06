@@ -1,6 +1,7 @@
 // widgets/primary_button.dart
 import 'package:flutter/material.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/core/constants/text_style.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String text;
@@ -48,9 +49,8 @@ class PrimaryButton extends StatelessWidget {
               )
             : Text(
                 text,
-                style: TextStyle(
+                style: AppTextStyles.textStyle18.copyWith(
                   color: Colors.white,
-                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.5,
                 ),

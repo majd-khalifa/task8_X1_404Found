@@ -24,7 +24,10 @@ class AppColors {
   static const Color primaryBackground = Color(0xFF0A0A0A);
   static const Color backgroundLight = Color(0xFFF7F6F8);
   static const Color backgroundDark = Color(0xFF0D0A10);
+
  static const Color inputBackground = Color(0xFF2D2D2D);
+
+
 
   static const Color background = Color(0xFF191022);
   static final Color greenprofilebackground = Colors.green[400]!;
@@ -39,9 +42,11 @@ class AppColors {
   static const Color textHint = Colors.white54;
 
   // Borders
+  static const Color border = Color(0xFF404040);
+  static const Color iconColor = Color(0xFF9E9E9E);
   static Color borderLight = Colors.white.withOpacity(.1);
   static Color borderStrong = Colors.white.withOpacity(.2);
-  static const Color border = Color(0xFF404040);
+
 
   // Cards
   static Color cardDark = Colors.white.withOpacity(.05);
@@ -53,16 +58,23 @@ class AppColors {
   // Buttons
   static Color buttonDark = Colors.white.withOpacity(.1);
   static Color buttonDarkHover = Colors.white.withOpacity(.2);
-  static const Color iconColor = Color(0xFF9E9E9E);
+
   //colors
   static const white = Colors.white;
   static const green = Colors.green;
   static const purple = Colors.purple;
   static const blue = Colors.blue;
+
   static const Color facebookBlue = Color(0xFF1877F2);
+
+
+
   static LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [Color(0xFF7C4DFF), Color(0xFF651FFF)],
   );
+
+ 
+
 }

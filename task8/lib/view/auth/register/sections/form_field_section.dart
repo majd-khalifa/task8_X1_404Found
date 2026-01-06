@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:task8/core/constants/text_style.dart';
 import 'package:task8/view/auth/widgets/custom_text_feild.dart';
 
 class FormFieldSection extends StatelessWidget {
@@ -28,34 +29,33 @@ class FormFieldSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        /// Name
         Text(
           'Name',
-          
-          style: TextStyle(
+          style: AppTextStyles.textStyle16.copyWith(
             color: Colors.white,
-            fontSize: 15.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 6),
+        SizedBox(height: 6.h),
         CustomTextField(
           controller: nameController,
           hintText: 'Your full name',
-
           prefixIcon: Icons.person_sharp,
           validator: namevalidator,
         ),
 
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
+
+        /// Email
         Text(
           'Email',
-          style: TextStyle(
+          style: AppTextStyles.textStyle16.copyWith(
             color: Colors.white,
-            fontSize: 15.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 6),
+        SizedBox(height: 6.h),
         CustomTextField(
           controller: emailController,
           hintText: 'name@example.com',
@@ -64,38 +64,37 @@ class FormFieldSection extends StatelessWidget {
           validator: emailvalidator,
         ),
 
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
+
+        /// Password
         Text(
           'Password',
-          style: TextStyle(
+          style: AppTextStyles.textStyle16.copyWith(
             color: Colors.white,
-            fontSize: 15.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 6),
-
+        SizedBox(height: 6.h),
         CustomTextField(
           controller: passwordController,
           hintText: '● ● ● ● ● ● ● ●',
-
           prefixIcon: Icons.lock,
           isPassword: true,
           obscureText: true,
           validator: passwordvalidator,
         ),
 
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
+
+        /// Confirm Password
         Text(
           'Confirm Password',
-          style: TextStyle(
+          style: AppTextStyles.textStyle16.copyWith(
             color: Colors.white,
-            fontSize: 15.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 6),
-
+        SizedBox(height: 6.h),
         CustomTextField(
           controller: confirmPasswordController,
           hintText: '● ● ● ● ● ● ● ●',

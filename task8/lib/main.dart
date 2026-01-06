@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           onGenerateRoute: AppRoutes.generateRoute,
 
-          initialRoute: AppRoutes.signUp, // أول صفحة
+          initialRoute: AppRoutes.trailer, // أول صفحة
         );
       },
     );

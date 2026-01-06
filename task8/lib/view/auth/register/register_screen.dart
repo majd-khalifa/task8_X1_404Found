@@ -6,7 +6,7 @@ import 'package:task8/cubits/auth_cubit.dart';
 import 'package:task8/cubits/auth_state.dart';
 import 'package:task8/view/auth/register/sections/form_field_section.dart';
 import 'package:task8/view/auth/register/sections/go_to_log_in_section.dart';
-import 'package:task8/view/auth/register/sections/sign_up_header.dart';
+import 'package:task8/view/auth/register/sections/log_in_header.dart';
 import 'package:task8/view/auth/register/sections/other_sign_up_ways_section.dart';
 import 'package:task8/view/auth/widgets/primary_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -113,7 +113,7 @@ class SignUpScreen extends StatelessWidget {
 
                       children: [
                         /// Icon
-                        SignUpHeader(),
+                        LogInHeader(),
 
                         SizedBox(height: 32.h),
                         FormFieldSection(
