@@ -1,4 +1,6 @@
 // widgets/custom_text_field.dart
+// ignore_for_file: library_private_types_in_public_api, deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +20,7 @@ class CustomTextField extends StatefulWidget {
   final bool enabled;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     this.controller,
     required this.hintText,
     required this.prefixIcon,
@@ -29,7 +31,7 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.onChanged,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -47,7 +49,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56.h,
+      height: 50.h,
       width: 1.sw,
       decoration: BoxDecoration(
         color: AppColors.surfaceDark,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:task8/core/constants/app_route.dart';
 
 class CircleButton extends StatelessWidget {
   const CircleButton({super.key, required this.icon});
@@ -20,7 +20,9 @@ class CircleButton extends StatelessWidget {
         padding: EdgeInsets.zero,
         constraints: const BoxConstraints(),
         icon: Icon(icon, color: Colors.white),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, AppRoutes.home);
+        },
       ),
     );
   }
