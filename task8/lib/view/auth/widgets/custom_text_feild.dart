@@ -98,7 +98,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   },
                 )
               : null,
-
           border: InputBorder.none,
           filled: true,
           fillColor: Colors.transparent,

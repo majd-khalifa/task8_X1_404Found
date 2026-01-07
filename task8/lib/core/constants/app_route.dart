@@ -9,7 +9,11 @@ import 'package:task8/view/trailer/trailer_page.dart';
 
 class AppRoutes {
   static const String login = '/login';
+
+  static const String signUp = '/signUp';
+
   static const String register = '/register';
+
   static const String home = '/home';
   static const String profile = '/profile';
 
@@ -19,8 +23,14 @@ class AppRoutes {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+
+    
+    case signUp:
+         return MaterialPageRoute(builder: (_) =>  SignUpScreen());
       case login:
-        return MaterialPageRoute(builder: (_) => LoginScreen());
+        return MaterialPageRoute(builder: (_) =>  LoginScreen());
+
+    
       case register:
         return MaterialPageRoute(builder: (_) => SignUpScreen());
 

@@ -43,11 +43,16 @@ class SocialButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+
+          padding: EdgeInsets.symmetric(horizontal: 16),
+
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
+            
+
             FaIcon(
               icon,
               color: isFacebook

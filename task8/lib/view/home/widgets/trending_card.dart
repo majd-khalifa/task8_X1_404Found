@@ -86,7 +86,6 @@ class TrendingCard extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-
             Text(
               subtitle,
               maxLines: 1,

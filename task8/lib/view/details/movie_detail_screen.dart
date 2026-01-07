@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
-import 'package:task8/view/details/cast_section.dart';
-import 'package:task8/view/details/details_header.dart';
-import 'package:task8/view/details/reviews_section.dart';
-import 'package:task8/view/details/synopsis_section.dart';
+import 'package:task8/view/details/sections/cast_section.dart';
+import 'package:task8/view/details/sections/details_header.dart';
+import 'package:task8/view/details/sections/reviews_section.dart';
+import 'package:task8/view/details/sections/synopsis_section.dart';
 import 'package:task8/view/details/widgets/wraper.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
@@ -19,7 +19,7 @@ class MovieDetailsScreen extends StatelessWidget {
           children: [
             // الهيدر الكامل (خلفية + بوستر + اسم الفيلم + أزرار)
             BackgroundHeader(),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             // المحتوى بعد الهيدر
             ContentWrapper(
               child: Column(

@@ -24,7 +24,6 @@ class FormFieldSection extends StatelessWidget {
   final String? Function(String?)? emailvalidator;
   final String? Function(String?)? passwordvalidator;
   final String? Function(String?)? confirmpasswordvalidator;
-
   @override
   Widget build(BuildContext context) {
     return Column(
