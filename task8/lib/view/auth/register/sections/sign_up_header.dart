@@ -1,9 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 
 class SignUpHeader extends StatelessWidget {
-  const SignUpHeader ({super.key});
+  const SignUpHeader({super.key});
 
   @override
   Widget build(BuildContext context) {

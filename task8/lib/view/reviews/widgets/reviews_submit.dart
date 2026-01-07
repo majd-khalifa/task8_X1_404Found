@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
-import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
 
 class ReviewsSubmit extends StatelessWidget {
