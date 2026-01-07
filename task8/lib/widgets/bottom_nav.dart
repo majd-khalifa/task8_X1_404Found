@@ -7,8 +7,26 @@ import 'package:task8/core/constants/size_app.dart';
 import 'package:task8/core/constants/text_style.dart';
 import 'package:task8/core/constants/app_route.dart';
 
-class BottomNav extends StatelessWidget {
-  const BottomNav({super.key});
+class BottomNav extends StatefulWidget {
+  final int initialIndex;
+  const BottomNav({super.key, required this.initialIndex});
+
+  @override
+  State<BottomNav> createState() => _BottomNavState();
+}
+
+class _BottomNavState extends State<BottomNav> {
+  late int activeIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    activeIndex = widget.initialIndex; // ← أهم سطر
+  }
+
+  void _onTap(int index, String route) {
+    Navigator.pushReplacementNamed(context, route);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,25 +44,42 @@ class BottomNav extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const _NavItem(
-            icon: Icons.home_filled,
-            label: "Home",
-            isActive: true,
-          ),
-          const _NavItem(icon: Icons.search, label: "Search"),
-          const _CenterNavButton(),
           GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, AppRoutes.reviews);
-            },
-            child: const _NavItem(icon: Icons.reviews, label: "Reviews"),
+            onTap: () => _onTap(0, AppRoutes.home),
+            child: _NavItem(
+              icon: Icons.home_filled,
+              label: "Home",
+              isActive: activeIndex == 0,
+            ),
           ),
 
           GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, AppRoutes.profile);
-            },
-            child: const _NavItem(icon: Icons.person, label: "Profile"),
+            onTap: () => _onTap(1, AppRoutes.home),
+            child: _NavItem(
+              icon: Icons.search,
+              label: "Search",
+              isActive: activeIndex == 1,
+            ),
+          ),
+
+          const _CenterNavButton(),
+
+          GestureDetector(
+            onTap: () => _onTap(2, AppRoutes.reviews),
+            child: _NavItem(
+              icon: Icons.reviews,
+              label: "Reviews",
+              isActive: activeIndex == 2,
+            ),
+          ),
+
+          GestureDetector(
+            onTap: () => _onTap(3, AppRoutes.profile),
+            child: _NavItem(
+              icon: Icons.person,
+              label: "Profile",
+              isActive: activeIndex == 3,
+            ),
           ),
         ],
       ),
@@ -88,7 +123,7 @@ class _CenterNavButton extends StatelessWidget {
         Navigator.pushNamed(context, AppRoutes.trailer);
       },
       child: Transform.translate(
-        offset: Offset(0, -14.h), // رقم سالب = لفوق
+        offset: Offset(0, -14.h),
         child: Container(
           width: 48.w,
           height: 48.w,

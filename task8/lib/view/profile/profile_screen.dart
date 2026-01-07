@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
 import 'package:task8/widgets/bottom_nav.dart';
 
@@ -13,7 +14,8 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
-      bottomNavigationBar: const BottomNav(),
+      bottomNavigationBar: const BottomNav(initialIndex: 3),
+
       body: SafeArea(
         child: Column(
           children: [
@@ -88,7 +90,9 @@ class ProfileScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.login);
+                  },
                   child: Text(
                     "Logout",
                     style: AppTextStyles.textStyle18.copyWith(

@@ -7,8 +7,23 @@ import 'widgets/category_chip.dart';
 import 'widgets/trending_card.dart';
 import 'widgets/movie_grid_item.dart';
 
-class HomeBody extends StatelessWidget {
+class HomeBody extends StatefulWidget {
   const HomeBody({super.key});
+
+  @override
+  State<HomeBody> createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State<HomeBody> {
+  int activeIndex = 0;
+
+  final List<String> categories = [
+    "All",
+    "Action",
+    "Sci-Fi",
+    "Comedy",
+    "Drama",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +39,17 @@ class HomeBody extends StatelessWidget {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            itemCount: 5,
+            itemCount: categories.length,
             separatorBuilder: (_, __) => SizedBox(width: 12.w),
             itemBuilder: (_, index) {
-              final categories = ["All", "Action", "Sci-Fi", "Comedy", "Drama"];
-              return CategoryChip(
-                label: categories[index],
-                isActive: index == 0,
+              return GestureDetector(
+                onTap: () {
+                  setState(() => activeIndex = index);
+                },
+                child: CategoryChip(
+                  label: categories[index],
+                  isActive: activeIndex == index,
+                ),
               );
             },
           ),
