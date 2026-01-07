@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
 
 class TrendingCard extends StatelessWidget {
@@ -10,6 +11,7 @@ class TrendingCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final String rating;
+  final void Function()? onTap;
 
   const TrendingCard({
     super.key,
@@ -17,13 +19,14 @@ class TrendingCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.rating,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-     
+        Navigator.pushNamed(context, AppRoutes.details);
       },
       child: SizedBox(
         width: 144.w,
@@ -36,7 +39,9 @@ class TrendingCard extends StatelessWidget {
                 aspectRatio: 2 / 3, // يمنع أي Overflow
                 child: Stack(
                   children: [
-                    Positioned.fill(child: Image.asset(image, fit: BoxFit.cover)),
+                    Positioned.fill(
+                      child: Image.asset(image, fit: BoxFit.cover),
+                    ),
                     Positioned(
                       top: 8.h,
                       right: 8.w,
@@ -48,7 +53,9 @@ class TrendingCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.black.withOpacity(.4),
                           borderRadius: BorderRadius.circular(6.r),
-                          border: Border.all(color: Colors.white.withOpacity(.1)),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(.1),
+                          ),
                         ),
                         child: Row(
                           children: [
@@ -68,9 +75,9 @@ class TrendingCard extends StatelessWidget {
                 ),
               ),
             ),
-      
+
             6.verticalSpace,
-      
+
             Text(
               title,
               maxLines: 1,
@@ -79,7 +86,6 @@ class TrendingCard extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-      
             Text(
               subtitle,
               maxLines: 1,
