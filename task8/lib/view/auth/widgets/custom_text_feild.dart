@@ -69,7 +69,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         style: AppTextStyles.textStyle16.copyWith(color: AppColors.textPrimary),
 
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 16.w, right: 16.w, top: 10.h),
+          contentPadding: EdgeInsets.only(left: 16.w, right: 16.w, top: 13.h),
 
           hintText: widget.hintText,
 

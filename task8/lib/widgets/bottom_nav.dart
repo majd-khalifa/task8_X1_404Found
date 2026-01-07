@@ -25,7 +25,7 @@ class _BottomNavState extends State<BottomNav> {
   }
 
   void _onTap(int index, String route) {
-    Navigator.pushReplacementNamed(context, route);
+    Navigator.pushNamed(context, route);
   }
 
   @override
@@ -119,9 +119,7 @@ class _CenterNavButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, AppRoutes.trailer);
-      },
+      onTap: () {},
       child: Transform.translate(
         offset: Offset(0, -14.h),
         child: Container(

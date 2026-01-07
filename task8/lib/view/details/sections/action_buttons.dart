@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
 
 class ActionButtons extends StatelessWidget {
@@ -31,7 +32,9 @@ class ActionButtons extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.trailer);
+                },
                 icon: const Icon(
                   Icons.play_arrow,
                   color: AppColors.textPrimary,

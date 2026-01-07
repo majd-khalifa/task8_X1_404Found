@@ -45,20 +45,16 @@ class SocialButton extends StatelessWidget {
           ),
 
           padding: EdgeInsets.symmetric(horizontal: 16),
-
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
-            
-
             FaIcon(
               icon,
               color: isFacebook
                   ? Colors.white
                   : (iconColor ?? AppColors.textPrimary),
-              size: 15,
+              size: 22,
             ),
 
             const SizedBox(width: 12),

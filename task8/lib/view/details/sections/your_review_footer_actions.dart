@@ -3,12 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
 
 class YourReviewFooterActions extends StatelessWidget {
-  const YourReviewFooterActions({
-    super.key,
-  });
+  const YourReviewFooterActions({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,28 +34,27 @@ class YourReviewFooterActions extends StatelessWidget {
         Row(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 12.w,
-                vertical: 6.h,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
               decoration: BoxDecoration(
                 color: AppColors.borderLight,
                 borderRadius: BorderRadius.circular(10.r),
               ),
-              child: Row(
-                children: [
-                  Icon(Icons.edit, size: 14.sp, color: AppColors.white),
-                  SizedBox(width: 4.w),
-                  Text("Edit", style: AppTextStyles.textStyle12),
-                ],
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.reviews);
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.edit, size: 14.sp, color: AppColors.white),
+                    SizedBox(width: 4.w),
+                    Text("Edit", style: AppTextStyles.textStyle12),
+                  ],
+                ),
               ),
             ),
             SizedBox(width: 8.w),
             Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 12.w,
-                vertical: 6.h,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
               decoration: BoxDecoration(
                 color: AppColors.rottenTomato.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10.r),

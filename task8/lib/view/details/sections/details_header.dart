@@ -13,55 +13,57 @@ class BackgroundHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 1.sw,
-      height: 0.65.sh,
-      child: Stack(
-        children: [
-          // 🔹 صورة خلفية خفيفة (تعطي عمق مثل Stitch)
-          Positioned(
-            child: Image.asset(
-              AppImage.posterImage,
-              fit: BoxFit.cover,
-              color: Colors.black.withOpacity(0.65),
-              colorBlendMode: BlendMode.darken,
+    return SafeArea(
+      child: SizedBox(
+        width: 1.sw,
+        height: 0.65.sh,
+        child: Stack(
+          children: [
+            // 🔹 صورة خلفية خفيفة (تعطي عمق مثل Stitch)
+            Positioned(
+              child: Image.asset(
+                AppImage.posterImage,
+                fit: BoxFit.cover,
+                color: Colors.black.withOpacity(0.65),
+                colorBlendMode: BlendMode.darken,
+              ),
             ),
-          ),
 
-          // 🔹 Gradient Overlay واحد ناعم (مطابق Stitch)
-          Positioned.fill(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: [0.0, 0.5, 1.0],
-                  colors: [
-                    AppColors.backgroundGradientTop,
-                    AppColors.backgroundGradientMiddle,
-                    AppColors.backgroundGradientBottom,
-                  ],
+            // 🔹 Gradient Overlay واحد ناعم (مطابق Stitch)
+            Positioned.fill(
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [0.0, 0.5, 1.0],
+                    colors: [
+                      AppColors.backgroundGradientTop,
+                      AppColors.backgroundGradientMiddle,
+                      AppColors.backgroundGradientBottom,
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          // 🔹 المحتوى
-          Positioned.fill(
-            child: Column(
-              children: [
-                // 🔹 أزرار الهيدر
-                HeaderButtons(),
-                // 🔹 البوستر
-                MoviePoster(),
-                const SizedBox(height: 16),
-                MovieInfo(),
-                const SizedBox(height: 16),
-                // 🔹 الأزرار
-                ActionButtons(),
-              ],
+            // 🔹 المحتوى
+            Positioned.fill(
+              child: Column(
+                children: [
+                  // 🔹 أزرار الهيدر
+                  HeaderButtons(),
+                  // 🔹 البوستر
+                  MoviePoster(),
+                  const SizedBox(height: 16),
+                  MovieInfo(),
+                  const SizedBox(height: 16),
+                  // 🔹 الأزرار
+                  ActionButtons(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

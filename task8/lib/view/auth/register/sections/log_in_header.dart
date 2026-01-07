@@ -17,13 +17,24 @@ class LogInHeader extends StatelessWidget {
             width: 64.w,
             height: 64.w,
             decoration: BoxDecoration(
-              border: Border.all(color: AppColors.primary.withOpacity(0.5)),
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  AppColors.primary.withOpacity(.1),
-                  AppColors.primary.withOpacity(.1),
+                  AppColors.primary.withOpacity(.25),
+                  AppColors.primary.withOpacity(.05),
                 ],
+                radius: 0.85,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primary.withOpacity(.3),
+                  blurRadius: 15,
+                  spreadRadius: 1,
+                ),
+              ],
+              border: Border.all(
+                color: AppColors.primary.withOpacity(0.5),
+                width: 1.5,
               ),
             ),
             child: Center(

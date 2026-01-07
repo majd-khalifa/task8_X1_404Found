@@ -12,14 +12,16 @@ class ReviewsHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         TextButton.icon(
-          onPressed: () =>
-              Navigator.of(context).pushReplacementNamed(AppRoutes.home),
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          label: const Text('Cancel', style: TextStyle(color: Colors.white)),
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back, color: Colors.white70),
+          label: Text(
+            'Cancel',
+            style: AppTextStyles.textStyle18.copyWith(color: Colors.white70),
+          ),
         ),
         Text(
           'Write Review',
-          style: AppTextStyles.textStyle24.copyWith(color: Colors.white),
+          style: AppTextStyles.textStyle20.copyWith(color: Colors.white),
         ),
         SizedBox(width: 56.w),
       ],
