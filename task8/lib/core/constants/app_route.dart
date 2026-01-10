@@ -23,14 +23,11 @@ class AppRoutes {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-
-    
-    case signUp:
-         return MaterialPageRoute(builder: (_) =>  SignUpScreen());
+      case signUp:
+        return MaterialPageRoute(builder: (_) => SignUpScreen());
       case login:
-        return MaterialPageRoute(builder: (_) =>  LoginScreen());
+        return MaterialPageRoute(builder: (_) => LoginScreen());
 
-    
       case register:
         return MaterialPageRoute(builder: (_) => SignUpScreen());
 

@@ -6,8 +6,6 @@ import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/text_style.dart';
 import 'package:task8/view/auth/widgets/social_button.dart';
 
-
-
 class LogInWithSoctialMedia extends StatelessWidget {
   const LogInWithSoctialMedia({super.key});
 
@@ -23,7 +21,6 @@ class LogInWithSoctialMedia extends StatelessWidget {
               child: Text(
                 'Or continue with',
 
-
                 style: AppTextStyles.textStyle12.copyWith(
                   color: AppColors.textSecondary,
                 ),
@@ -32,9 +29,8 @@ class LogInWithSoctialMedia extends StatelessWidget {
             Expanded(child: Divider(color: AppColors.border)),
           ],
         ),
-                
+
         SizedBox(height: 22.h),
-                
 
         SizedBox(height: 22.h),
 
@@ -52,11 +48,10 @@ class LogInWithSoctialMedia extends StatelessWidget {
             Expanded(
               child: SocialButton(
                 text: 'Apple',
-                
+
                 iconColor: Colors.white,
                 onPressed: () {},
                 icon: FontAwesomeIcons.apple,
-              
               ),
             ),
           ],

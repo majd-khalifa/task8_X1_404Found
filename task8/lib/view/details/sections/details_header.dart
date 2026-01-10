@@ -1,17 +1,14 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_image.dart';
-import 'package:task8/view/details/sections/action_buttons.dart';
-import 'package:task8/view/details/sections/header_buttons.dart';
-import 'package:task8/view/details/sections/movie_info.dart';
-import 'package:task8/view/details/sections/movie_poster.dart';
+import 'package:task8/core/constants/app_route.dart';
+import 'package:task8/core/constants/text_style.dart';
+import 'package:task8/view/details/widgets/circle_button.dart';
 
-class BackgroundHeader extends StatelessWidget {
-  const BackgroundHeader({super.key});
+class DetailsHeader extends StatelessWidget {
+  const DetailsHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +50,102 @@ class BackgroundHeader extends StatelessWidget {
               child: Column(
                 children: [
                   // 🔹 أزرار الهيدر
-                  HeaderButtons(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.w,
+                      vertical: 26.h,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CircleButton(icon: Icons.arrow_back),
+                        Row(
+                          children: [
+                            CircleButton(icon: Icons.share),
+                            const SizedBox(width: 12),
+                            CircleButton(icon: Icons.favorite_border),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                   // 🔹 البوستر
-                  MoviePoster(),
+                  Container(
+                    width: 176.w,
+                    height: 256.h,
+                    margin: EdgeInsets.only(top: 8.h),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: AppColors.borderLight,
+                        width: 2,
+                      ),
+                      image: DecorationImage(
+                        image: AssetImage(AppImage.posterImage),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 16),
-                  MovieInfo(),
+                  Text("Interstellar", style: AppTextStyles.textStyle30),
+                  const SizedBox(height: 8),
+                  Text(
+                    "Sci-Fi • Adventure • Drama",
+                    style: AppTextStyles.textStyle14,
+                  ),
                   const SizedBox(height: 16),
                   // 🔹 الأزرار
-                  ActionButtons(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 45.h,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primary.withOpacity(0.6),
+                                blurRadius: 10.r,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, AppRoutes.trailer);
+                            },
+                            icon: const Icon(
+                              Icons.play_arrow,
+                              color: AppColors.textPrimary,
+                            ),
+                            label: Text(
+                              "Watch Trailer",
+                              style: AppTextStyles.textStyle16,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Container(
+                        width: 48.w,
+                        height: 48.h,
+                        decoration: BoxDecoration(
+                          color: AppColors.borderLight,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppColors.cardDark),
+                        ),
+                        child: const Icon(
+                          Icons.bookmark_add,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_font.dart';
 import 'package:task8/core/constants/app_route.dart';
+import 'package:task8/core/services/services.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferencesService().init();
   runApp(const MyApp());
 }
 
@@ -28,9 +31,11 @@ class MyApp extends StatelessWidget {
             ),
           ),
 
-          initialRoute: AppRoutes.register, // أول صفحة
+          initialRoute: AppRoutes.home, // أول صفحة
         );
       },
+      // 👇 لازم ترجع child هنا
+      child: const SizedBox(),
     );
   }
 }

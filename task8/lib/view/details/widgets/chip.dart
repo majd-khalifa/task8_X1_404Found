@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Chip1 extends StatelessWidget {
-  const Chip1({
-    super.key,
-    required this.text,
-  });
+  const Chip1({super.key, required this.text});
 
   final String text;
 
