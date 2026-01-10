@@ -28,7 +28,9 @@ class ReviewSection extends StatelessWidget {
                   ),
                   shape: StadiumBorder(),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.reviews);
+                },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

@@ -12,8 +12,6 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(AuthLoading());
 
-    emit(AuthLoading());
-
     try {
       // Simulate API call
       await Future.delayed(Duration(seconds: 2));

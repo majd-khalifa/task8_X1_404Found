@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:task8/core/constants/app_font.dart';
 import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/services/services.dart';
 
@@ -22,14 +23,15 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           onGenerateRoute: AppRoutes.generateRoute,
-          initialRoute: AppRoutes.details,
-          // 👇 مهم جدًا
-          builder: (context, widget) {
-            return MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-              child: widget!,
-            );
-          },
+          theme: ThemeData(
+            fontFamily: AppFont.beVietnamPro,
+            textTheme: const TextTheme(
+              bodyMedium: TextStyle(color: Colors.white),
+              bodySmall: TextStyle(color: Colors.white70),
+            ),
+          ),
+
+          initialRoute: AppRoutes.home, // أول صفحة
         );
       },
       // 👇 لازم ترجع child هنا

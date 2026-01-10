@@ -119,9 +119,7 @@ class _CenterNavButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, AppRoutes.trailer);
-      },
+      onTap: () {},
       child: Transform.translate(
         offset: Offset(0, -14.h),
         child: Container(

@@ -54,7 +54,7 @@ class SocialButton extends StatelessWidget {
               color: isFacebook
                   ? Colors.white
                   : (iconColor ?? AppColors.textPrimary),
-              size: 15,
+              size: 22,
             ),
 
             const SizedBox(width: 12),

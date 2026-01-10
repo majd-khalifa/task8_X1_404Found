@@ -34,16 +34,6 @@ class LogInFormField extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Email Address',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 6),
-
               /// Email Label
               Text(
                 'Email Address',
@@ -64,17 +54,6 @@ class LogInFormField extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              Text(
-                'Password',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 6),
-              SizedBox(height: 20.h),
-
               /// Password Label
               Text(
                 'Password',
@@ -94,10 +73,6 @@ class LogInFormField extends StatelessWidget {
                 obscureText: true,
                 validator: passwordvalidator,
               ),
-
-              const SizedBox(height: 2),
-
-              SizedBox(height: 2.h),
 
               /// Forgot Password
               Row(

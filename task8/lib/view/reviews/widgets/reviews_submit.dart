@@ -36,7 +36,8 @@ class ReviewsSubmit extends StatelessWidget {
         ),
         SizedBox(height: 12.h),
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.pop(context),
+
           child: Text(
             'Discard Changes',
             style: AppTextStyles.textStyle14.copyWith(color: Colors.white70),

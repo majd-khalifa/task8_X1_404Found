@@ -27,7 +27,7 @@ class CategoryChip extends StatelessWidget {
                 AppShadows.primaryShadow.copyWith(
                   color: AppShadows.primaryShadow.color.withOpacity(.7),
                   offset: const Offset(0, 6),
-                  blurRadius: 10,
+                  blurRadius: 8,
                 ),
               ]
             : [],
