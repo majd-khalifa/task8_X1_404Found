@@ -14,12 +14,14 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.0
   video_player: ^2.8.6
+  video_player_android: ^2.4.10
   dio: ^5.9.0
   bloc: ^9.2.0
   equatable: ^2.0.8
   flutter_bloc: ^9.1.1
   font_awesome_flutter: ^10.7.0
   flutter_signin_button: ^2.0.0
+  shared_preferences: ^2.5.4
 
 
 dev_dependencies:

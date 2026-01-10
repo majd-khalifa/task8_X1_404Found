@@ -25,7 +25,7 @@ class _BottomNavState extends State<BottomNav> {
   }
 
   void _onTap(int index, String route) {
-    Navigator.pushReplacementNamed(context, route);
+    Navigator.pushNamed(context, route);
   }
 
   @override

@@ -67,7 +67,6 @@ class LogInHeader extends StatelessWidget {
 
         const SizedBox(height: 8),
 
-
         SizedBox(height: 20.h),
 
         Center(child: Text('Welcome Back', style: AppTextStyles.textStyle28)),
@@ -79,18 +78,13 @@ class LogInHeader extends StatelessWidget {
             'Log in to track and rate the latest premieres.',
             textAlign: TextAlign.center,
 
-             style: AppTextStyles.textStyle14.copyWith(
+            style: AppTextStyles.textStyle14.copyWith(
               color: AppColors.textSecondary,
             ),
           ),
         ),
         const SizedBox(height: 32),
-
-          
-          ]);
-      
-
-       
-    
+      ],
+    );
   }
 }

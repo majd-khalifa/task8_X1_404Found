@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CastItem extends StatelessWidget {
-  const CastItem({
-    super.key,
-    required this.img,
-    required this.name,
-  });
+  const CastItem({super.key, required this.img, required this.name});
 
   final String img;
   final String name;

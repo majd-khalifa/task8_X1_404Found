@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   // Primary
   static const Color primary = Color(0xFF7F13EC);
-  
+
   //gradient
   static const Color backgroundGradientTop = Color.fromRGBO(0, 0, 0, 0.35);
 
@@ -25,9 +25,7 @@ class AppColors {
   static const Color backgroundLight = Color(0xFFF7F6F8);
   static const Color backgroundDark = Color(0xFF0D0A10);
 
- static const Color inputBackground = Color(0xFF2D2D2D);
-
-
+  static const Color inputBackground = Color(0xFF2D2D2D);
 
   static const Color background = Color(0xFF191022);
   static final Color greenprofilebackground = Colors.green[400]!;
@@ -46,7 +44,6 @@ class AppColors {
   static const Color iconColor = Color(0xFF9E9E9E);
   static Color borderLight = Colors.white.withOpacity(.1);
   static Color borderStrong = Colors.white.withOpacity(.2);
-
 
   // Cards
   static Color cardDark = Colors.white.withOpacity(.05);
@@ -67,14 +64,9 @@ class AppColors {
 
   static const Color facebookBlue = Color(0xFF1877F2);
 
-
-
   static LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [Color(0xFF7C4DFF), Color(0xFF651FFF)],
   );
-
- 
-
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
 
 class ReviewsHeader extends StatelessWidget {
@@ -12,8 +11,7 @@ class ReviewsHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         TextButton.icon(
-          onPressed: () =>
-              Navigator.of(context).pushReplacementNamed(AppRoutes.home),
+          onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           label: const Text('Cancel', style: TextStyle(color: Colors.white)),
         ),
