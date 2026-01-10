@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:task8/core/constants/app_font.dart';
 import 'package:task8/core/constants/app_route.dart';
 
 void main() {
@@ -19,6 +20,13 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           onGenerateRoute: AppRoutes.generateRoute,
+          theme: ThemeData(
+            fontFamily: AppFont.beVietnamPro,
+            textTheme: const TextTheme(
+              bodyMedium: TextStyle(color: Colors.white),
+              bodySmall: TextStyle(color: Colors.white70),
+            ),
+          ),
 
           initialRoute: AppRoutes.register, // أول صفحة
         );

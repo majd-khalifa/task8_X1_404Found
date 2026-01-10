@@ -12,8 +12,6 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(AuthLoading());
 
-    emit(AuthLoading());
-
     try {
       // Simulate API call
       await Future.delayed(Duration(seconds: 2));
@@ -27,18 +25,16 @@ class AuthCubit extends Cubit<AuthState> {
 
   // Login
   void login({required String email, required String password}) async {
-    
-      emit(AuthLoading());
+    emit(AuthLoading());
 
-      try {
-        // Simulate API call
-        await Future.delayed(Duration(seconds: 2));
+    try {
+      // Simulate API call
+      await Future.delayed(Duration(seconds: 2));
 
-        // Success
-        emit(AuthSuccess(message: 'Logged in successfully!'));
-      } catch (e) {
-        emit(AuthFailure(error: e.toString()));
-      }
+      // Success
+      emit(AuthSuccess(message: 'Logged in successfully!'));
+    } catch (e) {
+      emit(AuthFailure(error: e.toString()));
     }
-  
+  }
 }
