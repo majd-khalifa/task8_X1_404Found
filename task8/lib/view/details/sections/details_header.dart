@@ -95,56 +95,59 @@ class DetailsHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   // 🔹 الأزرار
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 45.h,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15.w),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 45.h,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.primary.withOpacity(0.6),
+                                  blurRadius: 10.r,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.pushNamed(context, AppRoutes.trailer);
+                              },
+                              icon: const Icon(
+                                Icons.play_arrow,
+                                color: AppColors.textPrimary,
+                              ),
+                              label: Text(
+                                "Watch Trailer",
+                                style: AppTextStyles.textStyle16,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Container(
+                          width: 48.w,
+                          height: 48.h,
                           decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.primary.withOpacity(0.6),
-                                blurRadius: 10.r,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
+                            color: AppColors.borderLight,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: AppColors.cardDark),
                           ),
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.pushNamed(context, AppRoutes.trailer);
-                            },
-                            icon: const Icon(
-                              Icons.play_arrow,
-                              color: AppColors.textPrimary,
-                            ),
-                            label: Text(
-                              "Watch Trailer",
-                              style: AppTextStyles.textStyle16,
-                            ),
+                          child: const Icon(
+                            Icons.bookmark_add,
+                            color: AppColors.white,
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Container(
-                        width: 48.w,
-                        height: 48.h,
-                        decoration: BoxDecoration(
-                          color: AppColors.borderLight,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: AppColors.cardDark),
-                        ),
-                        child: const Icon(
-                          Icons.bookmark_add,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

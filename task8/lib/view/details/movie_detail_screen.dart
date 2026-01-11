@@ -6,10 +6,23 @@ import 'package:task8/view/details/sections/review_section.dart';
 import 'package:task8/view/details/sections/details_header.dart';
 import 'package:task8/view/details/widgets/wraper.dart';
 
-class MovieDetailsScreen extends StatelessWidget {
+class MovieDetailsScreen extends StatefulWidget {
   const MovieDetailsScreen({super.key});
 
   @override
+  State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
+}
+
+bool isloading = true;
+List movies = [];
+
+class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,

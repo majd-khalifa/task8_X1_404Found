@@ -3,7 +3,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:task8/core/errors/failur_request.dart';
-import 'package:task8/core/helper/snack_bar_helper.dart';
 import 'package:task8/core/services/api/api_link.dart';
 
 class ApiServices {
@@ -23,7 +22,9 @@ class ApiServices {
         ..interceptors.add(
           InterceptorsWrapper(
             onRequest: (options, handler) {
-              print("[${options.method}][${options.uri}]");
+              print(
+                "[${options.method}][${options.uri}] headers: ${options.headers}",
+              );
               handler.next(options);
             },
             onResponse: (response, handler) {
@@ -36,79 +37,105 @@ class ApiServices {
             },
           ),
         );
+
+  /// GET
   Future getData({
     required String url,
     Map<String, String>? headers,
+    String? token, // هنا يمكن تمرير التوكن إذا كان مطلوب
     BuildContext? context,
   }) async {
     try {
-      final response = await _dio.get(url, options: Options(headers: headers));
-      if (response.statusCode == 200 ||
-          response.statusCode == 201 ||
-          response.statusCode == 204) {
-        final data = response.data;
-        return data;
-        
-      }else {
-        throw ServerFailure.fromResponse(response.statusCode);
+      // دمج headers المرسلة مع التوكن إذا موجود
+      final finalHeaders = {...?headers};
+      if (token != null &&
+          token.isNotEmpty &&
+          !finalHeaders.containsKey('Authorization')) {
+        finalHeaders['Authorization'] = token;
       }
-      
-    } catch (errors) {
-      if (errors is DioException) {
-        final error = ServerFailure.fromDioError(errors);
-        SnackBarHelper.showError(context!, error.errorMessage);
-      }
-    }
-  }
 
-  Future postData({
-    required String url,
-    Map<String, String>? headers,
-    Map? body,
-    BuildContext? context,
-  }) async {
-    try {
-      final response = await _dio.post(url, data: body);
-      if (response.statusCode == 200 ||
-          response.statusCode == 201 ||
-          response.statusCode == 204) {
-        final data = response.data;
-        return data;
-      }else {
-        throw ServerFailure.fromResponse(response.statusCode);
-      }
-    } catch (errors) {
-      if (errors is DioException) {
-        final error = ServerFailure.fromDioError(errors);
-        SnackBarHelper.showError(context!, error.errorMessage);
-      }
-    }
-  }
-
-  Future putData({
-    required String url,
-    Map<String, String>? headers,
-    Map? body,
-    BuildContext? context,
-  }) async {
-    try {
-      final response = await _dio.put(
+      final response = await _dio.get(
         url,
-        data: body,
-        options: Options(headers: headers),
+        options: Options(headers: finalHeaders),
       );
+
       if (response.statusCode == 200 ||
           response.statusCode == 201 ||
           response.statusCode == 204) {
         return response.data;
-      }else {
+      } else {
         throw ServerFailure.fromResponse(response.statusCode);
       }
-    } catch (errors) {
-      if (errors is DioException) {
-        final error = ServerFailure.fromDioError(errors);
-        SnackBarHelper.showError(context!, error.errorMessage);
+    } on DioException catch (e) {
+      throw ServerFailure.fromDioError(e);
+    }
+  }
+
+  /// POST
+  Future postData({
+    required String url,
+    Map? body,
+    Map<String, String>? headers,
+    String? token, // التوكن اختياري
+    BuildContext? context,
+  }) async {
+    try {
+      final finalHeaders = {...?headers};
+      if (token != null &&
+          token.isNotEmpty &&
+          !finalHeaders.containsKey('Authorization')) {
+        finalHeaders['Authorization'] = token;
       }
+
+      final response = await _dio.post(
+        url,
+        data: body,
+        options: Options(headers: finalHeaders),
+      );
+
+      if (response.statusCode == 200 ||
+          response.statusCode == 201 ||
+          response.statusCode == 204) {
+        return response.data;
+      } else {
+        throw ServerFailure.fromResponse(response.statusCode);
+      }
+    } on DioException catch (e) {
+      throw ServerFailure.fromDioError(e);
+    }
+  }
+
+  // PUT
+  Future putData({
+    required String url,
+    Map? body,
+    Map<String, String>? headers,
+    String? token, // التوكن اختياري
+    BuildContext? context,
+  }) async {
+    try {
+      final finalHeaders = {...?headers};
+      if (token != null &&
+          token.isNotEmpty &&
+         headers!.containsKey('Authorization')) {
+        finalHeaders['Authorization'] = token;
+      }
+
+      final response = await _dio.put(
+        url,
+        data: body,
+        options: Options(headers: finalHeaders),
+      );
+
+      if (response.statusCode == 200 ||
+          response.statusCode == 201 ||
+          response.statusCode == 204) {
+        return response.data;
+      } else {
+        throw ServerFailure.fromResponse(response.statusCode);
+      }
+    } on DioException catch (e) {
+      throw ServerFailure.fromDioError(e);
     }
   }
 }
