@@ -117,8 +117,8 @@ class ApiServices {
       final finalHeaders = {...?headers};
       if (token != null &&
           token.isNotEmpty &&
-          headers!.containsKey('Authorization')) {
-        headers['Authorization'] = token;
+          !finalHeaders.containsKey('Authorization')) {
+        finalHeaders['Authorization'] = token;
       }
 
       final response = await _dio.put(

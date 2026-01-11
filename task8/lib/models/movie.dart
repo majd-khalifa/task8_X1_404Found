@@ -12,10 +12,6 @@ class Movie extends Equatable {
   final String description;
   final String trailerUrl;
   final String ageRating;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? views;
-  final String? movieUrl;
 
   const Movie({
     required this.id,
@@ -29,11 +25,35 @@ class Movie extends Equatable {
     required this.description,
     required this.trailerUrl,
     required this.ageRating,
-    this.createdAt,
-    this.updatedAt,
-    this.views,
-    this.movieUrl,
   });
+
+  factory Movie.fromJson(Map<String, dynamic> json) => Movie(
+    id: json['id'],
+    title: json['title'],
+    genreId: json['genre_id'],
+    genreName: json['genre_name'],
+    year: json['year'],
+    duration: json['duration'],
+    language: json['language'],
+    posterUrl: json['poster_url'],
+    description: json['description'],
+    trailerUrl: json['trailer_url'],
+    ageRating: json['age_rating'],
+  );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'genre_id': genreId,
+    'genre_name': genreName,
+    'year': year,
+    'duration': duration,
+    'language': language,
+    'poster_url': posterUrl,
+    'description': description,
+    'trailer_url': trailerUrl,
+    'age_rating': ageRating,
+  };
 
   @override
   List<Object?> get props => [
@@ -48,9 +68,5 @@ class Movie extends Equatable {
     description,
     trailerUrl,
     ageRating,
-    createdAt,
-    updatedAt,
-    views,
-    movieUrl,
   ];
 }
