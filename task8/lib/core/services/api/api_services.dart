@@ -4,8 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:task8/core/errors/failur_request.dart';
 import 'package:task8/core/services/api/api_link.dart';
+import 'package:task8/models/user.dart';
 
 class ApiServices {
+  //---------
+  static User? currentUser;
+
   final Dio _dio =
       Dio(
           BaseOptions(

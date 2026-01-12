@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
 
-          initialRoute: AppRoutes.register, // أول صفحة
+          initialRoute: AppRoutes.profile, // أول صفحة
         );
       },
       // 👇 لازم ترجع child هنا
