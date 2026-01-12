@@ -38,7 +38,7 @@ class Movie extends Equatable {
     posterUrl: json['poster_url'],
     description: json['description'],
     trailerUrl: json['trailer_url'],
-    ageRating: json['age_rating'],
+    ageRating: (json['age_rating'] ?? "Unknown").toString().trim(),
   );
 
   Map<String, dynamic> toJson() => {
