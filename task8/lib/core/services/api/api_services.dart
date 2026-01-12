@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +105,7 @@ class ApiServices {
     }
   }
 
-  // PUT
+  /// PUT
   Future putData({
     required String url,
     Map? body,
@@ -117,7 +117,7 @@ class ApiServices {
       final finalHeaders = {...?headers};
       if (token != null &&
           token.isNotEmpty &&
-         headers!.containsKey('Authorization')) {
+          !finalHeaders.containsKey('Authorization')) {
         finalHeaders['Authorization'] = token;
       }
 

@@ -1,30 +1,46 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:task8/core/constants/app_color.dart';
-import 'package:task8/core/constants/app_image.dart';
 import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
+import 'package:task8/models/movie.dart';
+import 'package:task8/view/details/widgets/info_tag.dart';
 import 'package:task8/view/details/widgets/circle_button.dart';
 
 class DetailsHeader extends StatelessWidget {
-  const DetailsHeader({super.key});
+  final Movie movie;
+
+  const DetailsHeader({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: SizedBox(
         width: 1.sw,
-        height: 0.65.sh,
+        height: 0.64.sh,
         child: Stack(
           children: [
             // 🔹 صورة خلفية خفيفة (تعطي عمق مثل Stitch)
-            Positioned(
-              child: Image.asset(
-                AppImage.posterImage,
+            Positioned.fill(
+              child: Image.network(
+                movie.posterUrl,
                 fit: BoxFit.cover,
                 color: Colors.black.withOpacity(0.65),
                 colorBlendMode: BlendMode.darken,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
               ),
             ),
 
@@ -58,7 +74,12 @@ class DetailsHeader extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CircleButton(icon: Icons.arrow_back),
+                        CircleButton(
+                          icon: Icons.arrow_back,
+                          onPressed: () {
+                            Navigator.pushNamed(context, AppRoutes.home);
+                          },
+                        ),
                         Row(
                           children: [
                             CircleButton(icon: Icons.share),
@@ -81,19 +102,72 @@ class DetailsHeader extends StatelessWidget {
                         width: 2,
                       ),
                       image: DecorationImage(
-                        image: AssetImage(AppImage.posterImage),
+                        image: NetworkImage(movie.posterUrl),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Text("Interstellar", style: AppTextStyles.textStyle30),
+                  Text(movie.title, style: AppTextStyles.textStyle30),
                   const SizedBox(height: 8),
                   Text(
                     "Sci-Fi • Adventure • Drama",
                     style: AppTextStyles.textStyle14,
                   ),
                   const SizedBox(height: 16),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // 🔹 Age rating
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.w,
+                            vertical: 4.h,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color:
+                                  AppColors.borderStrong, // استخدمنا AppColors
+                            ),
+                            borderRadius: BorderRadius.circular(6.r),
+                            color: AppColors
+                                .cardDark, // خلفية شفافة موحدة من AppColors
+                          ),
+                          child: Text(
+                            movie.ageRating,
+                            style: AppTextStyles.textStyle10.copyWith(
+                              color: AppColors.textPrimary.withOpacity(0.9),
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.5,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 15.w),
+
+                        // 🔹 Year
+                        InfoTag(
+                          icon: Icons.calendar_month,
+                          text: movie.year.toString(),
+                        ),
+                        SizedBox(width: 15.w),
+
+                        // 🔹 Duration
+                        InfoTag(
+                          icon: Icons.schedule,
+                          text:
+                              "${movie.duration ~/ 60}h ${movie.duration % 60}m",
+                        ),
+                        SizedBox(width: 15.w),
+
+                        // 🔹 Language
+                        InfoTag(icon: Icons.translate, text: movie.language),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
                   // 🔹 الأزرار
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15.w),

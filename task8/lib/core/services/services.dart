@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this, avoid_print
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task8/core/constants/constant.dart';
 import 'package:task8/core/constants/pref_key.dart';
@@ -32,4 +34,5 @@ class SharedPreferencesService {
   Future<void> removeAllData() async {
     await _sharedPrefences.clear();
   }
+  
 }

@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,19 +40,44 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   16.verticalSpace,
-                  Text(
-                    "Majd",
-                    style: AppTextStyles.textStyle24.copyWith(
-                      color: Colors.white,
-                    ),
+
+                  // ========================================
+                  FutureBuilder<List<String?>>(
+                    future: Future.wait([
+                      // SharedPreferencesService().getUserName(),
+                      // SharedPreferencesService().getUserEmail(),
+                    ]),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator(
+                          color: Color(0xFFBB86FC),
+                        );
+                      }
+
+                      final String name = snapshot.data?[0] ?? "Majd";
+                      final String email =
+                          snapshot.data?[1] ?? "nour@email.com";
+
+                      return Column(
+                        children: [
+                          Text(
+                            name,
+                            style: AppTextStyles.textStyle24.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                          4.verticalSpace,
+                          Text(
+                            email,
+                            style: AppTextStyles.textStyle14.copyWith(
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
-                  4.verticalSpace,
-                  Text(
-                    "nour@email.com",
-                    style: AppTextStyles.textStyle14.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
+                  // =====================================================================
                 ],
               ),
             ),
@@ -90,7 +114,7 @@ class ProfileScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.pushNamed(context, AppRoutes.login);
                   },
                   child: Text(

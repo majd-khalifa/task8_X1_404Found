@@ -28,7 +28,7 @@ class MovieGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.details);
+        Navigator.pushNamed(context, AppRoutes.details, arguments: 3);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
