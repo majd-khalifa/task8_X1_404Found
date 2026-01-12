@@ -36,11 +36,16 @@ class TrendingCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
               child: AspectRatio(
-                aspectRatio: 2 / 3, // يمنع أي Overflow
+                aspectRatio: 2 / 3,
                 child: Stack(
                   children: [
                     Positioned.fill(
-                      child: Image.asset(image, fit: BoxFit.cover),
+                      child: Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) =>
+                            const Icon(Icons.broken_image),
+                      ),
                     ),
                     Positioned(
                       top: 8.h,
