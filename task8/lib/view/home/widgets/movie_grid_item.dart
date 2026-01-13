@@ -38,8 +38,13 @@ class MovieGridItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12.r),
                 child: AspectRatio(
-                  aspectRatio: 2 / 3, // يمنع Overflow
-                  child: Image.asset(image, fit: BoxFit.cover),
+                  aspectRatio: 2 / 3,
+                  child: Image.network(
+                    image,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) =>
+                        const Icon(Icons.broken_image),
+                  ),
                 ),
               ),
 
