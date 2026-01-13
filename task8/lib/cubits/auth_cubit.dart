@@ -2,39 +2,44 @@ import 'package:bloc/bloc.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthInitial());
+  final AuthApi authApi;
+  AuthCubit(this.authApi) : super(AuthInitial());
 
-  // Register
-  void register({
-    required String name,
-    required String email,
-    required String password,
-  }) async {
-    emit(AuthLoading());
+  // login
+Future<void>login(String email,String password)async{
+  emit(AuthLoading());
+  try{
+    final response= await authApi.login(
+      email:email,
+      password:password
+    );
 
-    try {
-      // Simulate API call
-      await Future.delayed(Duration(seconds: 2));
+    emit(AuthSuccess(response.message));
 
-      // Success
-      emit(AuthSuccess(message: 'Account created successfully!'));
-    } catch (e) {
-      emit(AuthFailure(error: e.toString()));
-    }
+  } on Failure catch (failure){
+    emit(AuthFailure(failure.errorMessage));
   }
+}
 
-  // Login
-  void login({required String email, required String password}) async {
+  // register
+
+  Future<void> register(
+      String name,
+      String email,
+      String password,
+      ) async {
     emit(AuthLoading());
 
     try {
-      // Simulate API call
-      await Future.delayed(Duration(seconds: 2));
+      final response = await authApi.register(
+        name: name,
+        email: email,
+        password: password,
+      );
 
-      // Success
-      emit(AuthSuccess(message: 'Logged in successfully!'));
-    } catch (e) {
-      emit(AuthFailure(error: e.toString()));
+      emit(AuthSuccess(response.message));
+    } on Failure catch (failure)  {
+      emit(AuthFailure(failure.errorMessage));
     }
   }
 }

@@ -36,27 +36,14 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, designSize: const Size(375, 812));
-    return BlocProvider(
-      create: (_) => AuthCubit(),
-      child: Scaffold(
+    return  Scaffold(
         backgroundColor: AppColors.primaryBackground,
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is AuthFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.error),
-                  backgroundColor: Colors.red,
-                ),
-              );
+              SnackBarHelper.showError(context, state.error);
             } else if (state is AuthSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: Colors.green,
-                ),
-              );
-
+              SnackBarHelper.showSuccess(context, state.message);
               Navigator.pushReplacementNamed(context, AppRoutes.home);
             }
           },
@@ -106,7 +93,7 @@ class LoginScreen extends StatelessWidget {
             );
           },
         ),
-      ),
+
     );
   }
 }

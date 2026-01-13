@@ -63,30 +63,16 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, designSize: const Size(360, 800));
-    return BlocProvider(
-      create: (_) => AuthCubit(),
-      child: Scaffold(
+    return  Scaffold(
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is AuthFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.error),
-                  backgroundColor: Colors.red,
-                ),
-              );
+              SnackBarHelper.showError(context, state.error);
             }
 
-            if (state is AuthSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: Colors.green,
-                ),
-              );
-
+            elseif (state is AuthSuccess) {
+              SnackBarHelper.showSuccess(context, state.message);
               Navigator.pushReplacementNamed(context, AppRoutes.login);
-            }
           },
           builder: (context, state) {
             final bool isLoading = state is AuthLoading;
@@ -156,7 +142,7 @@ class SignUpScreen extends StatelessWidget {
             );
           },
         ),
-      ),
+
     );
   }
 }
