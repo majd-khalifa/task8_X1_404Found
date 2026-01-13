@@ -1,45 +1,52 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task8/core/errors/failur_request.dart';
+import 'package:task8/core/services/storage/shared_preferences_service.dart';
+import 'package:task8/repositories/auth_repository.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthApi authApi;
-  AuthCubit(this.authApi) : super(AuthInitial());
+  final SharedPreferencesService prefs;
 
-  // login
-Future<void>login(String email,String password)async{
-  emit(AuthLoading());
-  try{
-    final response= await authApi.login(
-      email:email,
-      password:password
-    );
+  AuthCubit(this.repository, this.prefs) : super(AuthInitial());
 
-    emit(AuthSuccess(response.message));
-
-  } on Failure catch (failure){
-    emit(AuthFailure(failure.errorMessage));
-  }
-}
-
-  // register
-
-  Future<void> register(
-      String name,
-      String email,
-      String password,
-      ) async {
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
     emit(AuthLoading());
 
     try {
-      final response = await authApi.register(
+      final token = await authApi.login(
+        email: email,
+        password: password,
+      );
+
+      await prefs.saveToken(token);
+
+      emit(AuthSuccess(message: 'Login successfully'));
+    } on ServerFailure catch (e) {
+      emit(AuthFailure(error: e.errorMessage));
+    }
+  }
+
+  Future<void> register({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    emit(AuthLoading());
+
+    try {
+      await authApi.register(
         name: name,
         email: email,
         password: password,
       );
 
-      emit(AuthSuccess(response.message));
-    } on Failure catch (failure)  {
-      emit(AuthFailure(failure.errorMessage));
+      emit(AuthSuccess(message: 'user registerd successfully'));
+    } on ServerFailure catch (e) {
+      emit(AuthFailure(error: e.errorMessage));
     }
   }
 }

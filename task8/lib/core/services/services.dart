@@ -3,29 +3,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task8/core/constants/constant.dart';
 import 'package:task8/core/constants/pref_key.dart';
-class ApiService{
-  final Dio dio;
-  ApiService(this.dio);
-  Future<dynamic> post(
-      String path, {
-        Map<String, dynamic>? data,
-      })async{
-    try {
-      final response = await dio.post(
-        path,
-        data: data,
-        options: Options(
-          headers: {
-            'Accept': 'application/json',
-          },
-        ),
-      );
-      return response.data;
-    }on DioException catch(e){
-      throw ServerFailure.fromDioError(e);
-    }
-  }
-}
+
 class SharedPreferencesService {
   late SharedPreferences _sharedPrefences;
 
