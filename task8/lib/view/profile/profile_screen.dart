@@ -1,20 +1,26 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
 import 'package:task8/widgets/bottom_nav.dart';
+import 'package:task8/core/services/api/api_services.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
   Widget build(BuildContext context) {
+    final user = ApiServices.currentUser;
+
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
       bottomNavigationBar: const BottomNav(initialIndex: 3),
-
       body: SafeArea(
         child: Column(
           children: [
@@ -40,50 +46,24 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   16.verticalSpace,
-
-                  // ========================================
-                  FutureBuilder<List<String?>>(
-                    future: Future.wait([
-                      // SharedPreferencesService().getUserName(),
-                      // SharedPreferencesService().getUserEmail(),
-                    ]),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator(
-                          color: Color(0xFFBB86FC),
-                        );
-                      }
-
-                      final String name = snapshot.data?[0] ?? "Majd";
-                      final String email =
-                          snapshot.data?[1] ?? "nour@email.com";
-
-                      return Column(
-                        children: [
-                          Text(
-                            name,
-                            style: AppTextStyles.textStyle24.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                          4.verticalSpace,
-                          Text(
-                            email,
-                            style: AppTextStyles.textStyle14.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                  Text(
+                    user?.name ?? "Guest",
+                    style: AppTextStyles.textStyle24.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                  4.verticalSpace,
+                  Text(
+                    user?.email ?? "No Email Found",
+                    style: AppTextStyles.textStyle14.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                   // =====================================================================
                 ],
               ),
             ),
-
             50.verticalSpace,
-
             _buildMenuItem(
               icon: Icons.bookmark_outline,
               title: 'My Watchlist',
@@ -99,9 +79,7 @@ class ProfileScreen extends StatelessWidget {
               title: 'Settings',
               onTap: () => print('Settings Clicked'),
             ),
-
             const Spacer(),
-
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
               child: SizedBox(
@@ -114,8 +92,9 @@ class ProfileScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                   ),
-                  onPressed: () async {
-                    Navigator.pushNamed(context, AppRoutes.login);
+                  onPressed: () {
+                    ApiServices.currentUser = null;
+                    Navigator.pushReplacementNamed(context, AppRoutes.login);
                   },
                   child: Text(
                     "Logout",
