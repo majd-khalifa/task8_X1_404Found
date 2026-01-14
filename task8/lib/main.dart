@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           ),
 
           /// 👇 سنعدلها بعد قليل
-          initialRoute: AppRoutes.register,
+          initialRoute: AppRoutes.home,
         );
       },
       child: const SizedBox(),

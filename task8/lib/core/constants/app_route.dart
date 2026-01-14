@@ -56,7 +56,21 @@ class AppRoutes {
       case trailer:
         return MaterialPageRoute(builder: (_) => const TrailerPage());
       case reviews:
-        return MaterialPageRoute(builder: (_) => const ReviewsPage());
+        final args = settings.arguments as Map<String, dynamic>?;
+
+        if (args == null || !args.containsKey('movieId')) {
+          return MaterialPageRoute(
+            builder: (_) => const Scaffold(
+              body: Center(child: Text("movieId is required")),
+            ),
+          );
+        }
+
+        return MaterialPageRoute(
+          builder: (_) =>
+              ReviewsPage(movieId: args['movieId'], review: args['review']),
+        );
+
       case filter:
         return MaterialPageRoute(builder: (_) => FilterScreen());
 
