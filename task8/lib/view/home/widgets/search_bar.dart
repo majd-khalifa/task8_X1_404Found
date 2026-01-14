@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
 
 class AppSearchBar extends StatelessWidget {
-  const AppSearchBar({super.key});
+  final Function(String)? onChanged;
+  final Function(Map)? onFilter;
+
+  const AppSearchBar({super.key, this.onChanged, this.onFilter});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +26,10 @@ class AppSearchBar extends StatelessWidget {
           children: [
             Icon(Icons.search, color: AppColors.textMuted, size: 22.sp),
             10.horizontalSpace,
+
             Expanded(
               child: TextField(
+                onChanged: onChanged,
                 style: AppTextStyles.textStyle14,
                 cursorColor: AppColors.primary,
                 decoration: InputDecoration(
@@ -36,7 +42,21 @@ class AppSearchBar extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(Icons.tune, color: AppColors.textMuted, size: 22.sp),
+
+            // زر الفلتر
+            IconButton(
+              icon: Icon(Icons.tune, color: AppColors.textMuted, size: 22.sp),
+              onPressed: () async {
+                final result = await Navigator.pushNamed(
+                  context,
+                  AppRoutes.filter,
+                );
+
+                if (result != null && onFilter != null) {
+                  onFilter!(result as Map);
+                }
+              },
+            ),
           ],
         ),
       ),

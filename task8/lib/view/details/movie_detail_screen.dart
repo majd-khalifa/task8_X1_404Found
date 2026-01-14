@@ -5,9 +5,9 @@ import 'package:task8/core/helper/snack_bar_helper.dart';
 import 'package:task8/core/services/api/api_link.dart';
 import 'package:task8/core/services/api/api_services.dart';
 import 'package:task8/models/index.dart';
-import 'package:task8/view/details/sections/rating_and_synopsis_section/rating_and_synopsis_section.dart';
-import 'package:task8/view/details/sections/review_section/review_section.dart';
-import 'package:task8/view/details/sections/details_header/details_header.dart';
+import 'package:task8/view/details/sections/details_header.dart';
+import 'package:task8/view/details/sections/rating_and_synopsis_section.dart';
+import 'package:task8/view/details/sections/review_section.dart';
 import 'package:task8/view/details/widgets/wraper.dart';
 
 class MovieDetailsScreen extends StatefulWidget {

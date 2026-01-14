@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
-import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
 
 class TrendingCard extends StatelessWidget {
@@ -19,15 +18,13 @@ class TrendingCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.rating,
-    this.onTap,
+   required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, AppRoutes.details);
-      },
+      onTap:onTap,
       child: SizedBox(
         width: 144.w,
         child: Column(
@@ -36,11 +33,16 @@ class TrendingCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
               child: AspectRatio(
-                aspectRatio: 2 / 3, // يمنع أي Overflow
+                aspectRatio: 2 / 3,
                 child: Stack(
                   children: [
                     Positioned.fill(
-                      child: Image.asset(image, fit: BoxFit.cover),
+                      child: Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) =>
+                            const Icon(Icons.broken_image),
+                      ),
                     ),
                     Positioned(
                       top: 8.h,

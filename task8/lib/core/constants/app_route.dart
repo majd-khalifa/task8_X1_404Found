@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:task8/view/auth/login/login_screen.dart';
 import 'package:task8/view/auth/register/register_screen.dart';
 import 'package:task8/view/details/movie_detail_screen.dart';
+import 'package:task8/view/filter/filter_screen.dart';
 import 'package:task8/view/home/home_screen.dart';
 import 'package:task8/view/profile/profile_screen.dart';
 import 'package:task8/view/reviews/reviews_page.dart';
@@ -20,6 +21,7 @@ class AppRoutes {
   static const String details = '/details';
   static const String trailer = '/trailer';
   static const String reviews = '/reviews';
+  static const String filter = '/filter';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -56,6 +58,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const TrailerPage());
       case reviews:
         return MaterialPageRoute(builder: (_) => const ReviewsPage());
+      case filter:
+        return MaterialPageRoute(builder: (_) => FilterScreen());
 
       default:
         return MaterialPageRoute(

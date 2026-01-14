@@ -1,5 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
@@ -15,7 +14,6 @@ import 'package:task8/view/details/widgets/review_card.dart';
 class ReviewSection extends StatefulWidget {
   final int movieId;
   const ReviewSection({super.key, required this.movieId});
-
   @override
   State<ReviewSection> createState() => _ReviewSectionState();
 }
@@ -24,36 +22,28 @@ class _ReviewSectionState extends State<ReviewSection> {
   final ApiServices _api = ApiServices();
   bool isLoading = true;
   bool isExpanded = false;
-  int userid = 3; //عدل هنا
   List<Review> reviews = [];
   Review? userReview;
   @override
   void initState() {
     super.initState();
-    fetchReviews();
+    fetchAllReviews();
   }
 
-  Future<void> fetchReviews() async {
+  Future<void> fetchAllReviews() async {
     setState(() => isLoading = true);
-
     try {
       final response = await _api.getData(
         url: ApiLink.movieReviews(widget.movieId),
       );
-
       debugPrint("API RESPONSE: $response");
-
       if (response.isNotEmpty &&
           response[0] is Map &&
           response[0]['data'] != null) {
         final List rawData = List.from(response[0]['data']);
-
-        // تحويل البيانات إلى Reviews
         final List<Review> allReviews = rawData
             .map((e) => Review.fromJson(Map<String, dynamic>.from(e)))
             .toList();
-
-        // استخراج تعليق المستخدم الحالي (إن وجد)
         Review? currentUserReview;
         try {
           currentUserReview = allReviews.firstWhere(
@@ -62,18 +52,14 @@ class _ReviewSectionState extends State<ReviewSection> {
         } catch (_) {
           currentUserReview = null;
         }
-
-        // حذف تعليق المستخدم من القائمة العامة
         final List<Review> otherReviews = allReviews
             .where((r) => r.user.email != PrefKey.useremail)
             .toList();
-
         setState(() {
           userReview = currentUserReview;
           reviews = otherReviews;
           isLoading = false;
         });
-
         debugPrint("USER REVIEW FOUND: ${userReview != null}");
         debugPrint("OTHER REVIEWS COUNT: ${reviews.length}");
       } else {
@@ -176,7 +162,7 @@ class _ReviewSectionState extends State<ReviewSection> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                userReview!.user.name,
+                                "Your Review",
                                 style: AppTextStyles.textStyle14.copyWith(
                                   color: AppColors.white,
                                 ),
@@ -214,7 +200,6 @@ class _ReviewSectionState extends State<ReviewSection> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // 👍 Likes
                       Row(
                         children: [
                           InkWell(
@@ -227,7 +212,7 @@ class _ReviewSectionState extends State<ReviewSection> {
                           ),
                           SizedBox(width: 6.w),
                           Text(
-                            "24", // لاحقاً من API
+                            "24",
                             style: TextStyle(
                               color: AppColors.white.withOpacity(0.5),
                               fontSize: 12.sp,
@@ -235,8 +220,6 @@ class _ReviewSectionState extends State<ReviewSection> {
                           ),
                         ],
                       ),
-
-                      // ✏️ Edit & 🗑 Delete
                       Row(
                         children: [
                           InkWell(
@@ -334,12 +317,12 @@ class _ReviewSectionState extends State<ReviewSection> {
                 );
               },
             ),
-          if (reviews.length > 2) // يظهر الزر فقط إذا عدد التعليقات أكبر من 2
+          if (reviews.length > 2)
             Center(
               child: TextButton(
                 onPressed: () {
                   setState(() {
-                    isExpanded = !isExpanded; // تغيير الحالة عند الضغط
+                    isExpanded = !isExpanded;
                   });
                 },
                 child: Padding(

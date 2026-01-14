@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
-import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
 
 class MovieGridItem extends StatelessWidget {
@@ -21,15 +20,13 @@ class MovieGridItem extends StatelessWidget {
     required this.rating,
     required this.year,
     this.badge,
-    this.onTap,
+   required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, AppRoutes.details, arguments: 3);
-      },
+      onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,8 +35,13 @@ class MovieGridItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12.r),
                 child: AspectRatio(
-                  aspectRatio: 2 / 3, // يمنع Overflow
-                  child: Image.asset(image, fit: BoxFit.cover),
+                  aspectRatio: 2 / 3,
+                  child: Image.network(
+                    image,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) =>
+                        const Icon(Icons.broken_image),
+                  ),
                 ),
               ),
 
