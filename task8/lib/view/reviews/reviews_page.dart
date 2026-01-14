@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/data/review_api.dart';
+import 'package:task8/models/review.dart';
 import 'widgets/reviews_header.dart';
 import 'widgets/reviews_poster_card.dart';
 import 'widgets/reviews_rating.dart';
@@ -10,54 +12,92 @@ import 'widgets/reviews_textbox.dart';
 import 'widgets/reviews_submit.dart';
 
 class ReviewsPage extends StatefulWidget {
-  const ReviewsPage({super.key});
+  final int movieId;
+  final Review? review; // null = إضافة، not null = تعديل
+
+  const ReviewsPage({super.key, required this.movieId, this.review});
 
   @override
   State<ReviewsPage> createState() => _ReviewsPageState();
 }
 
 class _ReviewsPageState extends State<ReviewsPage> {
+  late TextEditingController controller;
   double rating = 4.0;
-  final TextEditingController controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController(text: widget.review?.comment ?? "");
+    rating = widget.review?.rating.toDouble() ?? 4.0;
+  }
+
+  Future<void> submit() async {
+    final text = controller.text.trim();
+    if (text.isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Review cannot be empty")));
+      return;
+    }
+
+    bool success;
+
+    if (widget.review == null) {
+      // إضافة ريفيو جديد
+      success = await ReviewApi.addReview(
+        movieId: widget.movieId,
+        rating: rating,
+        comment: text,
+      );
+    } else {
+      // تعديل ريفيو موجود
+      success = await ReviewApi.updateReview(
+        movieId: widget.movieId,
+        reviewId: widget.review!.id,
+        rating: rating,
+        comment: text,
+      );
+    }
+
+    if (success) {
+      Navigator.pop(context, true);
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Failed to submit review")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
-      body: Stack(
-        children: [
-          // الخلفية العلوية
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: MediaQuery.of(context).size.height * 0.45,
-            child: const _TopBackground(),
-          ),
-
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-              child: Column(
-                children: [
-                  ReviewsHeader(),
-                  SizedBox(height: 16.h),
-                  const ReviewsPosterCard(),
-                  SizedBox(height: 20.h),
-                  ReviewsRating(
-                    rating: rating,
-                    onRate: (v) => setState(() => rating = v),
-                  ),
-                  SizedBox(height: 18.h),
-                  ReviewsTextBox(controller: controller),
-                  SizedBox(height: 18.h),
-                  ReviewsSubmit(controller: controller),
-                  SizedBox(height: 40.h),
-                ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            children: [
+              ReviewsHeader(),
+              SizedBox(height: 16.h),
+              ReviewsPosterCard(),
+              SizedBox(height: 20.h),
+              ReviewsRating(
+                rating: rating,
+                onRate: (v) => setState(() => rating = v),
               ),
-            ),
+              SizedBox(height: 18.h),
+              ReviewsTextBox(controller: controller),
+              SizedBox(height: 18.h),
+              ReviewsSubmit(
+                controller: controller,
+                rating: rating,
+                movieId: widget.movieId,
+                onSubmit: submit,
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

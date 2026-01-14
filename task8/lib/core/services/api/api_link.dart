@@ -1,5 +1,6 @@
 class ApiLink {
   static const String baseUrl = 'https://movie-platform.focal-x.com';
+
   /// ================= Auth =================
   static const String register = '$baseUrl/api/register';
   static const String login = '$baseUrl/api/login';
@@ -15,6 +16,10 @@ class ApiLink {
   static String movieReviews(int movieId) =>
       '$baseUrl/api/movies/$movieId/reviews';
   // Specific review by id
-  static String reviewDetails(int movieId, int reviewId) =>
+
+  static String addReview(int movieId) =>
+      "$baseUrl/api/movies/$movieId/reviews";
+
+  static String updateReview(int movieId, int reviewId) =>
       '$baseUrl/api/movies/$movieId/reviews/$reviewId';
 }

@@ -99,9 +99,18 @@ class _ReviewSectionState extends State<ReviewSection> {
                   ),
                   shape: StadiumBorder(),
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.reviews);
+                onPressed: () async {
+                  final result = await Navigator.pushNamed(
+                    context,
+                    AppRoutes.reviews,
+                    arguments: {'movieId': widget.movieId, 'review': null},
+                  );
+
+                  if (result == true) {
+                    setState(() {}); // يعمل refresh للصفحة كاملة
+                  }
                 },
+
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

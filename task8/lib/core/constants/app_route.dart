@@ -39,25 +39,38 @@ class AppRoutes {
       case profile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case details:
-  final args = settings.arguments;
-  if (args is int) {
-    return MaterialPageRoute(
-      builder: (_) => MovieDetailsScreen(movieId: args),
-    );
-  } else {
-    // لو لم يتم إرسال argument صحيح
-    return MaterialPageRoute(
-      builder: (_) => const Scaffold(
-        body: Center(child: Text("Movie ID not provided")),
-      ),
-    );
-  }
-
+        final args = settings.arguments;
+        if (args is int) {
+          return MaterialPageRoute(
+            builder: (_) => MovieDetailsScreen(movieId: args),
+          );
+        } else {
+          // لو لم يتم إرسال argument صحيح
+          return MaterialPageRoute(
+            builder: (_) => const Scaffold(
+              body: Center(child: Text("Movie ID not provided")),
+            ),
+          );
+        }
 
       case trailer:
         return MaterialPageRoute(builder: (_) => const TrailerPage());
       case reviews:
-        return MaterialPageRoute(builder: (_) => const ReviewsPage());
+        final args = settings.arguments as Map<String, dynamic>?;
+
+        if (args == null || !args.containsKey('movieId')) {
+          return MaterialPageRoute(
+            builder: (_) => const Scaffold(
+              body: Center(child: Text("movieId is required")),
+            ),
+          );
+        }
+
+        return MaterialPageRoute(
+          builder: (_) =>
+              ReviewsPage(movieId: args['movieId'], review: args['review']),
+        );
+
       case filter:
         return MaterialPageRoute(builder: (_) => FilterScreen());
 
