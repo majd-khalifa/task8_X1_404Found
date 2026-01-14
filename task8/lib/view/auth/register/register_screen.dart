@@ -76,7 +76,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
               );
             }
-
+        
             if (state is AuthSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -84,13 +84,13 @@ class SignUpScreen extends StatelessWidget {
                   backgroundColor: Colors.green,
                 ),
               );
-
+        
               Navigator.pushReplacementNamed(context, AppRoutes.login);
             }
           },
           builder: (context, state) {
             final bool isLoading = state is AuthLoading;
-
+        
             return Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -101,16 +101,19 @@ class SignUpScreen extends StatelessWidget {
               ),
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 60.h),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 24.w,
+                  vertical: 60.h,
+                ),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-
+        
                     children: [
                       /// Icon
                       SignUpHeader(),
-
+        
                       SizedBox(height: 32.h),
                       FormFieldSection(
                         nameController: nameController,
@@ -122,9 +125,9 @@ class SignUpScreen extends StatelessWidget {
                         passwordvalidator: _validatePassword,
                         confirmpasswordvalidator: _validateConfirmPassword,
                       ),
-
+        
                       const SizedBox(height: 32),
-
+        
                       PrimaryButton(
                         text: 'Register',
                         isLoading: isLoading,
@@ -141,13 +144,13 @@ class SignUpScreen extends StatelessWidget {
                                 }
                               },
                       ),
-
+        
                       const SizedBox(height: 32),
-
+        
                       const OtherSignUpWaysSection(),
-
+        
                       SizedBox(height: 32.h),
-
+        
                       const GoToLogInSection(),
                     ],
                   ),

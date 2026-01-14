@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
@@ -61,6 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: AppColors.textSecondary,
                     ),
                   ),
+                  // =====================================================================
                 ],
               ),
             ),

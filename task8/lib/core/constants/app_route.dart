@@ -39,7 +39,21 @@ class AppRoutes {
       case profile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case details:
-        return MaterialPageRoute(builder: (_) => const MovieDetailsScreen());
+  final args = settings.arguments;
+  if (args is int) {
+    return MaterialPageRoute(
+      builder: (_) => MovieDetailsScreen(movieId: args),
+    );
+  } else {
+    // لو لم يتم إرسال argument صحيح
+    return MaterialPageRoute(
+      builder: (_) => const Scaffold(
+        body: Center(child: Text("Movie ID not provided")),
+      ),
+    );
+  }
+
+
       case trailer:
         return MaterialPageRoute(builder: (_) => const TrailerPage());
       case reviews:

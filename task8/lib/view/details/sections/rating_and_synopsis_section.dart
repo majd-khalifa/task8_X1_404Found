@@ -5,13 +5,30 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_image.dart';
 import 'package:task8/core/constants/text_style.dart';
+import 'package:task8/models/movie.dart';
+import 'package:task8/models/review.dart';
 import 'package:task8/view/details/widgets/cast_item.dart';
+import 'package:task8/view/details/widgets/expandable_text.dart';
 
-class DetailsBody extends StatelessWidget {
-  const DetailsBody({super.key});
+class RatingAndSynopsisSection extends StatefulWidget {
+  final Movie movie;
+  final List<Review> reviews;
+  const RatingAndSynopsisSection({
+    super.key,
+    required this.movie,
+    required this.reviews,
+  });
 
   @override
+  State<RatingAndSynopsisSection> createState() =>
+      _RatingAndSynopsisSectionState();
+}
+
+class _RatingAndSynopsisSectionState extends State<RatingAndSynopsisSection> {
+  bool isLoading = true;
+  @override
   Widget build(BuildContext context) {
+    final double avgRating = Review.calculateAverageRating(widget.reviews);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -39,31 +56,40 @@ class DetailsBody extends StatelessWidget {
                           style: AppTextStyles.textStyle12,
                         ),
                         SizedBox(height: 4),
+
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text("8.6", style: AppTextStyles.textStyle30),
-                            SizedBox(width: 8.w),
-                            Row(
-                              children: List.generate(5, (index) {
-                                double rating = 5;
-
-                                Color color;
-                                if (index < rating.floor()) {
-                                  color = AppColors.primary;
-                                } else if (index < rating && rating % 1 != 0) {
-                                  color = AppColors.primary.withOpacity(0.5);
-                                } else {
-                                  color = Colors.black;
-                                }
-
-                                return Icon(
-                                  Icons.star,
-                                  size: 20.sp,
-                                  color: color,
-                                );
-                              }),
+                            Text(
+                              avgRating.toStringAsFixed(1),
+                              style: AppTextStyles.textStyle30,
                             ),
+                            SizedBox(width: 8.w),
+                            widget.reviews.isEmpty
+                                ? CircularProgressIndicator()
+                                : Row(
+                                    children: List.generate(5, (index) {
+                                      double rating = avgRating;
+
+                                      Color color;
+                                      if (index < rating.floor()) {
+                                        color = AppColors.primary;
+                                      } else if (index < rating &&
+                                          rating % 1 != 0) {
+                                        color = AppColors.primary.withOpacity(
+                                          0.5,
+                                        );
+                                      } else {
+                                        color = Colors.black;
+                                      }
+
+                                      return Icon(
+                                        Icons.star,
+                                        size: 20.sp,
+                                        color: color,
+                                      );
+                                    }),
+                                  ),
                           ],
                         ),
                       ],
@@ -126,44 +152,14 @@ class DetailsBody extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8.h),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Earth's future has been riddled by disasters, famines, and droughts. "
-                    "There is only one way to ensure mankind's survival: Interstellar travel. "
-                    "A newly discovered wormhole in the far reaches of our solar system allows "
-                    "a team of astronauts to go where no man has gone before, a planet that may "
-                    "have the right environment to sustain human life.",
-                    style: TextStyle(
-                      color: Colors.grey[300],
-                      fontSize: 16.sp,
-                      height: 1.6,
-                    ),
-                  ),
-
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      minimumSize: Size.zero,
-                    ),
-                    onPressed: () {},
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 8.h),
-                      child: Text(
-                        "Read more",
-                        style: TextStyle(
-                          color: AppColors.primary,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              ExpandableText(
+                text: widget.movie.description,
+                maxLines: 3,
+                style: TextStyle(
+                  color: Colors.grey[300],
+                  fontSize: 16.sp,
+                  height: 1.6,
+                ),
               ),
             ],
           ),

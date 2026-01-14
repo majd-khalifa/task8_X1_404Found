@@ -26,21 +26,23 @@ class Movie extends Equatable {
     required this.trailerUrl,
     required this.ageRating,
   });
-
-  factory Movie.fromJson(Map<String, dynamic> json) => Movie(
+  factory Movie.fromJson(Map<String, dynamic> json) {
+  return Movie(
     id: json['id'],
-    title: json['title'],
-    genreId: json['genre_id'],
-    genreName: json['genre_name'],
-    year: json['year'],
-    duration: json['duration'],
-    language: json['language'],
-    posterUrl: json['poster_url'],
-    description: json['description'],
-    trailerUrl: json['trailer_url'],
-    ageRating: (json['age_rating'] ?? "Unknown").toString().trim(),
+    title: json['title'] ?? '',
+    genreId: json['genre_id'] ?? 0,
+    genreName: json['genre_name'] ?? 'Unknown',
+    year: json['year'] ?? 0,
+    duration: json['duration'] ?? 0,
+    language: json['language'] ?? '',
+    posterUrl: json['poster_url'] ?? '',
+    description: json['description'] ?? '',
+    trailerUrl: json['trailer_url'] ?? '',
+    ageRating: json['age_rating'] ?? '',
   );
+}
 
+  
   Map<String, dynamic> toJson() => {
     'id': id,
     'title': title,

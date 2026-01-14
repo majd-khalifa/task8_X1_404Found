@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
+import 'package:task8/core/services/api/api_link.dart';
+import 'package:task8/core/services/api/api_services.dart';
 import 'package:task8/data/movie_api.dart';
 import 'package:task8/models/movie.dart';
+import 'package:task8/models/review.dart';
 
 import 'widgets/search_bar.dart';
 import 'widgets/category_chip.dart';
@@ -18,14 +22,14 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
   int activeIndex = 0;
-
+  final ApiServices _api = ApiServices();
   List<String> categories = ["All"];
   List<Movie> allMovies = [];
   List<Movie> filteredMovies = [];
-
+  Map<int, double> movieRatings = {};
   Future<void>? loadMoviesFuture;
+  bool reviewLoading = true;
 
-  @override
   @override
   void initState() {
     super.initState();
@@ -45,6 +49,31 @@ class _HomeBodyState extends State<HomeBody> {
       categories = ["All", ...uniqueRatings];
       filteredMovies = movies;
     });
+  }
+
+  Future<void> fetchMovieRating(int movieId) async {
+    if (movieRatings.containsKey(movieId)) return;
+
+    try {
+      final response = await _api.getData(url: ApiLink.movieReviews(movieId));
+
+      if (response.isNotEmpty && response[0]['data'] != null) {
+        final reviews = List.from(
+          response[0]['data'],
+        ).map((e) => Review.fromJson(Map<String, dynamic>.from(e))).toList();
+
+        final avg = Review.calculateAverageRating(reviews);
+
+        setState(() {
+          movieRatings[movieId] = avg;
+          reviewLoading = false;
+        });
+      } else {
+        movieRatings[movieId] = 0.0;
+      }
+    } catch (_) {
+      movieRatings[movieId] = 0.0;
+    }
   }
 
   void filterByCategory(int index) {
@@ -156,12 +185,26 @@ class _HomeBodyState extends State<HomeBody> {
                 separatorBuilder: (_, __) => SizedBox(width: 16.w),
                 itemBuilder: (_, index) {
                   final movie = allMovies[index];
-                  return TrendingCard(
-                    image: movie.posterUrl,
-                    title: movie.title,
-                    subtitle: movie.description,
-                    rating: movie.ageRating,
-                  );
+                  fetchMovieRating(movie.id);
+
+                  return reviewLoading
+                      ? SizedBox(
+                          child: Center(child: CircularProgressIndicator()),
+                        )
+                      : TrendingCard(
+                          image: movie.posterUrl,
+                          title: movie.title,
+                          subtitle: movie.description,
+                          rating:
+                              movieRatings[movie.id]?.toStringAsFixed(1) ?? "—",
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.details,
+                              arguments: movie.id,
+                            );
+                          },
+                        );
                 },
               ),
             ),
@@ -190,13 +233,27 @@ class _HomeBodyState extends State<HomeBody> {
                 ),
                 itemBuilder: (_, index) {
                   final movie = filteredMovies[index];
-                  return MovieGridItem(
-                    image: movie.posterUrl,
-                    title: movie.title,
-                    rating: movie.ageRating,
-                    year: movie.year.toString(),
-                    badge: movie.genreName,
-                  );
+                  fetchMovieRating(movie.id);
+                  return reviewLoading
+                      ? SizedBox(
+                          child: Center(child: CircularProgressIndicator()),
+                        )
+                      : MovieGridItem(
+                          image: movie.posterUrl,
+                          title: movie.title,
+                          rating:
+                              movieRatings[movie.id]?.toStringAsFixed(1) ?? "—",
+
+                          year: movie.year.toString(),
+                          badge: movie.genreName,
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.details,
+                              arguments: movie.id,
+                            );
+                          },
+                        );
                 },
               ),
             ),
@@ -205,4 +262,10 @@ class _HomeBodyState extends State<HomeBody> {
       },
     );
   }
+
+  // double calculateAverageRating(List<Review> reviews) {
+  //   if (reviews.isEmpty) return 0.0;
+  //   final total = reviews.fold<int>(0, (sum, r) => sum + r.rating);
+  //   return total / reviews.length;
+  // }
 }

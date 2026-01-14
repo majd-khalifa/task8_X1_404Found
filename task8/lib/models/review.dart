@@ -21,13 +21,13 @@ class Review extends Equatable {
   });
 
   factory Review.fromJson(Map<String, dynamic> json) => Review(
-    id: json['id'],
-    rating: json['rating'],
-    comment: json['comment'],
-    approved: json['approved'],
-    user: User.fromJson(json['user']),
-    movieId: json['movie_id'],
-    movieName: json['movie_name'],
+    id: json['id'] ?? 0,
+    rating: json['rating'] ?? 0,
+    comment: json['comment']?.toString() ?? '',
+    approved: json['approved'] ?? 0,
+    user: User.fromJson(Map<String, dynamic>.from(json['user'] ?? {})),
+    movieId: json['movie_id'] ?? 0,
+    movieName: json['movie_name']?.toString() ?? 'Unknown Movie',
   );
 
   Map<String, dynamic> toJson() => {
@@ -39,6 +39,16 @@ class Review extends Equatable {
     'movie_id': movieId,
     'movie_name': movieName,
   };
+
+  static double calculateAverageRating(List<Review> reviews) {
+    if (reviews.isEmpty) return 0.0; // لو ما في تعليقات
+
+    // اجمع كل التقييمات
+    final total = reviews.fold<int>(0, (sum, r) => sum + r.rating);
+
+    // اقسم على عدد التعليقات
+    return total / reviews.length;
+  }
 
   @override
   List<Object?> get props => [

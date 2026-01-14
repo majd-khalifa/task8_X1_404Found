@@ -34,4 +34,5 @@ class SharedPreferencesService {
   Future<void> removeAllData() async {
     await _sharedPrefences.clear();
   }
+  
 }
