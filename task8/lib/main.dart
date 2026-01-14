@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_font.dart';
 import 'package:task8/core/constants/app_route.dart';
-import 'package:task8/core/services/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SharedPreferencesService().init();
-  runApp(const MyApp());
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -31,10 +30,10 @@ class MyApp extends StatelessWidget {
             ),
           ),
 
-          initialRoute: AppRoutes.home, // أول صفحة
+          /// 👇 سنعدلها بعد قليل
+          initialRoute: AppRoutes.register,
         );
       },
-      // 👇 لازم ترجع child هنا
       child: const SizedBox(),
     );
   }

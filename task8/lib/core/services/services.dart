@@ -5,34 +5,49 @@ import 'package:task8/core/constants/constant.dart';
 import 'package:task8/core/constants/pref_key.dart';
 
 class SharedPreferencesService {
-  late SharedPreferences _sharedPrefences;
+  SharedPreferences? _sharedPrefences;
 
-  Future init() async {
-    _sharedPrefences = await SharedPreferences.getInstance();
-    if (await this.getStringValue(PrefKey.token) != null) {
-      ConstantData.usertoken = (await this.getStringValue(PrefKey.token))!;
-      print(ConstantData.usertoken);
-    }
+  // Lazy initialization
+  Future<SharedPreferences> get _prefs async {
+    return _sharedPrefences ??= await SharedPreferences.getInstance();
   }
 
-  Future<void> saveStringValue(String key, String value) async {
-    await _sharedPrefences.setString(key, value);
-  }
-
+  // استرجاع قيمة
   Future<String?> getStringValue(String key) async {
-    return _sharedPrefences.getString(key);
+    final prefs = await _prefs;
+    return prefs.getString(key);
   }
 
+  // حفظ قيمة
+  Future<void> saveStringValue(String key, String value) async {
+    final prefs = await _prefs;
+    await prefs.setString(key, value);
+  }
+
+  // حذف مفتاح
   Future<void> removeData(String key) async {
-    await _sharedPrefences.remove(key);
+    final prefs = await _prefs;
+    await prefs.remove(key);
   }
 
-  Future saveTokenUser(String token) async {
+  // حفظ التوكن
+  Future<void> saveTokenUser(String token) async {
     await saveStringValue(PrefKey.token, token);
+    ConstantData.usertoken = token; // تحديث المتغير العالمي فور الحفظ
   }
 
+  // حذف كل البيانات
   Future<void> removeAllData() async {
-    await _sharedPrefences.clear();
+    final prefs = await _prefs;
+    await prefs.clear();
   }
-  
+
+  // // استرجاع التوكن وحفظه في ConstantData (اختياري)
+  // Future<void> loadToken() async {
+  //   final token = await getStringValue(PrefKey.token);
+  //   if (token != null) {
+  //     ConstantData.usertoken = token;
+  //     print('Loaded token: $token');
+  //   }
+  // }
 }

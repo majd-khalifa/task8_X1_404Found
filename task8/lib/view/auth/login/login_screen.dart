@@ -3,16 +3,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_route.dart';
+import 'package:task8/core/services/api/api_services.dart';
+import 'package:task8/core/services/services.dart';
 import 'package:task8/view/auth/login/sections/go_to_register.dart';
 import 'package:task8/view/auth/login/sections/log_in_form_field.dart';
 import 'package:task8/view/auth/login/sections/log_in_header.dart';
 import 'package:task8/view/auth/login/sections/log_in_with_soctial_media.dart';
 import 'package:task8/view/auth/widgets/primary_button.dart';
-import '../../../cubits/auth_cubit.dart';
-import '../../../cubits/auth_state.dart';
+import '../cubits/auth_cubit.dart';
+import '../cubits/auth_state.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
+  final apiServices = ApiServices();
+final prefsService = SharedPreferencesService();
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -37,7 +42,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenUtil.init(context, designSize: const Size(375, 812));
     return BlocProvider(
-      create: (_) => AuthCubit(),
+      create: (_) => AuthCubit(prefsService,apiServices),
       child: Scaffold(
         backgroundColor: AppColors.primaryBackground,
         body: BlocConsumer<AuthCubit, AuthState>(
