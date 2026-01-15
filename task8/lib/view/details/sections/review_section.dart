@@ -13,11 +13,9 @@ import 'package:task8/view/details/widgets/review_card.dart';
 
 class ReviewSection extends StatefulWidget {
   final int movieId;
-  final VoidCallback onReviewUpdated;
   const ReviewSection({
     super.key,
     required this.movieId,
-    required this.onReviewUpdated,
   });
   @override
   State<ReviewSection> createState() => _ReviewSectionState();
@@ -112,7 +110,7 @@ class _ReviewSectionState extends State<ReviewSection> {
                   );
 
                   if (result == true) {
-                    await fetchAllReviews(); // ← الحل الحقيقي
+                    await fetchAllReviews();
                     setState(() {});
                   }
                 },
@@ -249,7 +247,7 @@ class _ReviewSectionState extends State<ReviewSection> {
                               );
 
                               if (result == true) {
-                                await fetchAllReviews(); // ← نفس الشي
+                                await fetchAllReviews();
                                 setState(() {});
                               }
                             },
