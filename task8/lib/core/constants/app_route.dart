@@ -6,6 +6,7 @@ import 'package:task8/view/filter/filter_screen.dart';
 import 'package:task8/view/home/home_screen.dart';
 import 'package:task8/view/profile/profile_screen.dart';
 import 'package:task8/view/reviews/reviews_page.dart';
+import 'package:task8/view/splash/splash_screen.dart';
 import 'package:task8/view/trailer/trailer_page.dart';
 
 class AppRoutes {
@@ -22,6 +23,7 @@ class AppRoutes {
   static const String trailer = '/trailer';
   static const String reviews = '/reviews';
   static const String filter = '/filter';
+  static const String splash = '/splash';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -55,6 +57,8 @@ class AppRoutes {
 
       case trailer:
         return MaterialPageRoute(builder: (_) => const TrailerPage());
+      case splash:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       case reviews:
         final args = settings.arguments as Map<String, dynamic>?;
 
