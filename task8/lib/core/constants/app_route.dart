@@ -54,7 +54,15 @@ class AppRoutes {
         }
 
       case trailer:
-        return MaterialPageRoute(builder: (_) => const TrailerPage());
+        final args = settings.arguments;
+        if (args is int) {
+          return MaterialPageRoute(builder: (_) => TrailerPage(movieId: args));
+        }
+        return MaterialPageRoute(
+          builder: (_) =>
+              const Scaffold(body: Center(child: Text('Movie ID is required'))),
+        );
+
       case reviews:
         final args = settings.arguments as Map<String, dynamic>?;
 

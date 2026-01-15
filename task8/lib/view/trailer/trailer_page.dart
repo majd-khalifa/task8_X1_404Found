@@ -1,24 +1,19 @@
 // ignore_for_file: deprecated_member_use
 
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:task8/data/movie_api.dart';
-import 'package:task8/core/constants/app_image.dart';
-import 'widgets/trailer_header.dart';
-import 'widgets/play_button.dart';
-import 'widgets/trailer_controls.dart';
 
 class TrailerPage extends StatefulWidget {
   final int movieId;
-  final String title;
-  final String subtitle;
+  final String? title;
+  final String? subtitle;
 
   const TrailerPage({
     super.key,
-    this.movieId = 155,
-    this.title = 'Interstellar',
-    this.subtitle = 'Official Trailer',
+    required this.movieId,
+    this.title,
+    this.subtitle,
   });
 
   @override
@@ -26,12 +21,9 @@ class TrailerPage extends StatefulWidget {
 }
 
 class _TrailerPageState extends State<TrailerPage> {
-  VideoPlayerController? controller;
-  bool initialized = false;
-  bool playing = false;
-  bool showControls = true;
-
-  Timer? _hideTimer;
+  late YoutubePlayerController _youtubeController;
+  bool isLoading = true;
+  String? trailerUrl;
 
   @override
   void initState() {
@@ -40,117 +32,204 @@ class _TrailerPageState extends State<TrailerPage> {
   }
 
   Future<void> _loadVideo() async {
-    final url = await MovieApi().getTrailerUrl(widget.movieId);
+    try {
+      print('🎬 Loading trailer for movieId: ${widget.movieId}');
+      final url = await MovieApi().getTrailerUrl(widget.movieId);
+      print('🎥 Got trailer URL: $url');
 
-    if (url != null) {
-      controller = VideoPlayerController.networkUrl(Uri.parse(url))
-        ..initialize().then((_) {
-          setState(() => initialized = true);
-        });
+      if (url != null && url.isNotEmpty) {
+        final videoId = MovieApi.extractYoutubeVideoId(url);
+
+        if (videoId != null && videoId.isNotEmpty) {
+          print('🎞️ YouTube Video ID: $videoId');
+
+          _youtubeController = YoutubePlayerController(
+            initialVideoId: videoId,
+            flags: const YoutubePlayerFlags(
+              autoPlay: false,
+              mute: false,
+              showLiveFullscreenButton: true,
+            ),
+          );
+
+          if (mounted) {
+            setState(() {
+              trailerUrl = url;
+              isLoading = false;
+            });
+            print('✅ YouTube player initialized');
+          }
+        } else {
+          print('❌ Failed to extract video ID');
+          if (mounted) {
+            setState(() => isLoading = false);
+          }
+        }
+      } else {
+        print('❌ No trailer available for this movie');
+        if (mounted) {
+          setState(() => isLoading = false);
+        }
+      }
+    } catch (e) {
+      print('❌ Exception in _loadVideo: $e');
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
     }
   }
 
   @override
   void dispose() {
-    controller?.dispose();
-    _hideTimer?.cancel();
+    _youtubeController.dispose();
     super.dispose();
   }
 
-  void _startHideTimer() {
-    _hideTimer?.cancel();
-    _hideTimer = Timer(const Duration(seconds: 3), () {
-      if (playing) {
-        setState(() => showControls = false);
-      }
-    });
-  }
-
-  void togglePlay() {
-    if (!initialized) return;
-
-    setState(() {
-      if (controller!.value.isPlaying) {
-        controller!.pause();
-        playing = false;
-        showControls = true;
-      } else {
-        controller!.play();
-        playing = true;
-        _startHideTimer();
-      }
-    });
-  }
-
-  void toggleControls() {
-    setState(() => showControls = !showControls);
-    if (showControls && playing) _startHideTimer();
-  }
-
-  bool get _isFirstFrame =>
-      controller == null || controller!.value.position == Duration.zero;
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          // الصورة أو الفيديو
-          Positioned.fill(
-            child: GestureDetector(
-              onTap: toggleControls,
-              child: _buildVideoOrPoster(),
-            ),
+    if (isLoading) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 20),
+              Text(
+                'جاري تحميل الفيديو...',
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ],
           ),
-
-          // طبقة شفافة قبل التشغيل الأول فقط
-          if (_isFirstFrame && !playing)
-            Positioned.fill(
-              child: Container(color: Colors.black.withOpacity(0.45)),
-            ),
-
-          // الهيدر
-          if (showControls)
-            TrailerHeader(
-              title: widget.title,
-              subtitle: widget.subtitle,
-              onBack: () => Navigator.pop(context),
-            ),
-
-          // زر التشغيل قبل أول تشغيل فقط
-          if (!playing) PlayButton(onPressed: togglePlay),
-
-          // عناصر التحكم
-          if (showControls && playing)
-            TrailerControls(
-              controller: controller,
-              initialized: initialized,
-              onPlayPause: togglePlay,
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildVideoOrPoster() {
-    // ✔ أول مرة → صورة
-    // ✔ بعد التشغيل → فيديو دائمًا (حتى عند الإيقاف)
-    bool showPoster =
-        !initialized ||
-        (controller!.value.position == Duration.zero && !playing);
-
-    if (showPoster) {
-      return Image.asset(AppImage.posterImage, fit: BoxFit.cover);
+        ),
+      );
     }
 
-    // فيديو (تشغيل + إيقاف = آخر فريم)
-    return SizedBox.expand(
-      child: FittedBox(
-        fit: BoxFit.cover,
-        child: SizedBox(
-          width: controller!.value.size.width,
-          height: controller!.value.size.height,
-          child: VideoPlayer(controller!),
+    if (trailerUrl == null) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.video_library_outlined,
+                    size: 100,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(height: 30),
+                  Text(
+                    'لا يوجد تريلر متاح',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 15),
+                  Text(
+                    'هذا الفيلم لا يملك فيديو تريلر في الوقت الحالي',
+                    style: TextStyle(fontSize: 14, color: Colors.grey[400]),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 40),
+                  Container(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        'العودة',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Header
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey[800],
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back, color: Colors.white),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                  SizedBox(width: 15),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.title ?? 'Trailer',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          widget.subtitle ?? 'Official Trailer',
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // YouTube Player
+            Expanded(
+              child: YoutubePlayer(
+                controller: _youtubeController,
+                showVideoProgressIndicator: true,
+                progressIndicatorColor: Colors.blueAccent,
+                onReady: () {
+                  print('✅ YouTube player ready');
+                },
+                onEnded: (data) {
+                  print('✅ Video ended');
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
