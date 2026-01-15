@@ -41,10 +41,34 @@ Future<Movie> fetchMovieDetails(int movieId) async {
 }
 
 /// =======================
-///  Trailer URL (Static)
+///  Trailer URL (From API)
 /// =======================
 class MovieApi {
   Future<String?> getTrailerUrl(int movieId) async {
-    return 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+    try {
+      final raw = await ApiServices().getData(
+        url: ApiLink.movieDetails(movieId),
+      );
+
+      if (raw is List && raw.isNotEmpty) {
+        final data = raw[0]['data'];
+        if (data != null && data['trailer_url'] != null) {
+          return data['trailer_url'] as String;
+        }
+      }
+      return null;
+    } catch (e) {
+      print('Error fetching trailer URL: $e');
+      return null;
+    }
+  }
+
+  static String? extractYoutubeVideoId(String url) {
+    final regExp = RegExp(
+      r'(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)',
+      caseSensitive: false,
+    );
+    final match = regExp.firstMatch(url);
+    return match?.group(1);
   }
 }

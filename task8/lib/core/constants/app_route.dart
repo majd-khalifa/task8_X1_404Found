@@ -47,7 +47,6 @@ class AppRoutes {
             builder: (_) => MovieDetailsScreen(movieId: args),
           );
         } else {
-          // لو لم يتم إرسال argument صحيح
           return MaterialPageRoute(
             builder: (_) => const Scaffold(
               body: Center(child: Text("Movie ID not provided")),
@@ -56,6 +55,22 @@ class AppRoutes {
         }
 
       case trailer:
+        final args = settings.arguments;
+        if (args is Map && args.containsKey('movieId')) {
+          return MaterialPageRoute(
+            builder: (_) => TrailerPage(
+              movieId: args['movieId'] as int,
+              title: args['title'] as String?,
+              posterUrl: args['posterUrl'] as String?,
+            ),
+          );
+        }
+        return MaterialPageRoute(
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Movie data is required')),
+          ),
+        );
+
         return MaterialPageRoute(builder: (_) => const TrailerPage());
       case splash:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
