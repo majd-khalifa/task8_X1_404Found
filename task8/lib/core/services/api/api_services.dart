@@ -80,15 +80,17 @@ class ApiServices {
     required String url,
     Map? body,
     Map<String, String>? headers,
-    String? token, // التوكن اختياري
-    BuildContext? context,
+    String? token,
   }) async {
     try {
-      final finalHeaders = {...?headers};
-      if (token != null &&
-          token.isNotEmpty &&
-          !finalHeaders.containsKey('Authorization')) {
-        finalHeaders['Authorization'] = token;
+      final finalHeaders = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        ...?headers,
+      };
+
+      if (token != null && token.isNotEmpty) {
+        finalHeaders['Authorization'] = 'Bearer $token';
       }
 
       final response = await _dio.post(

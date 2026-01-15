@@ -103,8 +103,8 @@ class _ReviewsPageState extends State<ReviewsPage> {
   }
 }
 
-class _TopBackground extends StatelessWidget {
-  const _TopBackground();
+class TopBackground extends StatelessWidget {
+  const TopBackground({super.key});
 
   @override
   Widget build(BuildContext context) {
