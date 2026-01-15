@@ -71,7 +71,6 @@ class AppRoutes {
           ),
         );
 
-        return MaterialPageRoute(builder: (_) => const TrailerPage());
       case splash:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case reviews:
