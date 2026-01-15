@@ -175,7 +175,11 @@ class DetailsHeader extends StatelessWidget {
                                 Navigator.pushNamed(
                                   context,
                                   AppRoutes.trailer,
-                                  arguments: movie.id,
+                                  arguments: {
+                                    'movieId': movie.id,
+                                    'title': movie.title,
+                                    'posterUrl': movie.posterUrl,
+                                  },
                                 );
                               },
                               icon: const Icon(

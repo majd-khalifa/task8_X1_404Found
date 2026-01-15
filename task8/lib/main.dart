@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
             ),
           ),
 
-          /// 👇 سنعدلها بعد قليل
           initialRoute: AppRoutes.home,
         );
       },
