@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/core/constants/app_image.dart';
 import 'package:task8/core/constants/text_style.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -31,9 +32,7 @@ class HomeHeader extends StatelessWidget {
               border: Border.all(color: AppColors.borderLight, width: 2),
             ),
             clipBehavior: Clip.antiAlias,
-            child: const CircleAvatar(
-              backgroundImage: AssetImage("assets/images/profile.png"),
-            ),
+            child: CircleAvatar(backgroundImage: AssetImage(AppImage.majed)),
           ),
         ],
       ),

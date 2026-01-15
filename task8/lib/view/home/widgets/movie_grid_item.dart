@@ -20,7 +20,7 @@ class MovieGridItem extends StatelessWidget {
     required this.rating,
     required this.year,
     this.badge,
-   required this.onTap,
+    required this.onTap,
   });
 
   @override
@@ -39,8 +39,9 @@ class MovieGridItem extends StatelessWidget {
                   child: Image.network(
                     image,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) =>
-                        const Icon(Icons.broken_image),
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(Icons.error, color: Colors.white54, size: 60);
+                    },
                   ),
                 ),
               ),

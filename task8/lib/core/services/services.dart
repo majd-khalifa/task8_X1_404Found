@@ -29,33 +29,26 @@ class SharedPreferencesService {
     await prefs.remove(key);
   }
 
-  // حفظ التوكن
-  Future<void> saveTokenUser(String token) async {
-    await saveStringValue(ConstantData.usertoken, token);
-    ConstantData.usertoken = token; // تحديث المتغير العالمي فور الحفظ
-  }
 
   // حذف كل البيانات
-   Future<void> removeAllData() async {
+  Future<void> removeAllData() async {
     final prefs = await _prefs;
     await prefs.clear();
-    ConstantData.usertoken = "";
-    ConstantData.useremail = "";
-  }
-
-  Future<void> removeTokenUser() async {
-    await removeData(ConstantData.usertoken);
-    ConstantData.usertoken = "";
-  }
-    Future<void> saveUserEmail(String email) async {
-    await saveStringValue('user_email', email);
-    ConstantData.useremail = email;
-  }
-
-  Future<void> removeUserEmail() async {
-    await removeData('user_email');
-    ConstantData.useremail = "";
-  }
-
+    removeData(ConstantData.usertoken);
+    removeData(ConstantData.useremail);
  
+  }
+Future<void> saveTokenUser(String token) async {
+  final prefs = await _prefs;
+  await prefs.setString(ConstantData.usertoken, token);
+}
+
+Future<void> saveUserEmail(String email) async {
+  final prefs = await _prefs;
+  await prefs.setString(ConstantData.useremail, email);
+}
+
+
+
+
 }

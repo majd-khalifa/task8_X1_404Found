@@ -13,12 +13,7 @@ import 'package:task8/view/details/widgets/review_card.dart';
 
 class ReviewSection extends StatefulWidget {
   final int movieId;
-  final VoidCallback onReviewUpdated;
-  const ReviewSection({
-    super.key,
-    required this.movieId,
-    required this.onReviewUpdated,
-  });
+  const ReviewSection({super.key, required this.movieId});
   @override
   State<ReviewSection> createState() => _ReviewSectionState();
 }
@@ -95,46 +90,47 @@ class _ReviewSectionState extends State<ReviewSection> {
                 style: AppTextStyles.textStyle18,
               ),
               Spacer(),
-              FilledButton.tonal(
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.primary.withOpacity(0.2),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 8.h,
-                  ),
-                  shape: StadiumBorder(),
-                ),
-                onPressed: () async {
-                  final result = await Navigator.pushNamed(
-                    context,
-                    AppRoutes.reviews,
-                    arguments: {'movieId': widget.movieId, 'review': null},
-                  );
-
-                  if (result == true) {
-                    await fetchAllReviews(); // ← الحل الحقيقي
-                    setState(() {});
-                  }
-                },
-
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.rate_review,
-                      size: 18.sp,
-                      color: AppColors.primary,
+              if (userReview == null)
+                FilledButton.tonal(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.primary.withOpacity(0.2),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 8.h,
                     ),
-                    SizedBox(width: 8.w),
-                    Text(
-                      "Post Review",
-                      style: AppTextStyles.textStyle14.copyWith(
+                    shape: StadiumBorder(),
+                  ),
+                  onPressed: () async {
+                    final result = await Navigator.pushNamed(
+                      context,
+                      AppRoutes.reviews,
+                      arguments: {'movieId': widget.movieId, 'review': null},
+                    );
+
+                    if (result == true) {
+                      await fetchAllReviews(); // ← الحل الحقيقي
+                      setState(() {});
+                    }
+                  },
+
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.rate_review,
+                        size: 18.sp,
                         color: AppColors.primary,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 8.w),
+                      Text(
+                        "Post Review",
+                        style: AppTextStyles.textStyle14.copyWith(
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
           SizedBox(height: 16),
@@ -184,14 +180,19 @@ class _ReviewSectionState extends State<ReviewSection> {
                               ),
                               SizedBox(height: 4.h),
                               Row(
-                                children: List.generate(
-                                  userReview!.rating,
-                                  (index) => Icon(
+                                children: List.generate(5, (index) {
+                                  final filled = index < userReview!.rating;
+                                  final isUnderFive = userReview!.rating < 5;
+                                  return Icon(
                                     Icons.star,
                                     size: 14.sp,
-                                    color: AppColors.primary,
-                                  ),
-                                ),
+                                    color: filled
+                                        ? (isUnderFive
+                                              ? AppColors.primary
+                                              : AppColors.background)
+                                        : AppColors.borderStrong,
+                                  );
+                                }),
                               ),
                             ],
                           ),

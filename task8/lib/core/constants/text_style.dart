@@ -92,4 +92,10 @@ class AppTextStyles {
     color: AppColors.textPrimary,
     height: 38 / 32,
   );
+
+  static TextStyle textStyle36 = TextStyle(
+    fontSize: 36,
+    fontWeight: FontWeight.w800,
+    color: AppColors.white,
+  );
 }

@@ -6,6 +6,7 @@ import 'package:task8/view/filter/filter_screen.dart';
 import 'package:task8/view/home/home_screen.dart';
 import 'package:task8/view/profile/profile_screen.dart';
 import 'package:task8/view/reviews/reviews_page.dart';
+// import 'package:task8/view/splash/splash_screen.dart';
 import 'package:task8/view/trailer/trailer_page.dart';
 
 class AppRoutes {
@@ -17,6 +18,7 @@ class AppRoutes {
 
   static const String home = '/home';
   static const String profile = '/profile';
+  static const String splash = '/splash';
 
   static const String details = '/details';
   static const String trailer = '/trailer';
@@ -38,6 +40,8 @@ class AppRoutes {
 
       case profile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
+      // case splash:
+      //   return MaterialPageRoute(builder: (_) => const SplashScreen());
       case details:
         final args = settings.arguments;
         if (args is int) {

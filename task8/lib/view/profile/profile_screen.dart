@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/core/constants/app_image.dart';
 import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
 import 'package:task8/core/services/services.dart';
@@ -40,10 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 120.w,
                       decoration: const BoxDecoration(shape: BoxShape.circle),
                       clipBehavior: Clip.antiAlias,
-                      child: Image.asset(
-                        "assets/images/majd prof.png",
-                        fit: BoxFit.cover,
-                      ),
+                      child: Image.asset(AppImage.majed, fit: BoxFit.cover),
                     ),
                   ),
                   16.verticalSpace,
@@ -92,8 +90,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                   ),
-                  onPressed: ()async {
-                     await SharedPreferencesService().removeAllData();
+                  onPressed: () async {
+                    await SharedPreferencesService().removeAllData();
 
                     ApiServices.currentUser = null;
                     Navigator.pushReplacementNamed(context, AppRoutes.login);
