@@ -7,7 +7,6 @@ import 'package:task8/core/services/api/api_link.dart';
 import 'package:task8/models/user.dart';
 
 class ApiServices {
-  //---------
   static User? currentUser;
 
   final Dio _dio =
@@ -36,7 +35,8 @@ class ApiServices {
               handler.next(response);
             },
             onError: (error, handler) {
-              print(error.message);
+              print("DIO ERROR: ${error.response?.data}");
+              print("STATUS CODE: ${error.response?.statusCode}");
               handler.next(error);
             },
           ),
@@ -46,16 +46,15 @@ class ApiServices {
   Future getData({
     required String url,
     Map<String, String>? headers,
-    String? token, // هنا يمكن تمرير التوكن إذا كان مطلوب
+    String? token,
     BuildContext? context,
   }) async {
     try {
-      // دمج headers المرسلة مع التوكن إذا موجود
       final finalHeaders = {...?headers};
-      if (token != null &&
-          token.isNotEmpty &&
-          !finalHeaders.containsKey('Authorization')) {
-        finalHeaders['Authorization'] = token;
+
+      // 🔥 إصلاح التوكن هنا
+      if (token != null && token.isNotEmpty) {
+        finalHeaders['Authorization'] = 'Bearer $token';
       }
 
       final response = await _dio.get(
@@ -63,9 +62,7 @@ class ApiServices {
         options: Options(headers: finalHeaders),
       );
 
-      if (response.statusCode == 200 ||
-          response.statusCode == 201 ||
-          response.statusCode == 204) {
+      if ([200, 201, 204].contains(response.statusCode)) {
         return response.data;
       } else {
         throw ServerFailure.fromResponse(response.statusCode);
@@ -89,6 +86,7 @@ class ApiServices {
         ...?headers,
       };
 
+      // 🔥 إصلاح التوكن هنا أيضًا
       if (token != null && token.isNotEmpty) {
         finalHeaders['Authorization'] = 'Bearer $token';
       }
@@ -99,9 +97,7 @@ class ApiServices {
         options: Options(headers: finalHeaders),
       );
 
-      if (response.statusCode == 200 ||
-          response.statusCode == 201 ||
-          response.statusCode == 204) {
+      if ([200, 201, 204].contains(response.statusCode)) {
         return response.data;
       } else {
         throw ServerFailure.fromResponse(response.statusCode);
@@ -116,15 +112,15 @@ class ApiServices {
     required String url,
     Map? body,
     Map<String, String>? headers,
-    String? token, // التوكن اختياري
+    String? token,
     BuildContext? context,
   }) async {
     try {
       final finalHeaders = {...?headers};
-      if (token != null &&
-          token.isNotEmpty &&
-          !finalHeaders.containsKey('Authorization')) {
-        finalHeaders['Authorization'] = token;
+
+      // 🔥 هذا كان سبب الـ 401 — تم إصلاحه
+      if (token != null && token.isNotEmpty) {
+        finalHeaders['Authorization'] = 'Bearer $token';
       }
 
       final response = await _dio.put(
@@ -133,9 +129,7 @@ class ApiServices {
         options: Options(headers: finalHeaders),
       );
 
-      if (response.statusCode == 200 ||
-          response.statusCode == 201 ||
-          response.statusCode == 204) {
+      if ([200, 201, 204].contains(response.statusCode)) {
         return response.data;
       } else {
         throw ServerFailure.fromResponse(response.statusCode);
