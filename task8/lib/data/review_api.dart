@@ -1,23 +1,18 @@
-import 'package:http/http.dart' as http;
 import 'package:task8/core/constants/constant.dart';
-import 'dart:convert';
-import 'package:task8/models/review.dart';
 import 'package:task8/core/services/api/api_link.dart';
+import 'package:task8/core/services/api/api_services.dart';
+import 'package:task8/models/review.dart';
 
 class ReviewApi {
+  static final ApiServices _api = ApiServices();
+
   /// جلب كل الريفيوهات لفيلم معيّن
   static Future<List<Review>> fetchReviews(int movieId) async {
-    final url = Uri.parse(ApiLink.movieReviews(movieId));
-    final response = await http.get(
-      url,
-      headers: {"Accept": "application/json"},
-    );
+    final response = await _api.getData(url: ApiLink.movieReviews(movieId));
 
-    if (response.statusCode != 200) return [];
+    if (response.isEmpty || response[0]['data'] == null) return [];
 
-    final body = jsonDecode(response.body);
-    final list = body[0]["data"] as List;
-
+    final List list = response[0]['data'];
     return list.map((e) => Review.fromJson(e)).toList();
   }
 
@@ -27,27 +22,13 @@ class ReviewApi {
     required double rating,
     required String comment,
   }) async {
-    final url = Uri.parse(ApiLink.addReview(movieId));
-    final token = ConstantData.usertoken;
-
-    final response = await http.post(
-      url,
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token",
-      },
-      body: jsonEncode({
-        "movie_id": movieId,
-        "rating": rating,
-        "comment": comment,
-      }),
+    final response = await _api.postData(
+      url: ApiLink.addReview(movieId),
+      token: ConstantData.usertoken,
+      body: {"movie_id": movieId, "rating": rating, "comment": comment},
     );
 
-    print("STATUS: ${response.statusCode}");
-    print("BODY: ${response.body}");
-
-    return response.statusCode >= 200 && response.statusCode < 300;
+    return response != null;
   }
 
   /// تعديل ريفيو موجود
@@ -57,22 +38,12 @@ class ReviewApi {
     required double rating,
     required String comment,
   }) async {
-    final url = Uri.parse(ApiLink.updateReview(movieId, reviewId));
-    final token = ConstantData.usertoken;
-
-    final response = await http.put(
-      url,
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token",
-      },
-      body: jsonEncode({"rating": rating, "comment": comment}),
+    final response = await _api.putData(
+      url: ApiLink.updateReview(movieId, reviewId),
+      token: ConstantData.usertoken,
+      body: {"rating": rating, "comment": comment},
     );
 
-    print("STATUS: ${response.statusCode}");
-    print("BODY: ${response.body}");
-
-    return response.statusCode >= 200 && response.statusCode < 300;
+    return response != null;
   }
 }
