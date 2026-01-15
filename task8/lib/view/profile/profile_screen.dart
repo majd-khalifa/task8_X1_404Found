@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
+import 'package:task8/core/services/services.dart';
 import 'package:task8/widgets/bottom_nav.dart';
 import 'package:task8/core/services/api/api_services.dart';
 
@@ -59,7 +60,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: AppColors.textSecondary,
                     ),
                   ),
-                  // =====================================================================
                 ],
               ),
             ),
@@ -92,7 +92,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: ()async {
+                     await SharedPreferencesService().removeAllData();
+
                     ApiServices.currentUser = null;
                     Navigator.pushReplacementNamed(context, AppRoutes.login);
                   },

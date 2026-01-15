@@ -263,9 +263,5 @@ class _HomeBodyState extends State<HomeBody> {
     );
   }
 
-  // double calculateAverageRating(List<Review> reviews) {
-  //   if (reviews.isEmpty) return 0.0;
-  //   final total = reviews.fold<int>(0, (sum, r) => sum + r.rating);
-  //   return total / reviews.length;
-  // }
+  
 }

@@ -2,7 +2,6 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task8/core/constants/constant.dart';
-import 'package:task8/core/constants/pref_key.dart';
 
 class SharedPreferencesService {
   SharedPreferences? _sharedPrefences;
@@ -32,22 +31,31 @@ class SharedPreferencesService {
 
   // حفظ التوكن
   Future<void> saveTokenUser(String token) async {
-    await saveStringValue(PrefKey.token, token);
+    await saveStringValue(ConstantData.usertoken, token);
     ConstantData.usertoken = token; // تحديث المتغير العالمي فور الحفظ
   }
 
   // حذف كل البيانات
-  Future<void> removeAllData() async {
+   Future<void> removeAllData() async {
     final prefs = await _prefs;
     await prefs.clear();
+    ConstantData.usertoken = "";
+    ConstantData.useremail = "";
   }
 
-  // // استرجاع التوكن وحفظه في ConstantData (اختياري)
-  // Future<void> loadToken() async {
-  //   final token = await getStringValue(PrefKey.token);
-  //   if (token != null) {
-  //     ConstantData.usertoken = token;
-  //     print('Loaded token: $token');
-  //   }
-  // }
+  Future<void> removeTokenUser() async {
+    await removeData(ConstantData.usertoken);
+    ConstantData.usertoken = "";
+  }
+    Future<void> saveUserEmail(String email) async {
+    await saveStringValue('user_email', email);
+    ConstantData.useremail = email;
+  }
+
+  Future<void> removeUserEmail() async {
+    await removeData('user_email');
+    ConstantData.useremail = "";
+  }
+
+ 
 }

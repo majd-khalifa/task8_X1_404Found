@@ -97,7 +97,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   // الهيدر الكامل (خلفية + بوستر + اسم الفيلم + أزرار)
                   DetailsHeader(movie: movie!),
 
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   // المحتوى بعد الهيدر
                   ContentWrapper(
                     child: Column(
@@ -114,7 +114,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           },
                         ),
 
-                        SizedBox(height: 40.h),
+                        SizedBox(height: 30.h),
                       ],
                     ),
                   ),
