@@ -107,7 +107,13 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           movie: movie!,
                           reviews: reviews,
                         ),
-                        ReviewSection(movieId: movie!.id),
+                        ReviewSection(
+                          movieId: movie!.id,
+                          onReviewUpdated: () {
+                            setState(() {});
+                          },
+                        ),
+
                         SizedBox(height: 40.h),
                       ],
                     ),

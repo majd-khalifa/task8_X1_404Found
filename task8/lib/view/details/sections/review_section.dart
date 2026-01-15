@@ -13,7 +13,12 @@ import 'package:task8/view/details/widgets/review_card.dart';
 
 class ReviewSection extends StatefulWidget {
   final int movieId;
-  const ReviewSection({super.key, required this.movieId});
+  final VoidCallback onReviewUpdated;
+  const ReviewSection({
+    super.key,
+    required this.movieId,
+    required this.onReviewUpdated,
+  });
   @override
   State<ReviewSection> createState() => _ReviewSectionState();
 }
@@ -107,7 +112,8 @@ class _ReviewSectionState extends State<ReviewSection> {
                   );
 
                   if (result == true) {
-                    setState(() {}); // يعمل refresh للصفحة كاملة
+                    await fetchAllReviews(); // ← الحل الحقيقي
+                    setState(() {});
                   }
                 },
 
@@ -232,8 +238,8 @@ class _ReviewSectionState extends State<ReviewSection> {
                       Row(
                         children: [
                           InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
+                            onTap: () async {
+                              final result = await Navigator.pushNamed(
                                 context,
                                 AppRoutes.reviews,
                                 arguments: {
@@ -241,6 +247,11 @@ class _ReviewSectionState extends State<ReviewSection> {
                                   'review': userReview,
                                 },
                               );
+
+                              if (result == true) {
+                                await fetchAllReviews(); // ← نفس الشي
+                                setState(() {});
+                              }
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(
