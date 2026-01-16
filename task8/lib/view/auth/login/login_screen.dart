@@ -41,7 +41,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, designSize: const Size(375, 812));
     return BlocProvider(
       create: (_) => AuthCubit(prefsService, apiServices),
       child: Scaffold(
