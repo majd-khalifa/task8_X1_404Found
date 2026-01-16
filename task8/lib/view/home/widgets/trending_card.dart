@@ -18,13 +18,13 @@ class TrendingCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.rating,
-   required this.onTap,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap:onTap,
+      onTap: onTap,
       child: SizedBox(
         width: 144.w,
         child: Column(
@@ -40,8 +40,13 @@ class TrendingCard extends StatelessWidget {
                       child: Image.network(
                         image,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) =>
-                            const Icon(Icons.broken_image),
+                        errorBuilder: (context, error, stackTrace) {
+                          return Icon(
+                            Icons.error,
+                            color: Colors.white54,
+                            size: 60,
+                          );
+                        },
                       ),
                     ),
                     Positioned(

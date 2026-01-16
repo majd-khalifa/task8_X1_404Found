@@ -1,5 +1,8 @@
 class ConstantData {
-  static String usertoken =
-      '237|Y83TjP92UtCwHO7OhnRMPfvHcWrySB6ph5ehdGYge9872a84';
-  static String useremail = "majd@email.com";
+  static const String usertoken = "user_token";
+  static const String useremail = "user_email";
+
+  // قيم runtime (اختياري)
+  static String tokenValue = "";
+  static String emailValue = "";
 }

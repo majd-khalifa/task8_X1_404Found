@@ -3,6 +3,7 @@ import 'package:task8/core/errors/failur_request.dart';
 import 'package:task8/core/services/api/api_link.dart';
 import 'package:task8/core/services/api/api_services.dart';
 import 'package:task8/core/services/services.dart';
+import 'package:task8/models/user.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -21,6 +22,12 @@ class AuthCubit extends Cubit<AuthState> {
       );
       print('Login response: $response'); // <-- اطبع هنا
       final token = response[0]['data']['token'];
+      final userJson = response[0]["data"]['user'];
+      final user = User.fromJson(userJson);
+ 
+      await prefs.saveStringValue("user_name", user.name);
+      await prefs.saveStringValue("user_email", user.email);
+      await prefs.saveUserEmail(email);
       await prefs.saveTokenUser(token); // الآن لن يفشل
       emit(const AuthSuccess(message: 'Login successfully'));
     } catch (e) {

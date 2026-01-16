@@ -1,10 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/core/constants/app_route.dart';
+import 'package:task8/core/constants/constant.dart';
 import 'package:task8/core/constants/text_style.dart';
+import 'package:task8/core/services/services.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  final prefs = SharedPreferencesService();
+  @override
+  void initState() {
+    super.initState();
+    _navigate();
+  }
+
+  Future<void> _navigate() async {
+  await Future.delayed(const Duration(seconds: 2));
+
+  ConstantData.tokenValue =
+      await prefs.getStringValue(ConstantData.usertoken) ?? "";
+
+  ConstantData.emailValue =
+      await prefs.getStringValue(ConstantData.useremail) ?? "";
+
+  print("SPLASH TOKEN: ${ConstantData.tokenValue}");
+  print("SPLASH EMAIL: ${ConstantData.emailValue}");
+
+  if (!mounted) return;
+
+  if (ConstantData.tokenValue.isEmpty ||
+      ConstantData.emailValue.isEmpty) {
+    Navigator.pushReplacementNamed(context, AppRoutes.login);
+  } else {
+    Navigator.pushReplacementNamed(context, AppRoutes.home);
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {

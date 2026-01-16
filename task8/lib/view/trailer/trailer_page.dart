@@ -193,6 +193,7 @@ class _TrailerPageState extends State<TrailerPage> {
             setState(() => showControls = !showControls);
             if (showControls) {
               _hideControlsAfterDelay();
+              _youtubeController.play(); // ✅ هذا هو السطر الناقص
             }
           }
         },
@@ -433,15 +434,15 @@ class _TrailerPageState extends State<TrailerPage> {
                           ),
                         ),
                         // Thumb
-                        AnimatedScale(
-                          scale: isHoveringProgressBar ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 200),
-                          child: Positioned(
-                            left:
-                                MediaQuery.of(context).size.width *
-                                    0.76 *
-                                    progress -
-                                8,
+                        Positioned(
+                          left:
+                              MediaQuery.of(context).size.width *
+                                  0.76 *
+                                  progress -
+                              8,
+                          child: AnimatedScale(
+                            scale: isHoveringProgressBar ? 1.0 : 0.0,
+                            duration: const Duration(milliseconds: 200),
                             child: Container(
                               width: 16,
                               height: 16,

@@ -18,12 +18,13 @@ class AppRoutes {
 
   static const String home = '/home';
   static const String profile = '/profile';
+  static const String splash = '/splash';
 
   static const String details = '/details';
   static const String trailer = '/trailer';
   static const String reviews = '/reviews';
   static const String filter = '/filter';
-  static const String splash = '/splash';
+
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -40,6 +41,8 @@ class AppRoutes {
 
       case profile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
+      case splash:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       case details:
         final args = settings.arguments;
         if (args is int) {
@@ -70,9 +73,6 @@ class AppRoutes {
             body: Center(child: Text('Movie data is required')),
           ),
         );
-
-      case splash:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
       case reviews:
         final args = settings.arguments as Map<String, dynamic>?;
 

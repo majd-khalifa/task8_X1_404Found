@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_route.dart';
-import 'package:task8/core/constants/pref_key.dart';
+import 'package:task8/core/constants/constant.dart';
 import 'package:task8/core/constants/text_style.dart';
 import 'package:task8/core/helper/snack_bar_helper.dart';
 import 'package:task8/core/services/api/api_link.dart';
@@ -13,10 +13,7 @@ import 'package:task8/view/details/widgets/review_card.dart';
 
 class ReviewSection extends StatefulWidget {
   final int movieId;
-  const ReviewSection({
-    super.key,
-    required this.movieId,
-  });
+  const ReviewSection({super.key, required this.movieId});
   @override
   State<ReviewSection> createState() => _ReviewSectionState();
 }
@@ -50,13 +47,13 @@ class _ReviewSectionState extends State<ReviewSection> {
         Review? currentUserReview;
         try {
           currentUserReview = allReviews.firstWhere(
-            (r) => r.user.email == PrefKey.useremail,
+            (r) => r.user.email == ConstantData.emailValue,
           );
         } catch (_) {
           currentUserReview = null;
         }
         final List<Review> otherReviews = allReviews
-            .where((r) => r.user.email != PrefKey.useremail)
+            .where((r) => r.user.email != ConstantData.emailValue)
             .toList();
         setState(() {
           userReview = currentUserReview;
@@ -93,46 +90,47 @@ class _ReviewSectionState extends State<ReviewSection> {
                 style: AppTextStyles.textStyle18,
               ),
               Spacer(),
-              FilledButton.tonal(
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.primary.withOpacity(0.2),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 8.h,
-                  ),
-                  shape: StadiumBorder(),
-                ),
-                onPressed: () async {
-                  final result = await Navigator.pushNamed(
-                    context,
-                    AppRoutes.reviews,
-                    arguments: {'movieId': widget.movieId, 'review': null},
-                  );
-
-                  if (result == true) {
-                    await fetchAllReviews();
-                    setState(() {});
-                  }
-                },
-
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.rate_review,
-                      size: 18.sp,
-                      color: AppColors.primary,
+              if (userReview == null)
+                FilledButton.tonal(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.primary.withOpacity(0.2),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 8.h,
                     ),
-                    SizedBox(width: 8.w),
-                    Text(
-                      "Post Review",
-                      style: AppTextStyles.textStyle14.copyWith(
+                    shape: StadiumBorder(),
+                  ),
+                  onPressed: () async {
+                    final result = await Navigator.pushNamed(
+                      context,
+                      AppRoutes.reviews,
+                      arguments: {'movieId': widget.movieId, 'review': null},
+                    );
+
+                    if (result == true) {
+                      await fetchAllReviews(); // ← الحل الحقيقي
+                      setState(() {});
+                    }
+                  },
+
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.rate_review,
+                        size: 18.sp,
                         color: AppColors.primary,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 8.w),
+                      Text(
+                        "Post Review",
+                        style: AppTextStyles.textStyle14.copyWith(
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
           SizedBox(height: 16),
@@ -182,14 +180,19 @@ class _ReviewSectionState extends State<ReviewSection> {
                               ),
                               SizedBox(height: 4.h),
                               Row(
-                                children: List.generate(
-                                  userReview!.rating,
-                                  (index) => Icon(
+                                children: List.generate(5, (index) {
+                                  final filled = index < userReview!.rating;
+                                  final isUnderFive = userReview!.rating < 5;
+                                  return Icon(
                                     Icons.star,
                                     size: 14.sp,
-                                    color: AppColors.primary,
-                                  ),
-                                ),
+                                    color: filled
+                                        ? (isUnderFive
+                                              ? AppColors.primary
+                                              : AppColors.background)
+                                        : AppColors.borderStrong,
+                                  );
+                                }),
                               ),
                             ],
                           ),

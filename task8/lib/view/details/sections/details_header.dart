@@ -27,14 +27,10 @@ class DetailsHeader extends StatelessWidget {
                 colorBlendMode: BlendMode.darken,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                          : null,
-                    ),
-                  );
+                  return Center(child: CircularProgressIndicator());
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(Icons.error, color: Colors.white54, size: 60);
                 },
               ),
             ), // 🔹 Gradient Overlay واحد ناعم (مطابق Stitch)
@@ -93,9 +89,23 @@ class DetailsHeader extends StatelessWidget {
                         color: AppColors.borderLight,
                         width: 2,
                       ),
-                      image: DecorationImage(
-                        image: NetworkImage(movie.posterUrl),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        movie.posterUrl,
                         fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: Colors.black12,
+                            alignment: Alignment.center,
+                            child: const Icon(
+                              Icons.broken_image,
+                              color: Colors.white70,
+                              size: 50,
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),

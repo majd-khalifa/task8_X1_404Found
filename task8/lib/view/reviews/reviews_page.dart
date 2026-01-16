@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
+import 'package:task8/core/helper/snack_bar_helper.dart';
 import 'package:task8/data/review_api.dart';
 import 'package:task8/models/review.dart';
 import 'widgets/reviews_header.dart';
@@ -13,7 +14,7 @@ import 'widgets/reviews_submit.dart';
 
 class ReviewsPage extends StatefulWidget {
   final int movieId;
-  final Review? review; // null = إضافة، not null = تعديل
+  final Review? review;
 
   const ReviewsPage({super.key, required this.movieId, this.review});
 
@@ -24,7 +25,7 @@ class ReviewsPage extends StatefulWidget {
 class _ReviewsPageState extends State<ReviewsPage> {
   late TextEditingController controller;
   double rating = 4.0;
-
+  bool isSubmitting = false;
   @override
   void initState() {
     super.initState();
@@ -40,32 +41,36 @@ class _ReviewsPageState extends State<ReviewsPage> {
       ).showSnackBar(const SnackBar(content: Text("Review cannot be empty")));
       return;
     }
-
+    setState(() => isSubmitting = true);
     bool success;
+    try {
+      if (widget.review == null) {
+        // إضافة ريفيو
+        success = await ReviewApi.addReview(
+          movieId: widget.movieId,
+          rating: rating,
+          comment: text,
+        );
+      } else {
+        // تعديل ريفيو
+        success = await ReviewApi.updateReview(
+          movieId: widget.movieId,
+          reviewId: widget.review!.id,
+          rating: rating,
+          comment: text,
+        );
+      }
 
-    if (widget.review == null) {
-      // إضافة ريفيو جديد
-      success = await ReviewApi.addReview(
-        movieId: widget.movieId,
-        rating: rating,
-        comment: text,
-      );
-    } else {
-      // تعديل ريفيو موجود
-      success = await ReviewApi.updateReview(
-        movieId: widget.movieId,
-        reviewId: widget.review!.id,
-        rating: rating,
-        comment: text,
-      );
-    }
-
-    if (success) {
-      Navigator.pop(context, true);
-    } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Failed to submit review")));
+      if (success) {
+        Navigator.pop(context, true);
+      } else {
+        SnackBarHelper.showError(context, "Failed to submit review");
+      }
+    } finally {
+      /// ✅ إيقاف الـ loading
+      if (mounted) {
+        setState(() => isSubmitting = false);
+      }
     }
   }
 
@@ -94,6 +99,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
                 rating: rating,
                 movieId: widget.movieId,
                 onSubmit: submit,
+                isLoading: isSubmitting,
               ),
             ],
           ),

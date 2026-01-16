@@ -8,13 +8,14 @@ class ReviewsSubmit extends StatelessWidget {
   final double rating;
   final int movieId;
   final VoidCallback onSubmit;
-
+  final bool isLoading;
   const ReviewsSubmit({
     super.key,
     required this.controller,
     required this.rating,
     required this.movieId,
     required this.onSubmit,
+    required this.isLoading,
   });
 
   @override
@@ -30,10 +31,12 @@ class ReviewsSubmit extends StatelessWidget {
             borderRadius: BorderRadius.circular(14.r),
           ),
         ),
-        child: Text(
-          'Submit Review',
-          style: AppTextStyles.textStyle18.copyWith(color: Colors.white),
-        ),
+        child: isLoading
+            ? CircularProgressIndicator(color: AppColors.white)
+            : Text(
+                'Submit Review',
+                style: AppTextStyles.textStyle18.copyWith(color: Colors.white),
+              ),
       ),
     );
   }
