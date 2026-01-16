@@ -6,8 +6,13 @@ import 'package:task8/core/constants/text_style.dart';
 
 class ReviewsTextBox extends StatelessWidget {
   final TextEditingController controller;
+  final Function(String) onChanged;
 
-  const ReviewsTextBox({super.key, required this.controller});
+  const ReviewsTextBox({
+    super.key,
+    required this.controller,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +29,7 @@ class ReviewsTextBox extends StatelessWidget {
           TextField(
             controller: controller,
             maxLines: null,
+            onChanged: onChanged,
             style: AppTextStyles.textStyle14.copyWith(color: Colors.white70),
             decoration: InputDecoration.collapsed(
               hintText:
