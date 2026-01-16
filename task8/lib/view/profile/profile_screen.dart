@@ -16,99 +16,128 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String name = "";
+  String email = "";
+  bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    loadUser();
+  }
+
+  Future<void> loadUser() async {
+    final prefs = SharedPreferencesService();
+
+    name = await prefs.getStringValue("user_name") ?? "";
+    email = await prefs.getStringValue("user_email") ?? "";
+
+    setState(() => isLoading = false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = ApiServices.currentUser;
-
-    return Scaffold(
-      backgroundColor: AppColors.backgroundDark,
-      bottomNavigationBar: const BottomNav(initialIndex: 3),
-      body: SafeArea(
-        child: Column(
-          children: [
-            40.verticalSpace,
-            Center(
+    return isLoading
+        ? CircularProgressIndicator()
+        : Scaffold(
+            backgroundColor: AppColors.backgroundDark,
+            bottomNavigationBar: const BottomNav(initialIndex: 3),
+            body: SafeArea(
               child: Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(3.w),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFBB86FC),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Container(
-                      width: 120.w,
-                      height: 120.w,
-                      decoration: const BoxDecoration(shape: BoxShape.circle),
-                      clipBehavior: Clip.antiAlias,
-                      child: Image.asset(AppImage.majed, fit: BoxFit.cover),
+                  40.verticalSpace,
+                  Center(
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(3.w),
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFBB86FC),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Container(
+                            width: 120.w,
+                            height: 120.w,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            clipBehavior: Clip.antiAlias,
+                            child: Image.asset(
+                              AppImage.majed,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        16.verticalSpace,
+                        Text(
+                          name,
+                          style: AppTextStyles.textStyle24.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                        4.verticalSpace,
+                        Text(
+                          email,
+                          style: AppTextStyles.textStyle14.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  16.verticalSpace,
-                  Text(
-                    user?.name ?? "Guest",
-                    style: AppTextStyles.textStyle24.copyWith(
-                      color: Colors.white,
-                    ),
+                  50.verticalSpace,
+                  _buildMenuItem(
+                    icon: Icons.bookmark_outline,
+                    title: 'My Watchlist',
+                    onTap: () => print('Watchlist Clicked'),
                   ),
-                  4.verticalSpace,
-                  Text(
-                    user?.email ?? "No Email Found",
-                    style: AppTextStyles.textStyle14.copyWith(
-                      color: AppColors.textSecondary,
+                  _buildMenuItem(
+                    icon: Icons.rate_review_outlined,
+                    title: 'My Reviews',
+                    onTap: () => print('Reviews Clicked'),
+                  ),
+                  _buildMenuItem(
+                    icon: Icons.settings_outlined,
+                    title: 'Settings',
+                    onTap: () => print('Settings Clicked'),
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 20.h,
+                    ),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 56.h,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFB56D76),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                        ),
+                        onPressed: () async {
+                          await SharedPreferencesService().removeAllData();
+
+                          ApiServices.currentUser = null;
+                          Navigator.pushReplacementNamed(
+                            context,
+                            AppRoutes.login,
+                          );
+                        },
+                        child: Text(
+                          "Logout",
+                          style: AppTextStyles.textStyle18.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            50.verticalSpace,
-            _buildMenuItem(
-              icon: Icons.bookmark_outline,
-              title: 'My Watchlist',
-              onTap: () => print('Watchlist Clicked'),
-            ),
-            _buildMenuItem(
-              icon: Icons.rate_review_outlined,
-              title: 'My Reviews',
-              onTap: () => print('Reviews Clicked'),
-            ),
-            _buildMenuItem(
-              icon: Icons.settings_outlined,
-              title: 'Settings',
-              onTap: () => print('Settings Clicked'),
-            ),
-            const Spacer(),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
-              child: SizedBox(
-                width: double.infinity,
-                height: 56.h,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFB56D76),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                  ),
-                  onPressed: () async {
-                    await SharedPreferencesService().removeAllData();
-
-                    ApiServices.currentUser = null;
-                    Navigator.pushReplacementNamed(context, AppRoutes.login);
-                  },
-                  child: Text(
-                    "Logout",
-                    style: AppTextStyles.textStyle18.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 
   Widget _buildMenuItem({

@@ -47,13 +47,13 @@ class _ReviewSectionState extends State<ReviewSection> {
         Review? currentUserReview;
         try {
           currentUserReview = allReviews.firstWhere(
-            (r) => r.user.email == ConstantData.useremail,
+            (r) => r.user.email == ConstantData.emailValue,
           );
         } catch (_) {
           currentUserReview = null;
         }
         final List<Review> otherReviews = allReviews
-            .where((r) => r.user.email != ConstantData.useremail)
+            .where((r) => r.user.email != ConstantData.emailValue)
             .toList();
         setState(() {
           userReview = currentUserReview;
@@ -250,7 +250,7 @@ class _ReviewSectionState extends State<ReviewSection> {
                               );
 
                               if (result == true) {
-                                await fetchAllReviews(); // ← نفس الشي
+                                await fetchAllReviews();
                                 setState(() {});
                               }
                             },

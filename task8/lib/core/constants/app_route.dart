@@ -6,7 +6,7 @@ import 'package:task8/view/filter/filter_screen.dart';
 import 'package:task8/view/home/home_screen.dart';
 import 'package:task8/view/profile/profile_screen.dart';
 import 'package:task8/view/reviews/reviews_page.dart';
-// import 'package:task8/view/splash/splash_screen.dart';
+import 'package:task8/view/splash/splash_screen.dart';
 import 'package:task8/view/trailer/trailer_page.dart';
 
 class AppRoutes {
@@ -25,6 +25,7 @@ class AppRoutes {
   static const String reviews = '/reviews';
   static const String filter = '/filter';
 
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case signUp:
@@ -40,8 +41,8 @@ class AppRoutes {
 
       case profile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
-      // case splash:
-      //   return MaterialPageRoute(builder: (_) => const SplashScreen());
+      case splash:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       case details:
         final args = settings.arguments;
         if (args is int) {
@@ -49,7 +50,6 @@ class AppRoutes {
             builder: (_) => MovieDetailsScreen(movieId: args),
           );
         } else {
-          // لو لم يتم إرسال argument صحيح
           return MaterialPageRoute(
             builder: (_) => const Scaffold(
               body: Center(child: Text("Movie ID not provided")),
@@ -58,7 +58,21 @@ class AppRoutes {
         }
 
       case trailer:
-        return MaterialPageRoute(builder: (_) => const TrailerPage());
+        final args = settings.arguments;
+        if (args is Map && args.containsKey('movieId')) {
+          return MaterialPageRoute(
+            builder: (_) => TrailerPage(
+              movieId: args['movieId'] as int,
+              title: args['title'] as String?,
+              posterUrl: args['posterUrl'] as String?,
+            ),
+          );
+        }
+        return MaterialPageRoute(
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Movie data is required')),
+          ),
+        );
       case reviews:
         final args = settings.arguments as Map<String, dynamic>?;
 

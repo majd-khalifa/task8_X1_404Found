@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_route.dart';
+import 'package:task8/core/helper/snack_bar_helper.dart';
 import 'package:task8/core/services/api/api_services.dart';
 import 'package:task8/core/services/services.dart';
 import 'package:task8/view/auth/login/sections/go_to_register.dart';
@@ -16,7 +17,7 @@ import '../cubits/auth_state.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   final apiServices = ApiServices();
-final prefsService = SharedPreferencesService();
+  final prefsService = SharedPreferencesService();
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
@@ -42,25 +43,15 @@ final prefsService = SharedPreferencesService();
   Widget build(BuildContext context) {
     ScreenUtil.init(context, designSize: const Size(375, 812));
     return BlocProvider(
-      create: (_) => AuthCubit(prefsService,apiServices),
+      create: (_) => AuthCubit(prefsService, apiServices),
       child: Scaffold(
         backgroundColor: AppColors.primaryBackground,
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is AuthFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.error),
-                  backgroundColor: Colors.red,
-                ),
-              );
+              SnackBarHelper.showError(context, state.error);
             } else if (state is AuthSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: Colors.green,
-                ),
-              );
+              SnackBarHelper.showSuccess(context, state.message);
 
               Navigator.pushReplacementNamed(context, AppRoutes.home);
             }
