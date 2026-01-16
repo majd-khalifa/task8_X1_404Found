@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/helper/snack_bar_helper.dart';
 import 'package:task8/data/review_api.dart';
+import 'package:task8/models/movie.dart';
 import 'package:task8/models/review.dart';
 import 'widgets/reviews_header.dart';
 import 'widgets/reviews_poster_card.dart';
@@ -15,8 +16,14 @@ import 'widgets/reviews_submit.dart';
 class ReviewsPage extends StatefulWidget {
   final int movieId;
   final Review? review;
+  final Movie movie;
 
-  const ReviewsPage({super.key, required this.movieId, this.review});
+  const ReviewsPage({
+    super.key,
+    required this.movieId,
+    this.review,
+    required this.movie,
+  });
 
   @override
   State<ReviewsPage> createState() => _ReviewsPageState();
@@ -85,7 +92,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
             children: [
               ReviewsHeader(),
               SizedBox(height: 16.h),
-              ReviewsPosterCard(),
+              ReviewsPosterCard(movie: widget.movie),
               SizedBox(height: 20.h),
               ReviewsRating(
                 rating: rating,

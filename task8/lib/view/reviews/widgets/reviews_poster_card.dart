@@ -4,19 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/text_style.dart';
 import 'package:task8/core/constants/app_image.dart';
+import 'package:task8/models/movie.dart';
 
 class ReviewsPosterCard extends StatelessWidget {
-  const ReviewsPosterCard({super.key});
+  final Movie movie;
+
+  const ReviewsPosterCard({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.04),
         borderRadius: BorderRadius.circular(14.r),
-        border: Border.all(color: Colors.white.withOpacity(0.04)),
       ),
       child: Row(
         children: [
@@ -27,7 +28,7 @@ class ReviewsPosterCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.r),
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(AppImage.posterImage),
+                image: NetworkImage(movie.posterUrl),
               ),
             ),
           ),
@@ -37,15 +38,14 @@ class ReviewsPosterCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Interstellar',
-                  style: AppTextStyles.textStyle30.copyWith(
-                    fontSize: 20.sp,
+                  movie.title,
+                  style: AppTextStyles.textStyle20.copyWith(
                     color: Colors.white,
                   ),
                 ),
                 SizedBox(height: 6.h),
                 Text(
-                  '2014 • Sci-Fi • Drama',
+                  "${movie.year} • ${movie.genreName}",
                   style: AppTextStyles.textStyle12.copyWith(
                     color: Colors.white70,
                   ),

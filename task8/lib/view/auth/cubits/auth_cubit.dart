@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task8/core/constants/constant.dart';
 import 'package:task8/core/errors/failur_request.dart';
 import 'package:task8/core/services/api/api_link.dart';
 import 'package:task8/core/services/api/api_services.dart';
@@ -20,15 +21,25 @@ class AuthCubit extends Cubit<AuthState> {
         url: ApiLink.login,
         body: {'email': email, 'password': password},
       );
-      print('Login response: $response'); // <-- اطبع هنا
+
+      print('Login response: $response');
+
       final token = response[0]['data']['token'];
       final userJson = response[0]["data"]['user'];
       final user = User.fromJson(userJson);
- 
+
+      // حفظ البيانات في SharedPreferences
       await prefs.saveStringValue("user_name", user.name);
       await prefs.saveStringValue("user_email", user.email);
-      await prefs.saveUserEmail(email);
-      await prefs.saveTokenUser(token); // الآن لن يفشل
+      await prefs.saveUserEmail(user.email);
+      await prefs.saveTokenUser(token);
+
+      // 🔥 أهم خطوة: حفظ التوكن في الذاكرة
+      ConstantData.usertoken = token;
+      ConstantData.useremail = user.email;
+
+      print("LOGIN TOKEN SAVED IN MEMORY: ${ConstantData.usertoken}");
+
       emit(const AuthSuccess(message: 'Login successfully'));
     } catch (e) {
       emit(const AuthFailure(error: 'Login failed'));

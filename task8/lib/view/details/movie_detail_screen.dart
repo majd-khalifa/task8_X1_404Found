@@ -107,7 +107,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           movie: movie!,
                           reviews: reviews,
                         ),
-                        ReviewSection(movieId: movie!.id),
+                        ReviewSection(movieId: movie!.id, movie: movie!),
 
                         SizedBox(height: 30.h),
                       ],

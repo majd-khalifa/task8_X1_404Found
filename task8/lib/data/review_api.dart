@@ -8,6 +8,8 @@ class ReviewApi {
 
   /// جلب كل الريفيوهات لفيلم معيّن
   static Future<List<Review>> fetchReviews(int movieId) async {
+    print("📌 [FETCH REVIEWS] TOKEN: ${ConstantData.usertoken}");
+
     final response = await _api.getData(url: ApiLink.movieReviews(movieId));
 
     if (response.isEmpty || response[0]['data'] == null) return [];
@@ -22,10 +24,13 @@ class ReviewApi {
     required double rating,
     required String comment,
   }) async {
+    print("🟣 [ADD REVIEW] TOKEN USED: ${ConstantData.usertoken}");
+    print("🟣 BODY: movieId=$movieId, rating=$rating, comment=$comment");
+
     final response = await _api.postData(
       url: ApiLink.addReview(movieId),
       token: ConstantData.usertoken,
-      body: {"movie_id": movieId, "rating": rating, "comment": comment},
+      body: {"movie_id": movieId, "rating": rating.toInt(), "comment": comment},
     );
 
     return response != null;
@@ -38,6 +43,10 @@ class ReviewApi {
     required double rating,
     required String comment,
   }) async {
+    print("🟡 [UPDATE REVIEW] TOKEN USED: ${ConstantData.usertoken}");
+    print("🟡 BODY: rating=$rating, comment=$comment");
+    print("🟡 URL: ${ApiLink.updateReview(movieId, reviewId)}");
+
     final response = await _api.putData(
       url: ApiLink.updateReview(movieId, reviewId),
       token: ConstantData.usertoken,

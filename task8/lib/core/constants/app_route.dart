@@ -86,7 +86,7 @@ class AppRoutes {
 
         return MaterialPageRoute(
           builder: (_) =>
-              ReviewsPage(movieId: args['movieId'], review: args['review']),
+              ReviewsPage(movieId: args['movieId'], review: args['review'], movie: args['movie'],),
         );
 
       case filter:

@@ -8,12 +8,15 @@ import 'package:task8/core/constants/text_style.dart';
 import 'package:task8/core/helper/snack_bar_helper.dart';
 import 'package:task8/core/services/api/api_link.dart';
 import 'package:task8/core/services/api/api_services.dart';
+import 'package:task8/models/movie.dart';
 import 'package:task8/models/review.dart';
 import 'package:task8/view/details/widgets/review_card.dart';
 
 class ReviewSection extends StatefulWidget {
   final int movieId;
-  const ReviewSection({super.key, required this.movieId});
+  final Movie movie;
+
+  const ReviewSection({super.key, required this.movieId, required this.movie});
   @override
   State<ReviewSection> createState() => _ReviewSectionState();
 }
@@ -47,14 +50,21 @@ class _ReviewSectionState extends State<ReviewSection> {
         Review? currentUserReview;
         try {
           currentUserReview = allReviews.firstWhere(
-            (r) => r.user.email == ConstantData.emailValue,
+            (r) =>
+                r.user.email.trim().toLowerCase() ==
+                ConstantData.useremail.trim().toLowerCase(),
           );
         } catch (_) {
           currentUserReview = null;
         }
         final List<Review> otherReviews = allReviews
-            .where((r) => r.user.email != ConstantData.emailValue)
+            .where(
+              (r) =>
+                  r.user.email.trim().toLowerCase() !=
+                  ConstantData.useremail.trim().toLowerCase(),
+            )
             .toList();
+
         setState(() {
           userReview = currentUserReview;
           reviews = otherReviews;
@@ -104,7 +114,11 @@ class _ReviewSectionState extends State<ReviewSection> {
                     final result = await Navigator.pushNamed(
                       context,
                       AppRoutes.reviews,
-                      arguments: {'movieId': widget.movieId, 'review': null},
+                      arguments: {
+                        'movieId': widget.movieId,
+                        'review': null,
+                        'movie': widget.movie,
+                      },
                     );
 
                     if (result == true) {
@@ -246,6 +260,7 @@ class _ReviewSectionState extends State<ReviewSection> {
                                 arguments: {
                                   'movieId': widget.movieId,
                                   'review': userReview,
+                                  'movie': widget.movie,
                                 },
                               );
 

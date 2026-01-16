@@ -1,8 +1,9 @@
 class ConstantData {
-  static const String usertoken = "user_token";
-  static const String useremail = "user_email";
+  // مفاتيح SharedPreferences
+  static const String usertokenKey = "user_token";
+  static const String useremailKey = "user_email";
 
-  // قيم runtime (اختياري)
-  static String tokenValue = "";
-  static String emailValue = "";
+  // قيم runtime
+  static String usertoken = "";
+  static String useremail = "";
 }

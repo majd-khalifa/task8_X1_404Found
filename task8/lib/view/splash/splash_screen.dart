@@ -22,27 +22,28 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _navigate() async {
-  await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
-  ConstantData.tokenValue =
-      await prefs.getStringValue(ConstantData.usertoken) ?? "";
+    // قراءة التوكن والإيميل من SharedPreferences
+    ConstantData.usertoken =
+        await prefs.getStringValue(ConstantData.usertokenKey) ?? "";
 
-  ConstantData.emailValue =
-      await prefs.getStringValue(ConstantData.useremail) ?? "";
+    ConstantData.useremail =
+        await prefs.getStringValue(ConstantData.useremailKey) ?? "";
 
-  print("SPLASH TOKEN: ${ConstantData.tokenValue}");
-  print("SPLASH EMAIL: ${ConstantData.emailValue}");
+    // طباعة القيم الحقيقية
+    print("SPLASH TOKEN: ${ConstantData.usertoken}");
+    print("SPLASH EMAIL: ${ConstantData.useremail}");
 
-  if (!mounted) return;
+    if (!mounted) return;
 
-  if (ConstantData.tokenValue.isEmpty ||
-      ConstantData.emailValue.isEmpty) {
-    Navigator.pushReplacementNamed(context, AppRoutes.login);
-  } else {
-    Navigator.pushReplacementNamed(context, AppRoutes.home);
+    // التحقق الصحيح
+    if (ConstantData.usertoken.isEmpty || ConstantData.useremail.isEmpty) {
+      Navigator.pushReplacementNamed(context, AppRoutes.login);
+    } else {
+      Navigator.pushReplacementNamed(context, AppRoutes.home);
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
