@@ -25,11 +25,8 @@ class AppRoutes {
   static const String reviews = '/reviews';
   static const String filter = '/filter';
 
-
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case signUp:
-        return MaterialPageRoute(builder: (_) => SignUpScreen());
       case login:
         return MaterialPageRoute(builder: (_) => LoginScreen());
 
@@ -85,8 +82,11 @@ class AppRoutes {
         }
 
         return MaterialPageRoute(
-          builder: (_) =>
-              ReviewsPage(movieId: args['movieId'], review: args['review'], movie: args['movie'],),
+          builder: (_) => ReviewsPage(
+            movieId: args['movieId'],
+            review: args['review'],
+            movie: args['movie'],
+          ),
         );
 
       case filter:

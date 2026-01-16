@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_image.dart';
 import 'package:task8/core/constants/app_route.dart';
+import 'package:task8/core/constants/constant.dart';
 import 'package:task8/core/constants/text_style.dart';
+import 'package:task8/core/services/api/api_link.dart';
 import 'package:task8/core/services/services.dart';
 import 'package:task8/widgets/bottom_nav.dart';
 import 'package:task8/core/services/api/api_services.dart';
@@ -117,6 +119,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         onPressed: () async {
+                          final token = await SharedPreferencesService()
+                              .getStringValue(ConstantData.usertokenKey);
+                          try {
+                            await ApiServices().postData(
+                              url: ApiLink.logout,
+                              token: token,
+                            );
+                          } catch (e) {
+                            debugPrint("Logout API failed: $e");
+                          }
                           await SharedPreferencesService().removeAllData();
 
                           ApiServices.currentUser = null;
