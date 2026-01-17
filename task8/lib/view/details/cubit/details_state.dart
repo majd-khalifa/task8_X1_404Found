@@ -1,54 +1,46 @@
-// import 'package:task8/models/movie.dart';
-// import 'package:task8/models/review.dart';
+import 'package:equatable/equatable.dart';
+import 'package:task8/models/index.dart';
 
-// abstract class MovieDetailsState {}
+class MovieDetailsState extends Equatable {
+  final bool isLoadingMovie;     // حالة تحميل بيانات الفيلم
+  final bool isLoadingReviews;   // حالة تحميل المراجعات
+  final Movie? movie;            // بيانات الفيلم
+  final List<Review> reviews;    // قائمة المراجعات
+  final Review? userReview;      // مراجعة المستخدم الحالي
+  final bool isExpanded;         // هل أظهرت كل المراجعات؟
+  final String? errorMessage;    // رسالة الخطأ
 
-// class MovieDetailsInitial extends MovieDetailsState {}
+  const MovieDetailsState({
+    this.isLoadingMovie = true,
+    this.isLoadingReviews = true,
+    this.movie,
+    this.reviews = const [],
+    this.userReview,
+    this.isExpanded = false,
+    this.errorMessage,
+  });
 
-// class MovieDetailsLoading extends MovieDetailsState {}
+  MovieDetailsState copyWith({
+    bool? isLoadingMovie,
+    bool? isLoadingReviews,
+    Movie? movie,
+    List<Review>? reviews,
+    Review? userReview,
+    bool? isExpanded,
+    String? errorMessage,
+  }) {
+    return MovieDetailsState(
+      isLoadingMovie: isLoadingMovie ?? this.isLoadingMovie,
+      isLoadingReviews: isLoadingReviews ?? this.isLoadingReviews,
+      movie: movie ?? this.movie,
+      reviews: reviews ?? this.reviews,
+      userReview: userReview ?? this.userReview,
+      isExpanded: isExpanded ?? this.isExpanded,
+     errorMessage: errorMessage ?? this.errorMessage,
+    );
+  }
 
-// class MovieDetailsLoaded extends MovieDetailsState {
-//   final Movie movie;
-
-//   // DetailsHeader
-//   final bool isFavorite;
-//   final bool isBookmarked;
-
-//   // RatingAndSynopsisSection
-//   final bool isSynopsisExpanded;
-
-//   // Reviews
-//   final List<Review> reviews;
-//   final Review? userReview;
-//   final bool areReviewsExpanded;
-
-//   MovieDetailsLoaded({
-//     required this.movie,
-//     this.isFavorite = false,
-//     this.isBookmarked = false,
-//     this.isSynopsisExpanded = false,
-//     this.reviews = const [],
-//     this.userReview,
-//     this.areReviewsExpanded = false,
-//   });
-
-//   MovieDetailsLoaded copyWith({
-//     Movie? movie,
-//     bool? isFavorite,
-//     bool? isBookmarked,
-//     bool? isSynopsisExpanded,
-//     List<Review>? reviews,
-//     Review? userReview,
-//     bool? areReviewsExpanded,
-//   }) {
-//     return MovieDetailsLoaded(
-//       movie: movie ?? this.movie,
-//       isFavorite: isFavorite ?? this.isFavorite,
-//       isBookmarked: isBookmarked ?? this.isBookmarked,
-//       isSynopsisExpanded: isSynopsisExpanded ?? this.isSynopsisExpanded,
-//       reviews: reviews ?? this.reviews,
-//       userReview: userReview ?? this.userReview,
-//       areReviewsExpanded: areReviewsExpanded ?? this.areReviewsExpanded,
-//     );
-//   }
-// }
+  @override
+  List<Object?> get props =>
+      [isLoadingMovie, isLoadingReviews, movie, reviews, userReview, isExpanded, errorMessage];
+}
