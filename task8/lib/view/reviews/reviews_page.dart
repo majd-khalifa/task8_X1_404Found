@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/helper/snack_bar_helper.dart';
-import 'package:task8/models/movie.dart';
-import 'package:task8/models/review.dart';
+import 'package:task8/models/movie_model.dart';
+import 'package:task8/models/review_model.dart';
 import 'cubit/reviews_cubit.dart';
 import 'cubit/reviews_state.dart';
 

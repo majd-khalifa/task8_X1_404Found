@@ -21,8 +21,7 @@ class ReviewsRating extends StatelessWidget {
           ),
         ),
         SizedBox(height: 12.h),
-
-        // ⭐ النجوم
+        //star rating
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(5, (i) {
@@ -43,7 +42,6 @@ class ReviewsRating extends StatelessWidget {
 
         SizedBox(height: 8.h),
 
-        // ⭐⭐ النص المعدل: 4.0/5.0
         RichText(
           text: TextSpan(
             children: [

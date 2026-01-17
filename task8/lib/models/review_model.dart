@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'user.dart';
+import 'user_model.dart';
 
 class Review extends Equatable {
   final int id;
@@ -41,12 +41,12 @@ class Review extends Equatable {
   };
 
   static double calculateAverageRating(List<Review> reviews) {
-    if (reviews.isEmpty) return 0.0; // لو ما في تعليقات
+    if (reviews.isEmpty) return 0.0; // if no reviews, average is 0
 
-    // اجمع كل التقييمات
+    // add up all ratings
     final total = reviews.fold<int>(0, (sum, r) => sum + r.rating);
 
-    // اقسم على عدد التعليقات
+    // divide by number of reviews to get average
     return total / reviews.length;
   }
 

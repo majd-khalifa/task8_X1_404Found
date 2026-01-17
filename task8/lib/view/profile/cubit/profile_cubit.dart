@@ -10,7 +10,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   final SharedPreferencesService _prefs = SharedPreferencesService();
 
-  /// تحميل بيانات المستخدم
+  // load user data
   Future<void> loadUser() async {
     try {
       final name = await _prefs.getStringValue("user_name") ?? "";
@@ -22,25 +22,25 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  /// تسجيل الخروج
+  // logout user
   Future<void> logout() async {
     try {
-      // 1️⃣ الحصول على التوكن من SharedPreferences
+      // get token from shared preferences
 
       final token = await _prefs.getStringValue(ConstantData.usertokenKey);
 
-      // 2️⃣ إرسال طلب Logout للـ API إذا كان التوكن موجود
+      // call logout API
       if (token != null) {
         await ApiServices().postData(url: ApiLink.logout, token: token);
       }
 
-      // 3️⃣ حذف كل البيانات المحلية
+      // remove token and email from shared preferences
       await _prefs.removeAllData();
 
-      // 4️⃣ مسح المستخدم الحالي في ApiServices
+      // reset current user in ApiServices
       ApiServices.currentUser = null;
 
-      // 5️⃣ تحديث الـ state في الـ Cubit
+      // emit logout success state
       emit(state.copyWith(logoutSuccess: true));
     } catch (e) {
       emit(state.copyWith(error: "Logout failed"));

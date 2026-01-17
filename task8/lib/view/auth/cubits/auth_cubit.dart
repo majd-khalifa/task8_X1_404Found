@@ -6,7 +6,7 @@ import 'package:task8/core/errors/failur_request.dart';
 import 'package:task8/core/services/api/api_link.dart';
 import 'package:task8/core/services/api/api_services.dart';
 import 'package:task8/core/services/services.dart';
-import 'package:task8/models/user.dart';
+import 'package:task8/models/user_model.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {

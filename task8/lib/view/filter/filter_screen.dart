@@ -14,7 +14,7 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   int selectedRatingIndex = 0;
 
-  final List<String> ratings = ["All", "PG", "PG-13", "R"];
+  final List<String> ratings = ["All", "PG-13", "PG", "R"];
 
   int? yearFrom;
   int? yearTo;

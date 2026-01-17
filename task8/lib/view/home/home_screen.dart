@@ -20,12 +20,7 @@ class HomeScreen extends StatelessWidget {
 
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Column(
-              children: const [
-                HomeHeader(),
-                HomeBody(), // UI فقط – اللوجيك كله داخل Cubit
-              ],
-            ),
+            child: Column(children: const [HomeHeader(), HomeBody()]),
           ),
         ),
       ),

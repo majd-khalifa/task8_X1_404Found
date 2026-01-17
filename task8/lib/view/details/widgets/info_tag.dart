@@ -14,17 +14,13 @@ class InfoTag extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
       decoration: BoxDecoration(
-        color: AppColors.cardDark, // خلفية شفافة موحدة
+        color: AppColors.cardDark,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: AppColors.borderLight),
       ),
       child: Row(
         children: [
-          Icon(
-            icon,
-            size: 12.sp,
-            color: AppColors.textSecondary,
-          ), // لون موحد من AppColors
+          Icon(icon, size: 12.sp, color: AppColors.textSecondary),
           SizedBox(width: 4.w),
           Text(
             text,

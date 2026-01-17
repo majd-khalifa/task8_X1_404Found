@@ -1,11 +1,13 @@
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
-import 'package:task8/models/movie.dart';
-import 'package:task8/models/review.dart';
+import 'package:task8/models/movie_model.dart';
+import 'package:task8/models/review_model.dart';
 import 'package:task8/view/details/cubit/detais_cubit.dart';
 
 class UserReviewCard extends StatelessWidget {

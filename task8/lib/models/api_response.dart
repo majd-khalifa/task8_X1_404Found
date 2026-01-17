@@ -2,7 +2,7 @@ class ApiResponse<T> {
   final T data;
   final String message;
   final int statusCode;
-  final String? token; // التوكن اختياري
+  final String? token;
 
   ApiResponse({
     required this.data,
@@ -15,7 +15,6 @@ class ApiResponse<T> {
     final body = json[0];
     final code = json[1];
 
-    // استخراج التوكن إذا موجود داخل data
     String? extractedToken;
     if (body['data'] is Map && body['data']['token'] != null) {
       extractedToken = body['data']['token'];

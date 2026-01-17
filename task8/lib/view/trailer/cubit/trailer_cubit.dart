@@ -59,12 +59,7 @@ class TrailerCubit extends Cubit<TrailerState> {
       emit(state.copyWith(isPlaying: false, showControls: true));
     } else {
       c.play();
-      emit(
-        state.copyWith(
-          isPlaying: true,
-          hasPlayedOnce: true, // 🔥 أهم سطر
-        ),
-      );
+      emit(state.copyWith(isPlaying: true, hasPlayedOnce: true));
       hideControlsAfterDelay();
     }
   }

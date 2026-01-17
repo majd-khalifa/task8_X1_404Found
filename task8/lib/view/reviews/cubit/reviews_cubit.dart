@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task8/data/review_api.dart';
-import 'package:task8/models/review.dart';
+import 'package:task8/models/review_model.dart';
 import 'reviews_state.dart';
 
 class ReviewsCubit extends Cubit<ReviewsState> {
   ReviewsCubit() : super(const ReviewsState());
 
-  /// تحميل البيانات الأولية (لما يكون تعديل)
+  // load initial review for editing
   void loadInitialReview(Review? review) {
     if (review == null) return;
 
@@ -20,17 +20,17 @@ class ReviewsCubit extends Cubit<ReviewsState> {
     );
   }
 
-  /// تحديث التقييم
+  // update rating
   void updateRating(double value) {
     emit(state.copyWith(rating: value));
   }
 
-  /// تحديث التعليق
+  // update comment
   void updateComment(String value) {
     emit(state.copyWith(comment: value));
   }
 
-  /// إرسال الريفيو (إضافة أو تعديل)
+  // submit review (add or update)
   Future<void> submitReview(int movieId) async {
     if (state.comment.trim().isEmpty) {
       emit(state.copyWith(error: "Review cannot be empty"));

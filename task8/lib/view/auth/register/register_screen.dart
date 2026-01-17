@@ -56,8 +56,6 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, designSize: const Size(393, 852));
-
     return BlocProvider(
       create: (_) => AuthCubit(prefsService, apiServices),
       child: BlocConsumer<AuthCubit, AuthState>(

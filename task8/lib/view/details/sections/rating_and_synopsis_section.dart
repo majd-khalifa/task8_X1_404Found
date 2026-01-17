@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_image.dart';
 import 'package:task8/core/constants/text_style.dart';
-import 'package:task8/models/review.dart';
+import 'package:task8/models/review_model.dart';
 import 'package:task8/view/details/cubit/detais_cubit.dart';
 import 'package:task8/view/details/cubit/details_state.dart';
 import 'package:task8/view/details/sections/cast_list_widget.dart';

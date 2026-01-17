@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:task8/models/movie.dart';
+import 'package:task8/models/movie_model.dart';
 
 class HomeState extends Equatable {
   final bool isLoading;
@@ -10,7 +10,7 @@ class HomeState extends Equatable {
   final Map<int, double> movieRatings;
   final String searchQuery;
   final String? error;
-   final String name;
+  final String name;
   final String email;
 
   const HomeState({
@@ -22,8 +22,8 @@ class HomeState extends Equatable {
     this.movieRatings = const {},
     this.searchQuery = "",
     this.error,
-    this.name = "",   // ✅ الافتراضي
-    this.email = "",  // ✅ الافتراضي
+    this.name = "",
+    this.email = "",
   });
 
   HomeState copyWith({
@@ -35,8 +35,8 @@ class HomeState extends Equatable {
     Map<int, double>? movieRatings,
     String? searchQuery,
     String? error,
-     String? name,   // ✅ أضف copyWith لهذه الحقول
-    String? email, 
+    String? name, // added for copyWith
+    String? email,
   }) {
     return HomeState(
       isLoading: isLoading ?? this.isLoading,
@@ -47,8 +47,8 @@ class HomeState extends Equatable {
       movieRatings: movieRatings ?? this.movieRatings,
       searchQuery: searchQuery ?? this.searchQuery,
       error: error,
-        name: name ?? this.name,   // ✅
-      email: email ?? this.email, // ✅
+      name: name ?? this.name,
+      email: email ?? this.email,
     );
   }
 
@@ -62,7 +62,7 @@ class HomeState extends Equatable {
     movieRatings,
     searchQuery,
     error,
-      name,   // ✅
-        email,  // ✅
+    name,
+    email,
   ];
 }

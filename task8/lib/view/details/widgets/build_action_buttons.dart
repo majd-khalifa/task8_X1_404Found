@@ -1,9 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
-import 'package:task8/models/movie.dart';
+import 'package:task8/models/movie_model.dart';
 
 class BuildActionButtons extends StatelessWidget {
   const BuildActionButtons({

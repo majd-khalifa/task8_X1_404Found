@@ -46,7 +46,7 @@ class TrailerControls extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // الوقت + البار
+            //time bar
             Row(
               children: [
                 SizedBox(
@@ -77,11 +77,11 @@ class TrailerControls extends StatelessWidget {
 
             const SizedBox(height: 12),
 
-            // أزرار التحكم
+            // control buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // يسار
+                // left
                 Row(
                   children: [
                     IconButton(
@@ -98,7 +98,7 @@ class TrailerControls extends StatelessWidget {
                   ],
                 ),
 
-                // وسط
+                // middle
                 Row(
                   children: [
                     IconButton(
@@ -132,7 +132,7 @@ class TrailerControls extends StatelessWidget {
                   ],
                 ),
 
-                // يمين
+                // right
                 Row(
                   children: [
                     IconButton(

@@ -11,7 +11,7 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userEmail = ConstantData.useremail;
-    final username = userEmail.split("@").first; // استخراج الاسم من الإيميل
+    final username = userEmail.split("@").first; // Extract username from email
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),

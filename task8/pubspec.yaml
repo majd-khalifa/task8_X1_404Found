@@ -26,12 +26,19 @@ dependencies:
   shared_preferences: ^2.5.4
   http: ^1.6.0
   collection: ^1.17.0
+  shimmer: ^3.0.0
 
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+
+flutter_icons: 
+  android: true
+  ios: true
+  image_path: "assets/icons/404found.jpg"
 
 flutter:
   uses-material-design: true 

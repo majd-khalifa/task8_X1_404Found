@@ -3,7 +3,7 @@
 import 'package:task8/core/constants/constant.dart';
 import 'package:task8/core/services/api/api_link.dart';
 import 'package:task8/core/services/api/api_services.dart';
-import 'package:task8/models/review.dart';
+import 'package:task8/models/review_model.dart';
 
 class ReviewApi {
   static final ApiServices _api = ApiServices();

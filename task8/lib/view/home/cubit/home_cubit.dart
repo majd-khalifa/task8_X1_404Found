@@ -3,8 +3,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task8/core/services/services.dart';
 import 'package:task8/data/movie_api.dart';
-import 'package:task8/models/movie.dart';
-import 'package:task8/models/review.dart';
+import 'package:task8/models/movie_model.dart';
+import 'package:task8/models/review_model.dart';
 import 'package:task8/core/services/api/api_link.dart';
 import 'package:task8/core/services/api/api_services.dart';
 import 'home_state.dart';
@@ -41,9 +41,9 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  /// Wrapper لدالة الـ API الأصلية fetchMovies()
+  // wrapper function to call fetchMovies from movie_api.dart
   Future<List<Movie>> fetchMoviesApi() async {
-    return await fetchMovies(); // ← هذه من movie_api.dart
+    return await fetchMovies();
   }
 
   /// ============================
@@ -136,6 +136,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> loadUser() async {
+    // ignore: no_leading_underscores_for_local_identifiers
     final SharedPreferencesService _prefs = SharedPreferencesService();
     try {
       final name = await _prefs.getStringValue("user_name") ?? "";

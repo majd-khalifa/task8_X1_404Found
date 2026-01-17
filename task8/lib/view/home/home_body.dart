@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
 import 'package:task8/view/home/cubit/home_cubit.dart';
 import 'package:task8/view/home/cubit/home_state.dart';
@@ -10,6 +9,7 @@ import 'widgets/search_bar.dart';
 import 'widgets/category_chip.dart';
 import 'widgets/trending_card.dart';
 import 'widgets/movie_grid_item.dart';
+import 'widgets/shimmer_home.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({super.key});
@@ -20,11 +20,9 @@ class HomeBody extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<HomeCubit>();
 
+        // 🔥 Shimmer أثناء التحميل
         if (state.isLoading) {
-          return const Padding(
-            padding: EdgeInsets.only(top: 100),
-            child: Center(child: CircularProgressIndicator()),
-          );
+          return const ShimmerHome();
         }
 
         if (state.error != null) {
@@ -88,9 +86,7 @@ class HomeBody extends StatelessWidget {
                 itemBuilder: (_, index) {
                   final movie = state.allMovies[index];
 
-                  // Lazy load rating
                   cubit.fetchMovieRating(movie.id);
-
                   final rating = state.movieRatings[movie.id];
 
                   return TrendingCard(
@@ -101,7 +97,7 @@ class HomeBody extends StatelessWidget {
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        AppRoutes.details,
+                        "/details",
                         arguments: movie.id,
                       );
                     },
@@ -135,7 +131,6 @@ class HomeBody extends StatelessWidget {
                   final movie = state.filteredMovies[index];
 
                   cubit.fetchMovieRating(movie.id);
-
                   final rating = state.movieRatings[movie.id];
 
                   return MovieGridItem(
@@ -147,7 +142,7 @@ class HomeBody extends StatelessWidget {
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        AppRoutes.details,
+                        "/details",
                         arguments: movie.id,
                       );
                     },

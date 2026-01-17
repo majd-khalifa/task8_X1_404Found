@@ -11,25 +11,25 @@ class SharedPreferencesService {
     return _sharedPrefences ??= await SharedPreferences.getInstance();
   }
 
-  // استرجاع قيمة
+  //get value
   Future<String?> getStringValue(String key) async {
     final prefs = await _prefs;
     return prefs.getString(key);
   }
 
-  // حفظ قيمة
+  // save value
   Future<void> saveStringValue(String key, String value) async {
     final prefs = await _prefs;
     await prefs.setString(key, value);
   }
 
-  // حذف مفتاح
+  // remove value
   Future<void> removeData(String key) async {
     final prefs = await _prefs;
     await prefs.remove(key);
   }
 
-  // حفظ التوكن
+  // save token
   Future<void> saveTokenUser(String token) async {
     await saveStringValue(ConstantData.usertokenKey, token);
     ConstantData.usertoken = token;
@@ -40,7 +40,7 @@ class SharedPreferencesService {
     ConstantData.useremail = email;
   }
 
-  // حذف كل البيانات
+  // remove all data
   Future<void> removeAllData() async {
     final prefs = await _prefs;
     await prefs.clear();

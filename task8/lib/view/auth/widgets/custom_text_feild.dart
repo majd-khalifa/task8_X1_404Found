@@ -65,7 +65,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
         onChanged: widget.onChanged,
         enabled: widget.enabled,
 
-        /// ⭐ هنا استخدمنا AppTextStyles
         style: AppTextStyles.textStyle16.copyWith(color: AppColors.textPrimary),
 
         decoration: InputDecoration(
@@ -73,7 +72,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
           hintText: widget.hintText,
 
-          /// ⭐ وهنا أيضًا
           hintStyle: AppTextStyles.textStyle16.copyWith(
             color: AppColors.textMuted,
           ),

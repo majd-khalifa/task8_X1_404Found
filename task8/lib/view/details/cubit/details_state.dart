@@ -2,13 +2,13 @@ import 'package:equatable/equatable.dart';
 import 'package:task8/models/index.dart';
 
 class MovieDetailsState extends Equatable {
-  final bool isLoadingMovie;     // حالة تحميل بيانات الفيلم
-  final bool isLoadingReviews;   // حالة تحميل المراجعات
-  final Movie? movie;            // بيانات الفيلم
-  final List<Review> reviews;    // قائمة المراجعات
-  final Review? userReview;      // مراجعة المستخدم الحالي
-  final bool isExpanded;         // هل أظهرت كل المراجعات؟
-  final String? errorMessage;    // رسالة الخطأ
+  final bool isLoadingMovie; // loading film data state
+  final bool isLoadingReviews; // loading reviews state
+  final Movie? movie; // film data
+  final List<Review> reviews; // list of reviews
+  final Review? userReview; // current user's review
+  final bool isExpanded; // whether all reviews are shown
+  final String? errorMessage; // error message if any
 
   const MovieDetailsState({
     this.isLoadingMovie = true,
@@ -36,11 +36,18 @@ class MovieDetailsState extends Equatable {
       reviews: reviews ?? this.reviews,
       userReview: userReview ?? this.userReview,
       isExpanded: isExpanded ?? this.isExpanded,
-     errorMessage: errorMessage ?? this.errorMessage,
+      errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [isLoadingMovie, isLoadingReviews, movie, reviews, userReview, isExpanded, errorMessage];
+  List<Object?> get props => [
+    isLoadingMovie,
+    isLoadingReviews,
+    movie,
+    reviews,
+    userReview,
+    isExpanded,
+    errorMessage,
+  ];
 }

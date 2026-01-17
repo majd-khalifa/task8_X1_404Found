@@ -26,14 +26,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _navigate() async {
     await Future.delayed(const Duration(seconds: 2));
 
-    // قراءة التوكن والإيميل من SharedPreferences
+    // read token and email from shared preferences
     ConstantData.usertoken =
         await prefs.getStringValue(ConstantData.usertokenKey) ?? "";
 
     ConstantData.useremail =
         await prefs.getStringValue(ConstantData.useremailKey) ?? "";
 
-    // طباعة القيم الحقيقية
+    // print the actual values
     print("SPLASH TOKEN: ${ConstantData.usertoken}");
     print("SPLASH EMAIL: ${ConstantData.useremail}");
 
@@ -53,15 +53,12 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: AppColors.backgroundDark,
       body: Stack(
         children: [
-          /// الخلفية
           Positioned.fill(child: Container(color: AppColors.backgroundDark)),
 
-          /// المحتوى الأساسي
           Positioned.fill(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                /// أيقونة الفيلم داخل مربع
                 Container(
                   width: 112.w,
                   height: 112.w,
@@ -112,7 +109,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
                 SizedBox(height: 24.h),
 
-                /// عنوان التطبيق
                 Text(
                   "MovieReview",
                   textAlign: TextAlign.center,
@@ -125,7 +121,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
                 SizedBox(height: 8.h),
 
-                /// الشعار النصي
                 Text(
                   "SHARE YOUR PERSPECTIVE",
                   textAlign: TextAlign.center,
@@ -139,7 +134,6 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ),
 
-          /// الفوتر
           Positioned(
             bottom: 48.h,
             left: 0,

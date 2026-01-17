@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
-import 'package:task8/models/movie.dart';
+import 'package:task8/models/movie_model.dart';
 
 class BuildPoster extends StatelessWidget {
-  const BuildPoster({
-    super.key,
-    required this.movie,
-  });
+  const BuildPoster({super.key, required this.movie});
 
   final Movie movie;
 

@@ -21,7 +21,7 @@ class _BottomNavState extends State<BottomNav> {
   @override
   void initState() {
     super.initState();
-    activeIndex = widget.initialIndex; // ← أهم سطر
+    activeIndex = widget.initialIndex;
   }
 
   void _onTap(int index, String route) {

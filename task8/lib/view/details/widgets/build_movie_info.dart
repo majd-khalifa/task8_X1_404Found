@@ -1,15 +1,14 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/text_style.dart';
-import 'package:task8/models/movie.dart';
+import 'package:task8/models/movie_model.dart';
 import 'package:task8/view/details/widgets/info_tag.dart';
 
 class BuildMovieInfo extends StatelessWidget {
-  const BuildMovieInfo({
-    super.key,
-    required this.movie,
-  });
+  const BuildMovieInfo({super.key, required this.movie});
 
   final Movie movie;
 

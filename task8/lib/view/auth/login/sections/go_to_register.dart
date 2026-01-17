@@ -20,7 +20,7 @@ class GoToRegister extends StatelessWidget {
             const SizedBox(width: 8),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, AppRoutes.signUp);
+                Navigator.pushNamed(context, AppRoutes.register);
               },
               child: Text(
                 'Sign Up',

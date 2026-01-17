@@ -27,7 +27,6 @@ class User extends Equatable {
     'role': role,
   };
 
-  //*************** */
   User copyWith({int? id, String? email, String? name, String? role}) {
     return User(
       id: id ?? this.id,
@@ -37,7 +36,6 @@ class User extends Equatable {
     );
   }
 
-  //************* */
   @override
   List<Object?> get props => [id, email, name, role];
 }

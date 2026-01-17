@@ -9,7 +9,7 @@ class TrailerState extends Equatable {
   final bool isFullscreen;
   final bool isHoveringProgressBar;
 
-  final bool hasPlayedOnce; // 🔥 أهم إضافة
+  final bool hasPlayedOnce;
 
   final String? trailerUrl;
   final String? videoId;
@@ -23,7 +23,7 @@ class TrailerState extends Equatable {
     this.showControls = true,
     this.isFullscreen = false,
     this.isHoveringProgressBar = false,
-    this.hasPlayedOnce = false, // 🔥
+    this.hasPlayedOnce = false,
     this.trailerUrl,
     this.videoId,
     this.controller,

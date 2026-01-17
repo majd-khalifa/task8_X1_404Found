@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:task8/view/trailer/cubit/trailer_cubit.dart';
 import 'package:task8/view/trailer/cubit/trailer_state.dart';
@@ -114,11 +115,9 @@ class TrailerPage extends StatelessWidget {
     TrailerState state,
     TrailerCubit cubit,
   ) {
-    // 1) تحميل
+    // 1) Shimmer أثناء التحميل
     if (state.isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(color: Color(0xFF7f13ec)),
-      );
+      return _buildShimmerLoading(context);
     }
 
     // 2) لا يوجد تريلر
@@ -163,6 +162,110 @@ class TrailerPage extends StatelessWidget {
       ),
     );
   }
+
+  // ---------------- SHIMMER ----------------
+
+  Widget _buildShimmerLoading(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.shade900,
+      highlightColor: Colors.grey.shade800,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Video placeholder (16:9)
+          Container(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.width * 9 / 16,
+            color: Colors.grey.shade900,
+          ),
+
+          const SizedBox(height: 20),
+
+          // Title shimmer
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
+              width: 140,
+              height: 18,
+              color: Colors.grey.shade900,
+            ),
+          ),
+
+          const SizedBox(height: 10),
+
+          // Subtitle shimmer
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
+              width: 100,
+              height: 14,
+              color: Colors.grey.shade900,
+            ),
+          ),
+
+          const SizedBox(height: 30),
+
+          // Progress bar shimmer
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
+              width: double.infinity,
+              height: 6,
+              color: Colors.grey.shade900,
+            ),
+          ),
+
+          const SizedBox(height: 30),
+
+          // Controls shimmer
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    _shimmerCircle(30),
+                    const SizedBox(width: 20),
+                    _shimmerCircle(30),
+                  ],
+                ),
+                Row(
+                  children: [
+                    _shimmerCircle(40),
+                    const SizedBox(width: 30),
+                    _shimmerCircle(50),
+                    const SizedBox(width: 30),
+                    _shimmerCircle(40),
+                  ],
+                ),
+                Row(
+                  children: [
+                    _shimmerCircle(30),
+                    const SizedBox(width: 20),
+                    _shimmerCircle(30),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _shimmerCircle(double size) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade900,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
+
+  // ---------------- POSTER ----------------
 
   Widget _posterPreview(TrailerCubit cubit) {
     return GestureDetector(
