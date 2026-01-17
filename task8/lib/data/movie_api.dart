@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:task8/core/services/api/api_services.dart';
 import 'package:task8/core/services/api/api_link.dart';
 import 'package:task8/models/movie.dart';

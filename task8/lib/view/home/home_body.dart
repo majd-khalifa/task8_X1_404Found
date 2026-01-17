@@ -1,149 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
-import 'package:task8/core/services/api/api_link.dart';
-import 'package:task8/core/services/api/api_services.dart';
-import 'package:task8/data/movie_api.dart';
-import 'package:task8/models/movie.dart';
-import 'package:task8/models/review.dart';
+import 'package:task8/view/home/cubit/home_cubit.dart';
+import 'package:task8/view/home/cubit/home_state.dart';
 
 import 'widgets/search_bar.dart';
 import 'widgets/category_chip.dart';
 import 'widgets/trending_card.dart';
 import 'widgets/movie_grid_item.dart';
 
-class HomeBody extends StatefulWidget {
+class HomeBody extends StatelessWidget {
   const HomeBody({super.key});
 
   @override
-  State<HomeBody> createState() => _HomeBodyState();
-}
-
-class _HomeBodyState extends State<HomeBody> {
-  int activeIndex = 0;
-  final ApiServices _api = ApiServices();
-  List<String> categories = ["All"];
-  List<Movie> allMovies = [];
-  List<Movie> filteredMovies = [];
-  Map<int, double> movieRatings = {};
-  Future<void>? loadMoviesFuture;
-  bool reviewLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    loadMoviesFuture = loadMovies();
-  }
-
-  Future<void> loadMovies() async {
-    final movies = await fetchMovies();
-
-    final uniqueRatings = movies
-        .map((m) => m.ageRating.trim())
-        .toSet()
-        .toList();
-
-    setState(() {
-      allMovies = movies;
-      categories = ["All", ...uniqueRatings];
-      filteredMovies = movies;
-    });
-  }
-
-  Future<void> fetchMovieRating(int movieId) async {
-    if (movieRatings.containsKey(movieId)) return;
-
-    try {
-      final response = await _api.getData(url: ApiLink.movieReviews(movieId));
-
-      if (response.isNotEmpty && response[0]['data'] != null) {
-        final reviews = List.from(
-          response[0]['data'],
-        ).map((e) => Review.fromJson(Map<String, dynamic>.from(e))).toList();
-
-        final avg = Review.calculateAverageRating(reviews);
-
-        setState(() {
-          movieRatings[movieId] = avg;
-          reviewLoading = false;
-        });
-      } else {
-        movieRatings[movieId] = 0.0;
-      }
-    } catch (_) {
-      movieRatings[movieId] = 0.0;
-    }
-  }
-
-  void filterByCategory(int index) {
-    setState(() {
-      activeIndex = index;
-
-      if (index == 0) {
-        filteredMovies = allMovies;
-      } else {
-        final selected = categories[index];
-        filteredMovies = allMovies
-            .where((m) => m.ageRating.trim() == selected.trim())
-            .toList();
-      }
-    });
-  }
-
-  void searchMovies(String query) {
-    setState(() {
-      if (query.isEmpty) {
-        filteredMovies = allMovies;
-      } else {
-        filteredMovies = allMovies
-            .where((m) => m.title.toLowerCase().contains(query.toLowerCase()))
-            .toList();
-      }
-    });
-  }
-
-  void applyFilter(Map data) {
-    final rating = data["rating"];
-    final yearFrom = data["yearFrom"];
-    final yearTo = data["yearTo"];
-    final durationFrom = data["durationFrom"];
-    final durationTo = data["durationTo"];
-
-    setState(() {
-      filteredMovies = allMovies.where((m) {
-        bool ok = true;
-
-        if (rating != null) ok &= m.ageRating == rating;
-        if (yearFrom != null) ok &= m.year >= yearFrom;
-        if (yearTo != null) ok &= m.year <= yearTo;
-        if (durationFrom != null) ok &= m.duration >= durationFrom;
-        if (durationTo != null) ok &= m.duration <= durationTo;
-
-        return ok;
-      }).toList();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: loadMoviesFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        final cubit = context.read<HomeCubit>();
+
+        if (state.isLoading) {
           return const Padding(
             padding: EdgeInsets.only(top: 100),
             child: Center(child: CircularProgressIndicator()),
           );
         }
-        if (snapshot.hasError) {
-          return Center(child: Text("Error: ${snapshot.error}"));
+
+        if (state.error != null) {
+          return Center(
+            child: Text(
+              state.error!,
+              style: AppTextStyles.textStyle16.copyWith(color: Colors.red),
+            ),
+          );
         }
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppSearchBar(onChanged: searchMovies, onFilter: applyFilter),
+            // Search Bar
+            AppSearchBar(
+              onChanged: cubit.searchMovies,
+              onFilter: cubit.applyFilter,
+            ),
 
             16.verticalSpace,
 
@@ -153,14 +53,14 @@ class _HomeBodyState extends State<HomeBody> {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                itemCount: categories.length,
+                itemCount: state.categories.length,
                 separatorBuilder: (_, __) => SizedBox(width: 12.w),
                 itemBuilder: (_, index) {
                   return GestureDetector(
-                    onTap: () => filterByCategory(index),
+                    onTap: () => cubit.filterByCategory(index),
                     child: CategoryChip(
-                      label: categories[index],
-                      isActive: activeIndex == index,
+                      label: state.categories[index],
+                      isActive: state.activeCategory == index,
                     ),
                   );
                 },
@@ -169,7 +69,7 @@ class _HomeBodyState extends State<HomeBody> {
 
             20.verticalSpace,
 
-            // Trending
+            // Trending Now
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Text("Trending Now", style: AppTextStyles.textStyle20),
@@ -181,30 +81,31 @@ class _HomeBodyState extends State<HomeBody> {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                itemCount: allMovies.length > 5 ? 5 : allMovies.length,
+                itemCount: state.allMovies.length > 5
+                    ? 5
+                    : state.allMovies.length,
                 separatorBuilder: (_, __) => SizedBox(width: 16.w),
                 itemBuilder: (_, index) {
-                  final movie = allMovies[index];
-                  fetchMovieRating(movie.id);
+                  final movie = state.allMovies[index];
 
-                  return reviewLoading
-                      ? SizedBox(
-                          child: Center(child: CircularProgressIndicator()),
-                        )
-                      : TrendingCard(
-                          image: movie.posterUrl,
-                          title: movie.title,
-                          subtitle: movie.description,
-                          rating:
-                              movieRatings[movie.id]?.toStringAsFixed(1) ?? "—",
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutes.details,
-                              arguments: movie.id,
-                            );
-                          },
-                        );
+                  // Lazy load rating
+                  cubit.fetchMovieRating(movie.id);
+
+                  final rating = state.movieRatings[movie.id];
+
+                  return TrendingCard(
+                    image: movie.posterUrl,
+                    title: movie.title,
+                    subtitle: movie.description,
+                    rating: rating?.toStringAsFixed(1) ?? "—",
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.details,
+                        arguments: movie.id,
+                      );
+                    },
+                  );
                 },
               ),
             ),
@@ -223,8 +124,7 @@ class _HomeBodyState extends State<HomeBody> {
               child: GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: filteredMovies.length,
-
+                itemCount: state.filteredMovies.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 16.w,
@@ -232,28 +132,26 @@ class _HomeBodyState extends State<HomeBody> {
                   childAspectRatio: 0.55,
                 ),
                 itemBuilder: (_, index) {
-                  final movie = filteredMovies[index];
-                  fetchMovieRating(movie.id);
-                  return reviewLoading
-                      ? SizedBox(
-                          child: Center(child: CircularProgressIndicator()),
-                        )
-                      : MovieGridItem(
-                          image: movie.posterUrl,
-                          title: movie.title,
-                          rating:
-                              movieRatings[movie.id]?.toStringAsFixed(1) ?? "—",
+                  final movie = state.filteredMovies[index];
 
-                          year: movie.year.toString(),
-                          badge: movie.genreName,
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutes.details,
-                              arguments: movie.id,
-                            );
-                          },
-                        );
+                  cubit.fetchMovieRating(movie.id);
+
+                  final rating = state.movieRatings[movie.id];
+
+                  return MovieGridItem(
+                    image: movie.posterUrl,
+                    title: movie.title,
+                    rating: rating?.toStringAsFixed(1) ?? "—",
+                    year: movie.year.toString(),
+                    badge: movie.genreName,
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.details,
+                        arguments: movie.id,
+                      );
+                    },
+                  );
                 },
               ),
             ),
@@ -262,6 +160,4 @@ class _HomeBodyState extends State<HomeBody> {
       },
     );
   }
-
-  
 }

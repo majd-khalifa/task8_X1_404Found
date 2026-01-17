@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task8/core/constants/constant.dart';
 import 'package:task8/core/errors/failur_request.dart';

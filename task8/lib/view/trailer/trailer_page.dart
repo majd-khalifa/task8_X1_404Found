@@ -1,11 +1,12 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:task8/data/movie_api.dart';
+import 'package:task8/view/trailer/cubit/trailer_cubit.dart';
+import 'package:task8/view/trailer/cubit/trailer_state.dart';
 
-class TrailerPage extends StatefulWidget {
+class TrailerPage extends StatelessWidget {
   final int movieId;
   final String? title;
   final String? posterUrl;
@@ -18,522 +19,110 @@ class TrailerPage extends StatefulWidget {
   });
 
   @override
-  State<TrailerPage> createState() => _TrailerPageState();
-}
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => TrailerCubit()..loadTrailer(movieId),
+      child: BlocBuilder<TrailerCubit, TrailerState>(
+        builder: (context, state) {
+          final cubit = context.read<TrailerCubit>();
 
-class _TrailerPageState extends State<TrailerPage> {
-  late YoutubePlayerController _youtubeController;
-  bool isLoading = true;
-  bool isPlaying = false;
-  bool showControls = true;
-  bool isMuted = false;
-  bool isHoveringProgressBar = false;
-  bool isFullscreen = false;
-  String? trailerUrl;
+          return Scaffold(
+            backgroundColor: Colors.black,
+            body: GestureDetector(
+              onTap: () {
+                if (state.controller != null &&
+                    state.controller!.value.isPlaying) {
+                  cubit.toggleControls();
+                }
+              },
+              child: Stack(
+                children: [
+                  Positioned.fill(child: _buildContent(context, state, cubit)),
 
-  @override
-  void initState() {
-    super.initState();
-    _loadVideo();
-  }
+                  // HEADER
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: SafeArea(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.black.withOpacity(0.8),
+                              Colors.black.withOpacity(0.4),
+                              Colors.transparent,
+                            ],
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _headerButton(
+                              icon: Icons.keyboard_arrow_down,
+                              onTap: () => Navigator.pop(context),
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  (title ?? "TRAILER").toUpperCase(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  "Official Trailer",
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(0.6),
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            _headerButton(icon: Icons.cast, onTap: () {}),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
 
-  Future<void> _loadVideo() async {
-    try {
-      print('🎬 Loading trailer for movieId: ${widget.movieId}');
-      final url = await MovieApi().getTrailerUrl(widget.movieId);
-      print('🎥 Got trailer URL: $url');
-
-      if (url != null && url.isNotEmpty) {
-        final videoId = MovieApi.extractYoutubeVideoId(url);
-
-        if (videoId != null && videoId.isNotEmpty) {
-          print('🎞️ YouTube Video ID: $videoId');
-
-          _youtubeController = YoutubePlayerController(
-            initialVideoId: videoId,
-            flags: const YoutubePlayerFlags(
-              autoPlay: false,
-              mute: false,
-              showLiveFullscreenButton: false,
-              hideControls: true,
-              enableCaption: true,
+                  // CONTROLS
+                  if (state.showControls && state.controller != null)
+                    _buildControls(context, state, cubit),
+                ],
+              ),
             ),
           );
-
-          _youtubeController.addListener(() {
-            if (mounted) {
-              setState(() {});
-            }
-          });
-
-          if (mounted) {
-            setState(() {
-              trailerUrl = url;
-              isLoading = false;
-            });
-            print('YouTube player initialized');
-          }
-        } else {
-          print('Failed to extract video ID');
-          if (mounted) {
-            setState(() => isLoading = false);
-          }
-        }
-      } else {
-        print(' No trailer available for this movie');
-        if (mounted) {
-          setState(() => isLoading = false);
-        }
-      }
-    } catch (e) {
-      print(' Exception in _loadVideo: $e');
-      if (mounted) {
-        setState(() => isLoading = false);
-      }
-    }
-  }
-
-  void _togglePlayPause() {
-    setState(() {
-      if (_youtubeController.value.isPlaying) {
-        _youtubeController.pause();
-        showControls = true;
-      } else {
-        _youtubeController.play();
-        _hideControlsAfterDelay();
-      }
-    });
-  }
-
-  void _toggleMute() {
-    setState(() {
-      if (isMuted) {
-        _youtubeController.unMute();
-        isMuted = false;
-      } else {
-        _youtubeController.mute();
-        isMuted = true;
-      }
-    });
-    _hideControlsAfterDelay();
-  }
-
-  void _seekBackward() {
-    final currentPosition = _youtubeController.value.position;
-    final newPosition = currentPosition - const Duration(seconds: 10);
-    _youtubeController.seekTo(
-      newPosition.isNegative ? Duration.zero : newPosition,
-    );
-    _hideControlsAfterDelay();
-  }
-
-  void _seekForward() {
-    final currentPosition = _youtubeController.value.position;
-    final duration = _youtubeController.value.metaData.duration;
-    final newPosition = currentPosition + const Duration(seconds: 10);
-    _youtubeController.seekTo(newPosition > duration ? duration : newPosition);
-    _hideControlsAfterDelay();
-  }
-
-  void _hideControlsAfterDelay() {
-    Future.delayed(const Duration(seconds: 3), () {
-      if (mounted && _youtubeController.value.isPlaying) {
-        setState(() => showControls = false);
-      }
-    });
-  }
-
-  void _toggleFullscreen() {
-    setState(() => isFullscreen = !isFullscreen);
-
-    if (isFullscreen) {
-      // الدخول إلى الشاشة الكاملة
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeRight,
-        DeviceOrientation.landscapeLeft,
-      ]);
-    } else {
-      // الخروج من الشاشة الكاملة
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-    }
-    _hideControlsAfterDelay();
-  }
-
-  String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    final minutes = twoDigits(duration.inMinutes.remainder(60));
-    final seconds = twoDigits(duration.inSeconds.remainder(60));
-    return '$minutes:$seconds';
-  }
-
-  @override
-  void dispose() {
-    _youtubeController.dispose();
-    // إعادة تعيين الإعدادات عند الخروج
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: GestureDetector(
-        onTap: () {
-          if (isPlaying && _youtubeController.value.isPlaying) {
-            setState(() => showControls = !showControls);
-            if (showControls) {
-              _hideControlsAfterDelay();
-              _youtubeController.play(); // ✅ هذا هو السطر الناقص
-            }
-          }
         },
-        child: Stack(
-          children: [
-            // المحتوى الرئيسي
-            Positioned.fill(child: _buildContent()),
-
-            // Top Nav Bar
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top + 8,
-                  left: 16,
-                  right: 16,
-                  bottom: 8,
-                ),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.8),
-                      Colors.black.withOpacity(0.4),
-                      Colors.transparent,
-                    ],
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildIconButton(
-                      icon: Icons.keyboard_arrow_down,
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            widget.title?.toUpperCase() ?? 'TRAILER',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.5,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            'Official Trailer 2',
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.6),
-                              fontSize: 11,
-                              letterSpacing: 0.3,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                    _buildIconButton(icon: Icons.cast, onPressed: () {}),
-                  ],
-                ),
-              ),
-            ),
-
-            // Bottom Controls
-            if (isPlaying && showControls)
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  padding: const EdgeInsets.only(
-                    left: 24,
-                    right: 24,
-                    bottom: 40,
-                    top: 60,
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        Colors.black.withOpacity(0.95),
-                        Colors.black.withOpacity(0.85),
-                        Colors.black.withOpacity(0.6),
-                        Colors.transparent,
-                      ],
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Progress Bar
-                      MouseRegion(
-                        onEnter: (_) =>
-                            setState(() => isHoveringProgressBar = true),
-                        onExit: (_) =>
-                            setState(() => isHoveringProgressBar = false),
-                        child: _buildProgressBar(),
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      // Control Buttons
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Left Controls
-                          Row(
-                            children: [
-                              _buildControlButton(
-                                icon: isMuted
-                                    ? Icons.volume_off
-                                    : Icons.volume_up,
-                                onPressed: _toggleMute,
-                              ),
-                              const SizedBox(width: 24),
-                              _buildControlButton(
-                                icon: Icons.closed_caption,
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
-
-                          // Center Controls
-                          Row(
-                            children: [
-                              _buildControlButton(
-                                icon: Icons.replay_10,
-                                onPressed: _seekBackward,
-                                size: 24,
-                              ),
-                              const SizedBox(width: 32),
-                              _buildPlayButton(),
-                              const SizedBox(width: 32),
-                              _buildControlButton(
-                                icon: Icons.forward_10,
-                                onPressed: _seekForward,
-                                size: 24,
-                              ),
-                            ],
-                          ),
-
-                          // Right Controls
-                          Row(
-                            children: [
-                              _buildControlButton(
-                                icon: Icons.settings,
-                                onPressed: () {},
-                              ),
-                              const SizedBox(width: 24),
-                              _buildControlButton(
-                                icon: isFullscreen
-                                    ? Icons.fullscreen_exit
-                                    : Icons.fullscreen,
-                                onPressed: _toggleFullscreen,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-          ],
-        ),
       ),
     );
   }
 
-  Widget _buildProgressBar() {
-    final position = _youtubeController.value.position.inSeconds;
-    final duration = _youtubeController.value.metaData.duration.inSeconds;
-    final progress = duration > 0 ? position / duration : 0.0;
+  // ---------------- CONTENT ----------------
 
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text(
-              _formatDuration(_youtubeController.value.position),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: GestureDetector(
-                onHorizontalDragUpdate: (details) {
-                  final newPosition =
-                      (details.globalPosition.dx -
-                          (MediaQuery.of(context).size.width * 0.12)) /
-                      (MediaQuery.of(context).size.width * 0.76);
-                  final clampedPosition = newPosition.clamp(0.0, 1.0);
-                  final seekPosition = Duration(
-                    seconds: (clampedPosition * duration).toInt(),
-                  );
-                  _youtubeController.seekTo(seekPosition);
-                },
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Container(
-                    height: 32,
-                    alignment: Alignment.center,
-                    child: Stack(
-                      alignment: Alignment.centerLeft,
-                      children: [
-                        // Background track
-                        Container(
-                          height: 4,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                        ),
-                        // Progress fill
-                        Container(
-                          width:
-                              MediaQuery.of(context).size.width *
-                              0.76 *
-                              progress,
-                          height: 4,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF7f13ec),
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                        ),
-                        // Thumb
-                        Positioned(
-                          left:
-                              MediaQuery.of(context).size.width *
-                                  0.76 *
-                                  progress -
-                              8,
-                          child: AnimatedScale(
-                            scale: isHoveringProgressBar ? 1.0 : 0.0,
-                            duration: const Duration(milliseconds: 200),
-                            child: Container(
-                              width: 16,
-                              height: 16,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.3),
-                                    blurRadius: 8,
-                                    spreadRadius: 2,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Text(
-              _formatDuration(_youtubeController.value.metaData.duration),
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPlayButton() {
-    return GestureDetector(
-      onTap: _togglePlayPause,
-      child: Icon(
-        _youtubeController.value.isPlaying ? Icons.pause : Icons.play_arrow,
-        color: Colors.white,
-        size: 40,
-      ),
-    );
-  }
-
-  Widget _buildControlButton({
-    required IconData icon,
-    required VoidCallback onPressed,
-    double size = 24,
-  }) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Icon(icon, color: Colors.white.withOpacity(0.8), size: size),
-    );
-  }
-
-  Widget _buildIconButton({
-    required IconData icon,
-    required VoidCallback onPressed,
-  }) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white.withOpacity(0.1),
-            border: Border.all(color: Colors.white.withOpacity(0.05), width: 1),
-          ),
-          child: Icon(icon, color: Colors.white, size: 24),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildContent() {
-    if (isLoading) {
+  Widget _buildContent(
+    BuildContext context,
+    TrailerState state,
+    TrailerCubit cubit,
+  ) {
+    // 1) تحميل
+    if (state.isLoading) {
       return const Center(
         child: CircularProgressIndicator(color: Color(0xFF7f13ec)),
       );
     }
 
-    if (trailerUrl == null) {
+    // 2) لا يوجد تريلر
+    if (state.trailerUrl == null) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -545,7 +134,7 @@ class _TrailerPageState extends State<TrailerPage> {
             ),
             const SizedBox(height: 20),
             Text(
-              'لا يوجد تريلر',
+              "لا يوجد تريلر",
               style: TextStyle(fontSize: 18, color: Colors.grey[400]),
             ),
           ],
@@ -553,62 +142,41 @@ class _TrailerPageState extends State<TrailerPage> {
       );
     }
 
-    if (isPlaying) {
-      return Center(
-        child: YoutubePlayer(
-          controller: _youtubeController,
-          showVideoProgressIndicator: false,
-          onReady: () {
-            print('YouTube player ready');
-          },
-          onEnded: (data) {
-            print('Video ended');
-            setState(() {
-              isPlaying = false;
-              showControls = true;
-            });
-          },
-        ),
-      );
+    // 3) قبل أول Play فقط → صورة الفيلم
+    if (!state.hasPlayedOnce) {
+      return _posterPreview(cubit);
     }
 
+    // 4) بعد أول Play → YoutubePlayer دائمًا
+    return Center(
+      child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: ClipRRect(
+          borderRadius: BorderRadius.zero,
+          child: YoutubePlayer(
+            controller: state.controller!,
+            showVideoProgressIndicator: false,
+            onReady: () {},
+            onEnded: (_) => cubit.onVideoEnded(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _posterPreview(TrailerCubit cubit) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          isPlaying = true;
-          showControls = true;
-        });
-        _hideControlsAfterDelay();
-      },
+      onTap: cubit.togglePlayPause,
       child: Stack(
         fit: StackFit.expand,
         children: [
           Image.network(
-            widget.posterUrl ?? '',
+            posterUrl ?? "",
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                color: Colors.grey[900],
-                child: const Center(
-                  child: Icon(
-                    Icons.broken_image,
-                    size: 100,
-                    color: Colors.grey,
-                  ),
-                ),
-              );
-            },
-          ),
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.transparent,
-                  Colors.black.withOpacity(0.3),
-                  Colors.transparent,
-                ],
+            errorBuilder: (_, __, ___) => Container(
+              color: Colors.grey[900],
+              child: const Center(
+                child: Icon(Icons.broken_image, size: 100, color: Colors.grey),
               ),
             ),
           ),
@@ -619,13 +187,6 @@ class _TrailerPageState extends State<TrailerPage> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: const Color(0xFF7f13ec).withOpacity(0.9),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF7f13ec).withOpacity(0.5),
-                    blurRadius: 20,
-                    spreadRadius: 5,
-                  ),
-                ],
               ),
               child: const Icon(
                 Icons.play_arrow,
@@ -637,5 +198,197 @@ class _TrailerPageState extends State<TrailerPage> {
         ],
       ),
     );
+  }
+
+  // ---------------- CONTROLS ----------------
+
+  Widget _buildControls(
+    BuildContext context,
+    TrailerState state,
+    TrailerCubit cubit,
+  ) {
+    final controller = state.controller!;
+    final pos = controller.value.position;
+    final dur = controller.value.metaData.duration;
+    final progress = dur.inSeconds == 0 ? 0.0 : pos.inSeconds / dur.inSeconds;
+
+    return Positioned(
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: Container(
+        padding: const EdgeInsets.only(
+          left: 24,
+          right: 24,
+          bottom: 40,
+          top: 60,
+        ),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [
+              Colors.black.withOpacity(0.95),
+              Colors.black.withOpacity(0.85),
+              Colors.black.withOpacity(0.6),
+              Colors.transparent,
+            ],
+          ),
+        ),
+        child: Column(
+          children: [
+            // Progress Bar
+            Row(
+              children: [
+                Text(
+                  _format(pos),
+                  style: const TextStyle(color: Colors.white, fontSize: 11),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: GestureDetector(
+                    onHorizontalDragUpdate: (details) {
+                      final width = MediaQuery.of(context).size.width * 0.76;
+                      final dx =
+                          details.globalPosition.dx -
+                          (MediaQuery.of(context).size.width * 0.12);
+                      final percent = (dx / width).clamp(0.0, 1.0);
+                      final newPos = Duration(
+                        seconds: (percent * dur.inSeconds).toInt(),
+                      );
+                      controller.seekTo(newPos);
+                    },
+                    child: Container(
+                      height: 32,
+                      alignment: Alignment.center,
+                      child: Stack(
+                        alignment: Alignment.centerLeft,
+                        children: [
+                          Container(
+                            height: 4,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          ),
+                          Container(
+                            width:
+                                MediaQuery.of(context).size.width *
+                                0.76 *
+                                progress,
+                            height: 4,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF7f13ec),
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  _format(dur),
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.5),
+                    fontSize: 11,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 24),
+
+            // Buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Left
+                Row(
+                  children: [
+                    _controlButton(
+                      icon: state.isMuted ? Icons.volume_off : Icons.volume_up,
+                      onTap: cubit.toggleMute,
+                    ),
+                    const SizedBox(width: 24),
+                    _controlButton(icon: Icons.closed_caption, onTap: () {}),
+                  ],
+                ),
+
+                // Center
+                Row(
+                  children: [
+                    _controlButton(
+                      icon: Icons.replay_10,
+                      onTap: cubit.seekBackward,
+                    ),
+                    const SizedBox(width: 32),
+                    GestureDetector(
+                      onTap: cubit.togglePlayPause,
+                      child: Icon(
+                        controller.value.isPlaying
+                            ? Icons.pause
+                            : Icons.play_arrow,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+                    ),
+                    const SizedBox(width: 32),
+                    _controlButton(
+                      icon: Icons.forward_10,
+                      onTap: cubit.seekForward,
+                    ),
+                  ],
+                ),
+
+                // Right
+                Row(
+                  children: [
+                    _controlButton(icon: Icons.settings, onTap: () {}),
+                    const SizedBox(width: 24),
+                    _controlButton(
+                      icon: state.isFullscreen
+                          ? Icons.fullscreen_exit
+                          : Icons.fullscreen,
+                      onTap: cubit.toggleFullscreen,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ---------------- HELPERS ----------------
+
+  Widget _headerButton({required IconData icon, required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.1),
+          shape: BoxShape.circle,
+        ),
+        child: Icon(icon, color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _controlButton({required IconData icon, required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Icon(icon, color: Colors.white.withOpacity(0.8), size: 24),
+    );
+  }
+
+  String _format(Duration d) {
+    String two(int n) => n.toString().padLeft(2, '0');
+    return "${two(d.inMinutes.remainder(60))}:${two(d.inSeconds.remainder(60))}";
   }
 }

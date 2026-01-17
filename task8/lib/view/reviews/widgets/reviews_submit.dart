@@ -4,18 +4,13 @@ import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/text_style.dart';
 
 class ReviewsSubmit extends StatelessWidget {
-  final TextEditingController controller;
-  final double rating;
-  final int movieId;
-  final VoidCallback onSubmit;
   final bool isLoading;
+  final VoidCallback onSubmit;
+
   const ReviewsSubmit({
     super.key,
-    required this.controller,
-    required this.rating,
-    required this.movieId,
-    required this.onSubmit,
     required this.isLoading,
+    required this.onSubmit,
   });
 
   @override
@@ -32,7 +27,7 @@ class ReviewsSubmit extends StatelessWidget {
           ),
         ),
         child: isLoading
-            ? CircularProgressIndicator(color: AppColors.white)
+            ? CircularProgressIndicator(color: Colors.white)
             : Text(
                 'Submit Review',
                 style: AppTextStyles.textStyle18.copyWith(color: Colors.white),
