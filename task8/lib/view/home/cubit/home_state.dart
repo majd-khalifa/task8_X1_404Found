@@ -10,6 +10,8 @@ class HomeState extends Equatable {
   final Map<int, double> movieRatings;
   final String searchQuery;
   final String? error;
+   final String name;
+  final String email;
 
   const HomeState({
     this.isLoading = false,
@@ -20,6 +22,8 @@ class HomeState extends Equatable {
     this.movieRatings = const {},
     this.searchQuery = "",
     this.error,
+    this.name = "",   // ✅ الافتراضي
+    this.email = "",  // ✅ الافتراضي
   });
 
   HomeState copyWith({
@@ -31,6 +35,8 @@ class HomeState extends Equatable {
     Map<int, double>? movieRatings,
     String? searchQuery,
     String? error,
+     String? name,   // ✅ أضف copyWith لهذه الحقول
+    String? email, 
   }) {
     return HomeState(
       isLoading: isLoading ?? this.isLoading,
@@ -41,6 +47,8 @@ class HomeState extends Equatable {
       movieRatings: movieRatings ?? this.movieRatings,
       searchQuery: searchQuery ?? this.searchQuery,
       error: error,
+        name: name ?? this.name,   // ✅
+      email: email ?? this.email, // ✅
     );
   }
 
@@ -54,5 +62,7 @@ class HomeState extends Equatable {
     movieRatings,
     searchQuery,
     error,
+      name,   // ✅
+        email,  // ✅
   ];
 }

@@ -5,6 +5,7 @@ import 'package:task8/core/constants/app_color.dart';
 import 'package:task8/core/constants/app_image.dart';
 import 'package:task8/core/constants/app_route.dart';
 import 'package:task8/core/constants/text_style.dart';
+import 'package:task8/core/helper/snack_bar_helper.dart';
 import 'package:task8/widgets/bottom_nav.dart';
 
 import 'cubit/profile_cubit.dart';
@@ -24,9 +25,7 @@ class ProfileScreen extends StatelessWidget {
           }
 
           if (state.error != null) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.error!)));
+            SnackBarHelper.showError(context, state.error!);
           }
         },
         child: BlocBuilder<ProfileCubit, ProfileState>(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task8/core/constants/app_font.dart';
 import 'package:task8/core/constants/app_route.dart';
+import 'package:task8/view/home/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
           initialRoute: AppRoutes.splash,
         );
       },
-      child: const SizedBox(),
+      child: const HomeScreen(),
     );
   }
 }

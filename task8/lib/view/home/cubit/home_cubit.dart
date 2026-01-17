@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_to_list_in_spreads
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task8/core/services/services.dart';
 import 'package:task8/data/movie_api.dart';
 import 'package:task8/models/movie.dart';
 import 'package:task8/models/review.dart';
@@ -132,5 +133,17 @@ class HomeCubit extends Cubit<HomeState> {
     }).toList();
 
     emit(state.copyWith(filteredMovies: filtered));
+  }
+
+  Future<void> loadUser() async {
+    final SharedPreferencesService _prefs = SharedPreferencesService();
+    try {
+      final name = await _prefs.getStringValue("user_name") ?? "";
+      final email = await _prefs.getStringValue("user_email") ?? "";
+
+      emit(state.copyWith(name: name, email: email, isLoading: false));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, error: "Failed to load user data"));
+    }
   }
 }
